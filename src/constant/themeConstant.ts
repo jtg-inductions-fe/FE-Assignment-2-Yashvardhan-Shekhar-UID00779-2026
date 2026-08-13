@@ -6,7 +6,13 @@ export const COLORS = {
     PRIMARY: {
         MAIN: '#0E9F6E',
     },
+    Secondary: {
+        main: '#ff09ef',
+    }
+    
 };
+
+
 
 /**
  * Base font size in pixels.

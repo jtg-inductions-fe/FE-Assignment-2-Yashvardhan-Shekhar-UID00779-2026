@@ -23,7 +23,7 @@ const typographyUtil: TypographyUtils = {
  * @returns The function returns a TypographyOptions object, which includes various typography settings,
  */
 const typographyStyle = (theme: Theme): TypographyOptions => ({
-    fontFamily: 'Inter',
+    fontFamily: 'Inter, Helvetica, Arial, sans-serif',
     htmlFontSize: HTML_FONT_SIZE,
 
     fontWeightLight: 400,
