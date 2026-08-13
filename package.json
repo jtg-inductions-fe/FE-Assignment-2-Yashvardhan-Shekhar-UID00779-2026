@@ -1,6 +1,6 @@
 {
-    "name": "react-mui-base-template",
-    "description": "",
+    "name": "Vinces - smarter restaurant management",
+    "description": "Vinces - a single, unified web platform that seamlessly serves both audiences. The application must intelligently identify the user's role upon login and dynamically adapt the available actions on the exact same screens. Customers use the interface to discover food and place orders, while restaurant owners use the very same pages to manage their menus and process incoming orders",
     "private": true,
     "version": "0.0.0",
     "type": "module",
