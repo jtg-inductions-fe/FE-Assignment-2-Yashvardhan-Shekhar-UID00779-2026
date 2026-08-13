@@ -6,12 +6,6 @@ import type {
 
 import { HTML_FONT_SIZE } from '@constant';
 
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/inter/900.css';
-
 /* Custom px to rem function */
 const typographyUtil: TypographyUtils = {
     /**
@@ -28,6 +22,7 @@ const typographyUtil: TypographyUtils = {
  * @param theme - Theme object to access the breakpoints.
  * @returns The function returns a TypographyOptions object, which includes various typography settings,
  */
+
 const typographyStyle = (theme: Theme): TypographyOptions => ({
     fontFamily: 'Inter, Arial, sans-serif',
     htmlFontSize: HTML_FONT_SIZE,
