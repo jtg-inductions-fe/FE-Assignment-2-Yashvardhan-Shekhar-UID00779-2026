@@ -8,11 +8,8 @@ export const COLORS = {
     },
     Secondary: {
         main: '#ff09ef',
-    }
-    
+    },
 };
-
-
 
 /**
  * Base font size in pixels.
