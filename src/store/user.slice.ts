@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { User } from '@types';
 
 const initialState: User = {
+    id: '',
     name: '',
     email: '',
-    id: '',
-    role: '',
+    role: 'customer',
 };
 
 // creating slice and reduces for user to update values
@@ -14,11 +14,11 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        updateUser: (state, action: PayloadAction<User>) => {
-            state.id = action.payload.id;
-            state.name = action.payload.name;
-            state.email = action.payload.email;
-            state.role = action.payload.role;
+        updateUser: (state, action: PayloadAction<User | null>) => {
+            state.id = action.payload?.id || '';
+            state.name = action.payload?.name || '';
+            state.email = action.payload?.email || '';
+            state.role = action.payload?.role || 'customer';
         },
     },
 });
