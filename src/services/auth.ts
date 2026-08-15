@@ -43,7 +43,7 @@ export const logIn = async (user: LoginInput): Promise<void> => {
                     message: 'Logged in successfully.',
                 }),
             );
-            
+
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { password, confirmPassword, ...userInfo } = { ...u };
 

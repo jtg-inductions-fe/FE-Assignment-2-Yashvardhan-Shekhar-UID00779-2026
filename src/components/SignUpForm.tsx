@@ -64,12 +64,12 @@ const SignUpForm = ({ onSwitchToLogin }: SignUpFormProps) => {
                 Sign Up
             </Typography>
 
-            <form 
-              onSubmit={(e) => {
-                void handleSubmit(onSubmit)(e);
-              }} 
-              noValidate
-              >
+            <form
+                onSubmit={(e) => {
+                    void handleSubmit(onSubmit)(e);
+                }}
+                noValidate
+            >
                 <Stack spacing={2}>
                     {/* Name Field */}
                     <TextField

@@ -45,12 +45,12 @@ const LoginForm = ({ onSwitchToSignUp }: LoginFormProps) => {
                 Log In
             </Typography>
 
-            <form 
-              onSubmit={(e) => {
-                void handleSubmit(onSubmit)(e);
-              }} 
-              noValidate
-              >
+            <form
+                onSubmit={(e) => {
+                    void handleSubmit(onSubmit)(e);
+                }}
+                noValidate
+            >
                 <Stack spacing={2.5}>
                     <TextField
                         label="Email Address"
