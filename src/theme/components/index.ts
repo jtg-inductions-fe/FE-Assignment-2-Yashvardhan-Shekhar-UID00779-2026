@@ -54,10 +54,6 @@ export const components: Components = {
             html: {
                 fontSize: '62.5%',
             },
-            body: {
-                backgroundColor: '#f7ede3',
-                color:'#0F241F',
-            },
         },
     },
     MuiButton: {
