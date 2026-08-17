@@ -1,5 +1,5 @@
 {
-    "name": "Apna Restaurant - smarter restaurant management",
+    "name": "apna-restaurant",
     "description": "Apna Restaurant - a single, unified web platform that seamlessly serves both audiences. The application must intelligently identify the user's role upon login and dynamically adapt the available actions on the exact same screens. Customers use the interface to discover food and place orders, while restaurant owners use the very same pages to manage their menus and process incoming orders",
     "private": true,
     "version": "0.0.0",
@@ -12,7 +12,8 @@
         "lint:fix": "eslint --fix .",
         "preview": "vite preview",
         "prettier": "npx prettier --write ./",
-        "postinstall": "husky install"
+        "postinstall": "husky",
+        "pre-commit": "lint-staged"
     },
     "dependencies": {
         "@emotion/react": "11.14.0",
@@ -25,7 +26,8 @@
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-hook-form": "^7.85.0",
-        "react-redux": "^9.3.0"
+        "react-redux": "^9.3.0",
+        "react-router": "^8.3.0"
     },
     "devDependencies": {
         "@types/eslint-plugin-jsx-a11y": "6",
@@ -51,5 +53,6 @@
         "vite": "6.0.11",
         "vite-plugin-image-optimizer": "1.1.8",
         "vite-tsconfig-paths": "5.1.4"
-    }
+    },
+    "packageManager": "yarn@4.18.0"
 }
