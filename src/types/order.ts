@@ -1,6 +1,4 @@
 export type CartItem = {
-    itemId: string;
+    id: string;
     quantity: number;
-}
-
-export type CartItemList = CartItem[];
+};

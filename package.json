@@ -12,8 +12,7 @@
         "lint:fix": "eslint --fix .",
         "preview": "vite preview",
         "prettier": "npx prettier --write ./",
-        "postinstall": "husky install",
-        "prepare": "husky",
+        "postinstall": "husky",
         "pre-commit": "lint-staged"
     },
     "dependencies": {

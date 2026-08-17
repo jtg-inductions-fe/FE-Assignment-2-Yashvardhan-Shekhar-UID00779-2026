@@ -1,4 +1,3 @@
-
 export type LoginInput = {
     email: string;
     password: string;
@@ -15,4 +14,3 @@ export type SignupInput = User &
     LoginInput & {
         confirmPassword: string;
     };
-
