@@ -4,3 +4,5 @@ export {
     COLORS,
     SCALING_FACTOR,
 } from './theme.constant';
+
+export const BORDER_RADIUS = 9999;

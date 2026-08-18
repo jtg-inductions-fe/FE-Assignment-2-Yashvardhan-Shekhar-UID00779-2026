@@ -1,4 +1,4 @@
-import { User } from '../types'; // Adjust path as needed
+import { User } from '@types';
 
 const MOCK_SIGNUP_USERS: (User & { password: string })[] = [
     {

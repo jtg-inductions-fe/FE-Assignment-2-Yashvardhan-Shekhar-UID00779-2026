@@ -4,6 +4,14 @@ import { Container } from '@mui/material';
 
 import { Home } from '@pages';
 import { ThemeProvider } from '@providers';
+import { updateUser, useAppDispatch } from '@store';
+import { AppDispatch, User } from '@types';
+import { theme } from '@theme';
+import { Alert as AlertType, User } from '@types';
+
+import { Home, OnBoarding } from './pages';
+import { AppDispatch, useAppDispatch, useAppSelector } from './store';
+import { updateUser } from './store';
 
 export const App = () => {
     mockDataSetup();
@@ -34,7 +42,6 @@ export const App = () => {
     return (
         <ThemeProvider>
             <Container maxWidth="xl">
-
                 {alert.severity && (
                     <Snackbar
                         open={true}
@@ -53,9 +60,8 @@ export const App = () => {
                         </Alert>
                     </Snackbar>
                 )}
-                
+
                 {uid ? <Home /> : <OnBoarding />}
-                
             </Container>
         </ThemeProvider>
     );

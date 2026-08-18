@@ -1,7 +1,7 @@
 import { dispatch, updateAlert } from 'store';
 import { updateUser } from 'store';
 
-import { LoginInput, SignupInput } from '../types';
+import { LoginInput, SignupInput } from '@types';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -29,7 +29,7 @@ export const signUp = async (user: SignupInput): Promise<void> => {
     );
 };
 
-export const logIn = async (user: LoginInput): Promise<void> => {
+export const login = async (user: LoginInput): Promise<void> => {
     await delay(2000);
 
     const str = localStorage.getItem('allUsers') || '[]';
@@ -61,7 +61,7 @@ export const logIn = async (user: LoginInput): Promise<void> => {
     );
 };
 
-export const logOut = () => {
+export const logout = () => {
     dispatch(
         updateAlert({
             severity: 'success',

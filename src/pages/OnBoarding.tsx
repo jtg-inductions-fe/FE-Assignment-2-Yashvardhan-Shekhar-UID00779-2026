@@ -4,7 +4,7 @@ import onboardingImg from 'assets/images/onboarding-bg.webp';
 
 import { Box, Typography } from '@mui/material';
 
-import { LoginForm, SignUpForm } from '../components';
+import { LoginForm, SignUpForm } from '@components';
 
 const OnBoarding = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -60,10 +60,18 @@ const OnBoarding = () => {
                     borderRadius: 5,
                     p: 3,
                     width: '100%',
-                    maxWidth: 400,
-                    // maxHeight:{md:}
+                    maxWidth: 450,
                 }}
             >
+                <Typography
+                    variant="h4"
+                    component="h1"
+                    gutterBottom
+                    align="center"
+                >
+                    {isLogin ? 'Log In' : 'Sign Up'}
+                </Typography>
+
                 {isLogin ? (
                     <LoginForm onSwitchToSignUp={() => setIsLogin(false)} />
                 ) : (
