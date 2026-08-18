@@ -1,2 +1,1 @@
-export { signUp, login, logout } from './auth';
-export { default } from './mockDataSetUp';
+export { signUp, login, logout } from './auth.service';

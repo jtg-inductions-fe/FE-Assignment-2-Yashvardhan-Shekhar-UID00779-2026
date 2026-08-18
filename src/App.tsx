@@ -8,6 +8,7 @@ import { updateUser, useAppDispatch } from '@store';
 import { AppDispatch, User } from '@types';
 import { theme } from '@theme';
 import { Alert as AlertType, User } from '@types';
+import { mockDataSetup } from '@utils';
 
 import { Home, OnBoarding } from './pages';
 import { AppDispatch, useAppDispatch, useAppSelector } from './store';

@@ -35,10 +35,9 @@ const OnBoarding = () => {
                 <Box sx={{ textAlign: 'center' }}>
                     <Typography variant="h1">Apna Restaurant</Typography>
                     <Typography>
-                        {' '}
                         Discover local flavors as a customer or track kitchen
                         tickets as an owner. A single, fast platform designed
-                        for both sides of the table.{' '}
+                        for both sides of the table.
                     </Typography>
                 </Box>
                 <Box
@@ -60,7 +59,7 @@ const OnBoarding = () => {
                     borderRadius: 5,
                     p: 3,
                     width: '100%',
-                    maxWidth: 450,
+                    maxWidth: 400,
                 }}
             >
                 <Typography

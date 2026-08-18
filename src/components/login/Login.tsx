@@ -97,7 +97,6 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
                 <StyledButton
                     type="submit"
                     variant="contained"
-                    color="primary"
                     fullWidth
                     loading={isLoading}
                     loadingPosition="end"

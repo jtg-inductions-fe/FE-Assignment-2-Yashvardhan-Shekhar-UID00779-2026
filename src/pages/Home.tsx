@@ -1,4 +1,4 @@
-import { logout } from 'services/auth';
+import { logout } from 'services/auth.service';
 
 import { StyledButton } from '@styles';
 

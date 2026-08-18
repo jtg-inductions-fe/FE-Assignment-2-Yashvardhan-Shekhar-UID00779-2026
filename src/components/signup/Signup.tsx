@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { signUp } from 'services/auth';
+import { signUp } from 'services/auth.service';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -209,7 +209,6 @@ const Signup = ({ onSwitchToLogin }: SignupProps) => {
                 <StyledButton
                     type="submit"
                     variant="contained"
-                    color="primary"
                     fullWidth
                     loading={isLoading}
                     loadingPosition="end"
