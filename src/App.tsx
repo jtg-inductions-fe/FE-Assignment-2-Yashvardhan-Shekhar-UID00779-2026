@@ -8,18 +8,10 @@ import { updateUser } from './store/userSlice';
 import { User } from './types/User.types';
 
 const App = () => {
-    const temp = {
-        name: 'User',
-        email: 'user@gmail.com',
-        id: 'userid98',
-        role: 'customer',
-    };
-    localStorage.setItem('user', JSON.stringify(temp));
-
     const user = JSON.parse(localStorage.getItem('user') || '') as User;
 
     const isPresent =
-        user && user.name && user.email && user.id && user.role ? true : false;
+        false && user && user.name && user.email && user.id && user.role;
 
     const dispatch: AppDispatch = useAppDispatch();
 
