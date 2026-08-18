@@ -10,4 +10,4 @@ const Home = (user: User) => (
         </Button>
     </>
 );
-export default Home;
+export { Home };

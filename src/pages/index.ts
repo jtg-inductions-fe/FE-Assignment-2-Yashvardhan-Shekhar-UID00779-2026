@@ -1,4 +1,2 @@
-import Home from './Home';
-import OnBoarding from './OnBoarding';
-
-export { Home, OnBoarding };
+export { Home } from './Home';
+export { OnBoarding } from './OnBoarding';

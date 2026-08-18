@@ -1,3 +1,7 @@
+import { Container, CssBaseline, ThemeProvider } from '@mui/material';
+
+import { theme } from '@theme';
+
 import { Home, OnBoarding } from './pages';
 import { AppDispatch, useAppDispatch } from './store';
 import { updateUser } from './store/userSlice';
@@ -5,9 +9,9 @@ import { User } from './types/User.types';
 
 const App = () => {
     const temp = {
-        name: 'Amir',
-        email: 'Amir@gmail.com',
-        id: '7890hyui',
+        name: 'User',
+        email: 'user@gmail.com',
+        id: 'userid98',
         role: 'customer',
     };
     localStorage.setItem('user', JSON.stringify(temp));
@@ -23,6 +27,13 @@ const App = () => {
         dispatch(updateUser(user));
     }
 
-    return isPresent ? <Home {...user} /> : <OnBoarding />;
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container maxWidth="xl">
+                {isPresent ? <Home {...user} /> : <OnBoarding />};
+            </Container>
+        </ThemeProvider>
+    );
 };
-export default App;
+export { App };
