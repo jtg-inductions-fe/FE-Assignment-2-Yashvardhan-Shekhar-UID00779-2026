@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 import { BarProps } from 'types';
 
 import HistoryIcon from '@mui/icons-material/History';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {
     AppBar,
@@ -14,6 +15,8 @@ import {
     Link,
     Toolbar,
 } from '@mui/material';
+
+import { COLORS } from '@constant';
 
 const Navbar = ({
     handleProfileClick,
@@ -51,8 +54,16 @@ const Navbar = ({
                             display: { xs: 'none', md: 'flex' },
                             gap: 1,
                             alignItems: 'center',
+                            color: COLORS.textSecondary,
                         }}
                     >
+                        <Button
+                            color={activeTab === 'home' ? 'primary' : 'inherit'}
+                            onClick={() => void navigate('/home')}
+                        >
+                            <HomeOutlinedIcon sx={{ mr: 1 }} /> Home
+                        </Button>
+
                         {user?.role === 'customer' && (
                             <Button
                                 color={
