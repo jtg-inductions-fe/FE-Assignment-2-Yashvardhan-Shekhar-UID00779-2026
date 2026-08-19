@@ -1,4 +1,4 @@
-import { User } from './auth';
+import { User } from './auth.types';
 
 export type BarProps = {
     handleProfileClick: (event: React.MouseEvent<HTMLElement>) => void;

@@ -15,7 +15,8 @@
             "@services": ["services/index"],
             "@styles": ["styles/index"],
             "@theme": ["theme/index"],
-            "@utils": ["utils/index"]
+            "@utils": ["utils/index"],
+            "@router": ["router/index"]
         }
     }
 }

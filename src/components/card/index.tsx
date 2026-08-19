@@ -1,2 +1,2 @@
-const card = () => <>card</>;
-export default card;
+const Card = () => <>Card</>;
+export { Card };

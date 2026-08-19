@@ -1,2 +1,2 @@
 const Cart = () => <>cart page</>;
-export default Cart;
+export { Cart };

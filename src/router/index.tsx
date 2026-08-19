@@ -1,11 +1,11 @@
-import Cart from 'components/cart';
-import MenuItems from 'components/menuItems';
-import Orders from 'components/orders';
-import Restaurants from 'components/restaurants';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
-import { updateAlert, useAppDispatch } from 'store';
 
-import Home from '../pages/Home';
+import { Cart } from '@components';
+import { MenuItems } from '@components';
+import { Orders } from '@components';
+import { Restaurants } from '@components';
+import { Home } from '@pages';
+import { updateAlert, useAppDispatch } from '@store';
 
 const PageNotFound = () => {
     const dispatch = useAppDispatch();
@@ -53,6 +53,6 @@ const router = createBrowserRouter([
     },
 ]);
 
-const AppRouter = () => <RouterProvider router={router} />;
+const Router = () => <RouterProvider router={router} />;
 
-export default AppRouter;
+export { Router };

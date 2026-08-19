@@ -11,8 +11,8 @@ import {
     Button,
     Container,
     IconButton,
+    Link,
     Toolbar,
-    Typography,
 } from '@mui/material';
 
 const Navbar = ({
@@ -35,18 +35,15 @@ const Navbar = ({
                     sx={{ justifyContent: 'space-between' }}
                 >
                     {/* Brand Logo / Home Link */}
-                    <Typography
+                    <Link
                         variant="h6"
+                        component="button"
                         onClick={() => void navigate('/')}
-                        sx={{
-                            flexGrow: 1,
-                            fontWeight: 700,
-                            color: 'primary.main',
-                            cursor: 'pointer',
-                        }}
+                        fontWeight="700"
+                        underline="none"
                     >
                         Apna Restaurant
-                    </Typography>
+                    </Link>
 
                     {/* Desktop Menu Links */}
                     <Box
@@ -107,4 +104,4 @@ const Navbar = ({
     );
 };
 
-export default Navbar;
+export { Navbar };

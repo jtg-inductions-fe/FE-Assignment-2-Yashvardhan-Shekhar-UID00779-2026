@@ -1,10 +1,9 @@
-import React from 'react';
-
-import { logOut } from 'services/auth';
 import { User } from 'types';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ListItemIcon, ListSubheader, Menu, MenuItem } from '@mui/material';
+
+import { logout } from '@services';
 
 type ProfileMenuProps = {
     isMenuOpen: boolean;
@@ -32,7 +31,7 @@ const ProfileMenu = ({
         }}
     >
         <ListSubheader>Hi, {user?.name}</ListSubheader>
-        <MenuItem onClick={logOut} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={logout} sx={{ color: 'error.main' }}>
             <ListItemIcon sx={{ color: 'error.main' }}>
                 <LogoutIcon fontSize="small" />
             </ListItemIcon>
@@ -41,4 +40,4 @@ const ProfileMenu = ({
     </Menu>
 );
 
-export default ProfileMenu;
+export { ProfileMenu };
