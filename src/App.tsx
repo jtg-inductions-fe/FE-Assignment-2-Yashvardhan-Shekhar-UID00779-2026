@@ -1,14 +1,22 @@
 import mockDataSetup from 'services/mockDataSetUp';
 
 import { Container } from '@mui/material';
+import { Alert } from 'components';
+import { setUpDispatch } from 'store';
+
+import { Container, CssBaseline, ThemeProvider } from '@mui/material';
 
 import { Home } from '@pages';
 import { ThemeProvider } from '@providers';
 import { updateUser, useAppDispatch } from '@store';
 import { AppDispatch, User } from '@types';
-import { theme } from '@theme';
-import { Alert as AlertType, User } from '@types';
-import { mockDataSetup } from '@utils';
+import { Home, OnBoarding } from '@pages';
+import {
+    AppDispatch,
+    updateUser,
+    useAppDispatch,
+    useAppSelector,
+} from '@store';
 
 import { Home, OnBoarding } from './pages';
 import { AppDispatch, useAppDispatch, useAppSelector } from './store';
@@ -20,13 +28,6 @@ export const App = () => {
     const dispatch: AppDispatch = useAppDispatch();
     setUpDispatch(dispatch);
 
-    const handleAlertClose = () => {
-        dispatch(
-            updateAlert({ severity: null, message: 'something went wrong' }),
-        );
-    };
-
-    const alert: AlertType = useAppSelector((state) => state.alert);
     const uid: string | undefined = useAppSelector((state) => state.user.id);
 
     if (!uid) {
@@ -41,24 +42,7 @@ export const App = () => {
     return (
         <ThemeProvider>
             <Container maxWidth="xl">
-                {alert.severity && (
-                    <Snackbar
-                        open={true}
-                        autoHideDuration={3000}
-                        onClose={handleAlertClose}
-                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    >
-                        <Alert
-                            severity={alert.severity || 'warning'}
-                            onClose={handleAlertClose}
-                            sx={{
-                                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                            }}
-                        >
-                            {alert.message}
-                        </Alert>
-                    </Snackbar>
-                )}
+                <Alert />
 
                 {uid ? <Home /> : <OnBoarding />}
             </Container>
