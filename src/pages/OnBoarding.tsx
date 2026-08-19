@@ -4,7 +4,7 @@ import onboardingImg from 'assets/images/onboarding-bg.webp';
 
 import { Box, Typography } from '@mui/material';
 
-import { LoginForm, SignUpForm } from '@components';
+import { Login, Signup } from '@components';
 
 const OnBoarding = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -72,9 +72,9 @@ const OnBoarding = () => {
                 </Typography>
 
                 {isLogin ? (
-                    <LoginForm onSwitchToSignUp={() => setIsLogin(false)} />
+                    <Login onSwitchToSignUp={() => setIsLogin(false)} />
                 ) : (
-                    <SignUpForm onSwitchToLogin={() => setIsLogin(true)} />
+                    <Signup onSwitchToLogin={() => setIsLogin(true)} />
                 )}
             </Box>
         </Box>

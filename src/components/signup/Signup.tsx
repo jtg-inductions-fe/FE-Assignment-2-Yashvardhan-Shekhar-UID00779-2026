@@ -237,4 +237,4 @@ const Signup = ({ onSwitchToLogin }: SignupProps) => {
     );
 };
 
-export default Signup;
+export { Signup };

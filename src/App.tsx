@@ -33,9 +33,7 @@ export const App = () => {
         const user = JSON.parse(localStorage.getItem('user') || 'null') as User;
 
         const isPresent =
-            user && user.name && user.email && user.role && user.id
-                ? true
-                : false;
+            user && user.name && user.email && user.role && user.id;
 
         if (isPresent) dispatch(updateUser(user));
     }

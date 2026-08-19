@@ -125,4 +125,4 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
     );
 };
 
-export default Login;
+export { Login };
