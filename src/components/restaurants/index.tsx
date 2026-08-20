@@ -1,13 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { DeleteRestaurantDialog } from 'components/RestaurantDeleteDialog';
-import { RestaurantFormDialog } from 'components/RestaurantFormDialog';
 import { useLoaderData } from 'react-router';
-import {
-    handleCreateRestaurant,
-    handleDeleteRestaurant,
-    handleEditRestaurant,
-} from 'utils/restaurants.util';
 
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,10 +15,19 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { RestaurantCard } from '@components';
+import {
+    DeleteRestaurantDialog,
+    RestaurantCard,
+    RestaurantFormDialog,
+} from '@components';
 import { useAppSelector } from '@store';
 import { StyledAddButton, StyledField, StyledToggleButton } from '@styles';
 import { Restaurant } from '@types';
+import {
+    handleCreateRestaurant,
+    handleDeleteRestaurant,
+    handleEditRestaurant,
+} from '@utils';
 
 export const Restaurants = () => {
     const theme = useTheme();
