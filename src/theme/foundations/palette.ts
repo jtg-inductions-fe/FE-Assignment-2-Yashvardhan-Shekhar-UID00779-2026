@@ -5,23 +5,23 @@ import { COLORS } from '@constant';
 export const palette: PaletteOptions = {
     mode: 'light',
     primary: {
-        light: COLORS.primaryLight,
-        main: COLORS.primaryMain,
-        dark: COLORS.primaryDark,
-        contrastText: COLORS.white,
+        light: COLORS.PRIMARY.LIGHT,
+        main: COLORS.PRIMARY.MAIN,
+        dark: COLORS.PRIMARY.DARK,
+        contrastText: COLORS.WHITE,
     },
     secondary: {
-        light: COLORS.secondaryLight,
-        main: COLORS.secondaryMain,
-        dark: COLORS.secondaryDark,
-        contrastText: COLORS.white,
+        light: COLORS.SECONDARY.LIGHT,
+        main: COLORS.SECONDARY.MAIN,
+        dark: COLORS.SECONDARY.DARK,
+        contrastText: COLORS.WHITE,
     },
     background: {
-        default: COLORS.backgroundDefault,
-        paper: COLORS.backgroundPaper,
+        default: COLORS.BACKGROUND.DEFAULT,
+        paper: COLORS.BACKGROUND.PAPER,
     },
     text: {
-        primary: COLORS.textPrimary,
-        secondary: COLORS.textSecondary,
+        primary: COLORS.TEXT.PRIMARY,
+        secondary: COLORS.TEXT.SECONDARY,
     },
 };

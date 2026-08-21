@@ -27,103 +27,122 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
     fontFamily: 'Inter, Arial, sans-serif',
     htmlFontSize: HTML_FONT_SIZE,
 
-    fontWeightRegular: FONT_WEIGHTS.regular,
-    fontWeightMedium: FONT_WEIGHTS.medium,
-    fontWeightBold: FONT_WEIGHTS.bold,
+    fontWeightRegular: FONT_WEIGHTS.REGULAR,
+    fontWeightMedium: FONT_WEIGHTS.MEDIUM,
+    fontWeightBold: FONT_WEIGHTS.BOLD,
 
     // Headings
     h1: {
         fontSize: typographyUtil.pxToRem(28),
-        fontWeight: FONT_WEIGHTS.bold,
+        fontWeight: FONT_WEIGHTS.BOLD,
         lineHeight: typographyUtil.pxToRem(36),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(40),
             lineHeight: typographyUtil.pxToRem(52),
         },
     },
+
     h2: {
         fontSize: typographyUtil.pxToRem(24),
-        fontWeight: FONT_WEIGHTS.bold,
+        fontWeight: FONT_WEIGHTS.BOLD,
         lineHeight: typographyUtil.pxToRem(32),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(32),
             lineHeight: typographyUtil.pxToRem(42),
         },
     },
+
     h3: {
         fontSize: typographyUtil.pxToRem(22),
-        fontWeight: FONT_WEIGHTS.semiBold,
+        fontWeight: FONT_WEIGHTS.SEMIBOLD,
         lineHeight: typographyUtil.pxToRem(30),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(28),
             lineHeight: typographyUtil.pxToRem(36),
         },
     },
+
     h4: {
         fontSize: typographyUtil.pxToRem(20),
-        fontWeight: FONT_WEIGHTS.semiBold,
+        fontWeight: FONT_WEIGHTS.SEMIBOLD,
         lineHeight: typographyUtil.pxToRem(28),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(24),
             lineHeight: typographyUtil.pxToRem(32),
         },
     },
+
     h5: {
         fontSize: typographyUtil.pxToRem(18),
-        fontWeight: FONT_WEIGHTS.semiBold,
+        fontWeight: FONT_WEIGHTS.SEMIBOLD,
         lineHeight: typographyUtil.pxToRem(26),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(20),
             lineHeight: typographyUtil.pxToRem(28),
         },
     },
+
     h6: {
         fontSize: typographyUtil.pxToRem(16),
-        fontWeight: FONT_WEIGHTS.medium,
+        fontWeight: FONT_WEIGHTS.MEDIUM,
         lineHeight: typographyUtil.pxToRem(22),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(18),
             lineHeight: typographyUtil.pxToRem(24),
         },
     },
+
     subtitle1: {
         fontSize: typographyUtil.pxToRem(16),
-        fontWeight: FONT_WEIGHTS.medium,
+        fontWeight: FONT_WEIGHTS.MEDIUM,
         lineHeight: typographyUtil.pxToRem(24),
     },
+
     subtitle2: {
         fontSize: typographyUtil.pxToRem(14),
-        fontWeight: FONT_WEIGHTS.medium,
+        fontWeight: FONT_WEIGHTS.MEDIUM,
         lineHeight: typographyUtil.pxToRem(20),
     },
+
     body1: {
         fontSize: typographyUtil.pxToRem(14),
-        fontWeight: FONT_WEIGHTS.regular,
+        fontWeight: FONT_WEIGHTS.REGULAR,
         lineHeight: typographyUtil.pxToRem(22),
+
         [theme.breakpoints.up('md')]: {
             fontSize: typographyUtil.pxToRem(16),
             lineHeight: typographyUtil.pxToRem(24),
         },
     },
+
     body2: {
         fontSize: typographyUtil.pxToRem(13),
-        fontWeight: FONT_WEIGHTS.regular,
+        fontWeight: FONT_WEIGHTS.REGULAR,
         lineHeight: typographyUtil.pxToRem(18),
     },
+
     button: {
         fontSize: typographyUtil.pxToRem(14),
-        fontWeight: FONT_WEIGHTS.medium,
+        fontWeight: FONT_WEIGHTS.MEDIUM,
         lineHeight: typographyUtil.pxToRem(20),
         textTransform: 'none',
     },
+
     caption: {
         fontSize: typographyUtil.pxToRem(12),
-        fontWeight: FONT_WEIGHTS.regular,
+        fontWeight: FONT_WEIGHTS.REGULAR,
         lineHeight: typographyUtil.pxToRem(16),
     },
+
     overline: {
         fontSize: typographyUtil.pxToRem(10),
-        fontWeight: FONT_WEIGHTS.medium,
+        fontWeight: FONT_WEIGHTS.MEDIUM,
         lineHeight: typographyUtil.pxToRem(14),
         textTransform: 'uppercase',
     },

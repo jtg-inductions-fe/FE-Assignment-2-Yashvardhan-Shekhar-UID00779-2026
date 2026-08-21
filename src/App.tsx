@@ -1,13 +1,11 @@
-import { Container, CssBaseline, ThemeProvider } from '@mui/material';
+import { Container } from '@mui/material';
 
-import { theme } from '@theme';
+import { ThemeProvider } from '@components';
+import { Home, OnBoarding } from '@pages';
+import { updateUser, useAppDispatch } from '@store';
+import { AppDispatch, User } from '@types';
 
-import { Home, OnBoarding } from './pages';
-import { AppDispatch, useAppDispatch } from './store';
-import { updateUser } from './store/userSlice';
-import { User } from './types/User.types';
-
-const App = () => {
+export const App = () => {
     const user = JSON.parse(localStorage.getItem('user') || '') as User;
 
     const isPresent =
@@ -20,12 +18,10 @@ const App = () => {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <ThemeProvider>
             <Container maxWidth="xl">
-                {isPresent ? <Home {...user} /> : <OnBoarding />};
+                {isPresent ? <Home /> : <OnBoarding />};
             </Container>
         </ThemeProvider>
     );
 };
-export { App };

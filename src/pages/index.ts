@@ -1,2 +1,2 @@
-export { Home } from './Home';
-export { OnBoarding } from './OnBoarding';
+export { Home } from './Home.page';
+export { OnBoarding } from './OnBoarding.page';
