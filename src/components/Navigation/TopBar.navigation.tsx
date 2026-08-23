@@ -6,7 +6,6 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {
     AppBar,
-    Avatar,
     Badge,
     Box,
     Button,
@@ -18,7 +17,9 @@ import {
 
 import { COLORS } from '@constant';
 
-const Navbar = ({
+import { StyledAvatar } from './navigation.styles';
+
+export const Navbar = ({
     handleProfileClick,
     user,
     activeTab,
@@ -54,7 +55,7 @@ const Navbar = ({
                             display: { xs: 'none', md: 'flex' },
                             gap: 1,
                             alignItems: 'center',
-                            color: COLORS.textSecondary,
+                            color: COLORS.TEXT.SECONDARY,
                         }}
                     >
                         <Button
@@ -96,17 +97,11 @@ const Navbar = ({
                             color="inherit"
                             onClick={handleProfileClick}
                             size="small"
-                            sx={{ ml: 1 }}
+                            aria-label="opening the profile menu"
                         >
-                            <Avatar
-                                sx={{
-                                    width: 32,
-                                    height: 32,
-                                    bgcolor: 'primary.main',
-                                }}
-                            >
+                            <StyledAvatar>
                                 {user?.name?.[0]?.toUpperCase()}
-                            </Avatar>
+                            </StyledAvatar>
                         </IconButton>
                     </Box>
                 </Toolbar>
@@ -114,5 +109,3 @@ const Navbar = ({
         </AppBar>
     );
 };
-
-export { Navbar };

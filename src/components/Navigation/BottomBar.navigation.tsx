@@ -2,17 +2,13 @@ import { useNavigate } from 'react-router';
 import { BarProps } from 'types';
 
 import HistoryIcon from '@mui/icons-material/History';
-import HomeIcon from '@mui/icons-material/Home';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {
-    Avatar,
-    Badge,
-    BottomNavigation,
-    BottomNavigationAction,
-    Paper,
-} from '@mui/material';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Badge, BottomNavigation, BottomNavigationAction } from '@mui/material';
 
-const BottomBar = ({
+import { StyledAvatar, StyledPaper } from './navigation.styles';
+
+export const BottomBar = ({
     handleProfileClick,
     user,
     activeTab,
@@ -20,22 +16,12 @@ const BottomBar = ({
 }: BarProps) => {
     const navigate = useNavigate();
     return (
-        <Paper
-            sx={{
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                display: { xs: 'block', md: 'none' },
-                zIndex: (theme) => theme.zIndex.appBar,
-            }}
-            elevation={10}
-        >
+        <StyledPaper elevation={10}>
             <BottomNavigation showLabels value={activeTab}>
                 <BottomNavigationAction
                     label="Home"
                     value="home"
-                    icon={<HomeIcon />}
+                    icon={<HomeOutlinedIcon />}
                     onClick={() => void navigate('/home')}
                 />
                 {user?.role === 'customer' && (
@@ -44,7 +30,7 @@ const BottomBar = ({
                         value="cart"
                         icon={
                             <Badge badgeContent={cartCount} color="primary">
-                                <ShoppingCartIcon />
+                                <ShoppingCartOutlinedIcon />
                             </Badge>
                         }
                         onClick={() => void navigate('/cart')}
@@ -60,21 +46,13 @@ const BottomBar = ({
                     label="Profile"
                     value="profile"
                     icon={
-                        <Avatar
-                            sx={{
-                                width: 32,
-                                height: 32,
-                                bgcolor: 'primary.main',
-                            }}
-                        >
+                        <StyledAvatar>
                             {user?.name?.[0]?.toUpperCase()}
-                        </Avatar>
+                        </StyledAvatar>
                     }
                     onClick={handleProfileClick}
                 />
             </BottomNavigation>
-        </Paper>
+        </StyledPaper>
     );
 };
-
-export { BottomBar };

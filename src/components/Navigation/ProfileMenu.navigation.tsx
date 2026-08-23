@@ -1,9 +1,11 @@
 import { User } from 'types';
 
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ListItemIcon, ListSubheader, Menu, MenuItem } from '@mui/material';
+import { ListItemIcon, ListSubheader, MenuItem } from '@mui/material';
 
 import { logout } from '@services';
+
+import { StyledMenu } from './navigation.styles';
 
 type ProfileMenuProps = {
     isMenuOpen: boolean;
@@ -12,23 +14,21 @@ type ProfileMenuProps = {
     user: User;
 };
 
-const ProfileMenu = ({
+export const ProfileMenu = ({
     isMenuOpen,
     anchorEl,
     handleMenuClose,
     user,
 }: ProfileMenuProps) => (
-    <Menu
+    <StyledMenu
         anchorEl={anchorEl}
         open={isMenuOpen}
         onClose={handleMenuClose}
         onClick={handleMenuClose}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        PaperProps={{
-            elevation: 3,
-            sx: { mt: 1.5, minWidth: 180, borderRadius: 2 },
-        }}
+        // MenuListProps={{
+        //   'aria-labelledby': 'basic-button',
+        //   backgroundColor:'yellow',
+        // }}
     >
         <ListSubheader>Hi, {user?.name}</ListSubheader>
         <MenuItem onClick={logout} sx={{ color: 'error.main' }}>
@@ -37,7 +37,5 @@ const ProfileMenu = ({
             </ListItemIcon>
             Logout
         </MenuItem>
-    </Menu>
+    </StyledMenu>
 );
-
-export { ProfileMenu };

@@ -1,23 +1,28 @@
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
+import { useEffect } from 'react';
+
+import {
+    createBrowserRouter,
+    Navigate,
+    RouterProvider,
+    useNavigate,
+} from 'react-router';
 
 import { Cart } from '@components';
 import { MenuItems } from '@components';
 import { Orders } from '@components';
 import { Restaurants } from '@components';
 import { Home } from '@pages';
-import { updateAlert, useAppDispatch } from '@store';
+import { alert } from '@utils';
 
 const PageNotFound = () => {
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
-    dispatch(
-        updateAlert({
-            severity: 'warning',
-            message: 'Requested page does not exist.',
-        }),
-    );
+    useEffect(() => {
+        alert('warning', 'Requested page does not exist.');
+        void navigate('/home', { replace: true });
+    }, [navigate]);
 
-    return <Navigate to="/home" replace />;
+    return null;
 };
 
 const router = createBrowserRouter([
@@ -34,7 +39,7 @@ const router = createBrowserRouter([
                 element: <Restaurants />,
             },
             {
-                path: 'restaurant:restaurantId',
+                path: 'restaurant/:restaurantId',
                 element: <MenuItems />,
             },
             {
