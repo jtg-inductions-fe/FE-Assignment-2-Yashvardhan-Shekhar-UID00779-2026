@@ -22,6 +22,7 @@ import {
 
 import { StyledButton, StyledTextField } from '@styles';
 import { SignupInput } from '@types';
+import { handleErrorFeedback } from '@utils';
 
 interface SignupProps {
     onSwitchToLogin?: () => void;
@@ -44,6 +45,7 @@ const Signup = ({ onSwitchToLogin }: SignupProps) => {
         },
     });
 
+    // to validate both password are same
     const password = watch('password');
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -51,9 +53,14 @@ const Signup = ({ onSwitchToLogin }: SignupProps) => {
         setShowConfirmPassword((show) => !show);
 
     const onSubmit: SubmitHandler<SignupInput> = async (data) => {
-        setIsLoading(true);
-        await signUp(data);
-        setIsLoading(false);
+        try {
+            setIsLoading(true);
+            await signUp(data);
+        } catch (e) {
+            handleErrorFeedback(e);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (

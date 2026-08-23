@@ -2,13 +2,16 @@ import { dispatch, updateAlert } from 'store';
 import { updateUser } from 'store';
 
 import { LoginInput, SignupInput } from '@types';
+import { getHashedPassword } from '@utils';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const signUp = async (user: SignupInput): Promise<void> => {
     await delay(2000);
 
-    user.id = Math.random().toString(36).substring(2, 11);
+    user.id = crypto.randomUUID();
+
+    user.password = await getHashedPassword(user.password);
 
     const str = localStorage.getItem('allUsers') || '[]';
     const users = (await JSON.parse(str)) as SignupInput[];
@@ -32,6 +35,7 @@ export const signUp = async (user: SignupInput): Promise<void> => {
 export const login = async (user: LoginInput): Promise<void> => {
     await delay(2000);
 
+    user.password = await getHashedPassword(user.password);
     const str = localStorage.getItem('allUsers') || '[]';
     const users = (await JSON.parse(str)) as SignupInput[];
 

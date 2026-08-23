@@ -7,7 +7,7 @@ import { dispatch, useAppSelector } from '@store';
 import { theme } from '@theme';
 import { Alert as AlertType } from '@types';
 
-const AlertComponent = () => {
+export const AlertComponent = () => {
     const handleAlertClose = () => {
         dispatch(
             updateAlert({ severity: null, message: 'something went wrong' }),
@@ -38,5 +38,3 @@ const AlertComponent = () => {
         <></>
     );
 };
-
-export { AlertComponent as Alert };

@@ -1,4 +1,4 @@
 export { ThemeProvider } from '../providers/ThemeProvider';
-export { Login } from './login';
-export { Signup } from './signup';
-export { Alert } from './alert';
+export { Login } from './Auth';
+export { Signup } from './Auth';
+export { Alert } from './Alert';

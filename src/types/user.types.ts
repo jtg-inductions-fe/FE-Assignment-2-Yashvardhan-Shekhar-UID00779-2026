@@ -1,7 +1,18 @@
 // an authenticated user's basic information.
-export type User = {
-    id: string;
-    name: string;
+
+export type LoginInput = {
     email: string;
-    role: string;
+    password: string;
 };
+
+export type User = {
+    id?: string;
+    email: string;
+    name: string;
+    role: 'owner' | 'customer';
+};
+
+export type SignupInput = User &
+    LoginInput & {
+        confirmPassword: string;
+    };

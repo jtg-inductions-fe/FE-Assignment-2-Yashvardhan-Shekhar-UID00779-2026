@@ -47,6 +47,7 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
             noValidate
         >
             <Stack spacing={2.5}>
+                {/* email field */}
                 <StyledTextField
                     label="Email Address"
                     type="email"
@@ -63,6 +64,7 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
                     })}
                 />
 
+                {/* Password field */}
                 <StyledTextField
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
@@ -107,7 +109,7 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
 
                 <Box sx={{ textAlign: 'center' }}>
                     <Typography variant="body2" color="text.secondary">
-                        Don &apos; t have an account?{' '}
+                        {"Don't "}have an account?{' '}
                         <Link
                             component="button"
                             type="button"
