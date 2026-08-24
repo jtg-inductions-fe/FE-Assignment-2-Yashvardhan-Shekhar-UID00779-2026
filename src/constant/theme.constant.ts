@@ -27,5 +27,4 @@ export const COLORS = {
         PRIMARY: '#0A2129',
         SECONDARY: '#5A6A75',
     },
-    WHITE: '#FFFFFF',
 };

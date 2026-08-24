@@ -8,13 +8,13 @@ export const palette: PaletteOptions = {
         light: COLORS.PRIMARY.LIGHT,
         main: COLORS.PRIMARY.MAIN,
         dark: COLORS.PRIMARY.DARK,
-        contrastText: COLORS.WHITE,
+        contrastText: COLORS.BACKGROUND.PAPER,
     },
     secondary: {
         light: COLORS.SECONDARY.LIGHT,
         main: COLORS.SECONDARY.MAIN,
         dark: COLORS.SECONDARY.DARK,
-        contrastText: COLORS.WHITE,
+        contrastText: COLORS.BACKGROUND.PAPER,
     },
     background: {
         default: COLORS.BACKGROUND.DEFAULT,
