@@ -5,7 +5,7 @@ export {
     store,
     dispatch,
     setUpDispatch,
-} from './initialization.store';
+} from './store';
 
-export { updateUser } from './userSlice.store';
-export { updateAlert } from './alertSlice.store';
+export { updateUser } from './user.slice';
+export { updateAlert } from './alert.slice';
