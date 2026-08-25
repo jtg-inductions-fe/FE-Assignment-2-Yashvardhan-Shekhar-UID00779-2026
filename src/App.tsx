@@ -15,7 +15,6 @@ export const App = () => {
     mockDataSetup();
 
     const dispatch: AppDispatch = useAppDispatch();
-    setUpDispatch(dispatch);
 
     const uid: string | undefined = useAppSelector((state) => state.user.id);
 

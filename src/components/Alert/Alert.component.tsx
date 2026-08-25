@@ -1,13 +1,16 @@
-import { updateAlert } from 'store';
+import { updateAlert, useAppDispatch } from 'store';
 
 import { Alert, Snackbar } from '@mui/material';
 
 import { BORDER_RADIUS } from '@constant';
-import { dispatch, useAppSelector } from '@store';
+import { useAppSelector } from '@store';
 import { theme } from '@theme';
 import { Alert as AlertType } from '@types';
 
 export const AlertComponent = () => {
+    
+    const dispatch = useAppDispatch();
+
     const handleAlertClose = () => {
         dispatch(
             updateAlert({ severity: null, message: 'something went wrong' }),

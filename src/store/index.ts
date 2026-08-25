@@ -3,8 +3,6 @@ export {
     useAppSelector,
     useAppStore,
     store,
-    dispatch,
-    setUpDispatch,
 } from './store';
 
 export { updateUser } from './user.slice';

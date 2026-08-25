@@ -36,7 +36,7 @@ export const signUp = async (
     dispatch(updateUser(userInfo));
 
     // Display a success message after account creation.
-    alert('success', 'Your account has been created.');
+    alert('success', 'Your account has been created.', dispatch);
 };
 
 // Authenticate a user using their email and password.
@@ -66,13 +66,13 @@ export const login = async (
             dispatch(updateUser(userInfo));
 
             // Display a success message after authentication.
-            alert('success', 'Logged in successfully.');
+            alert('success', 'Logged in successfully.', dispatch);
             return;
         }
     }
 
     // Display an error message for invalid credentials.
-    alert('error', 'Incorrect email id or password');
+    alert('error', 'Incorrect email id or password', dispatch);
 };
 
 // Log out the current user and clear their stored information.
@@ -84,5 +84,5 @@ export const logout = (dispatch: AppDispatch) => {
     localStorage.removeItem('user');
 
     // Display a success message after logout.
-    alert('success', 'Logged out successfully.');
+    alert('success', 'Logged out successfully.', dispatch);
 };
