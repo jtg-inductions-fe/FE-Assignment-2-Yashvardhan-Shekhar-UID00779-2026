@@ -1,8 +1,3 @@
-export {
-    useAppDispatch,
-    useAppSelector,
-    useAppStore,
-    store,
-} from './initialization.store';
+export { useAppDispatch, useAppSelector, useAppStore, store } from './store';
 
-export { updateUser } from './userSlice.store';
+export { updateUser } from './user.slice';

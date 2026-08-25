@@ -3,7 +3,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { AppDispatch, AppStore, RootState } from '@types';
 
-import userReducer from './userSlice.store';
+import userReducer from './user.slice';
 
 // Configure the Redux store
 export const store = configureStore({
