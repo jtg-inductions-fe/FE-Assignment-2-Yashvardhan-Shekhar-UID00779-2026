@@ -25,7 +25,7 @@ import { StyledButton, StyledTextField } from '@styles';
 import { AppDispatch, SignupInput } from '@types';
 import { handleErrorFeedback } from '@utils';
 
-const Signup = ({ onSwitchToLogin: }: {
+export const Signup = ({ onSwitchToLogin }: {
     onSwitchToLogin: () => void;
 }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ const Signup = ({ onSwitchToLogin: }: {
             setIsLoading(true);
             await signUp(data, dispatch);
         } catch (e) {
-            handleErrorFeedback(e);
+            handleErrorFeedback(e, dispatch);
         } finally {
             setIsLoading(false);
         }
@@ -243,5 +243,3 @@ const Signup = ({ onSwitchToLogin: }: {
         </form>
     );
 };
-
-export { Signup };

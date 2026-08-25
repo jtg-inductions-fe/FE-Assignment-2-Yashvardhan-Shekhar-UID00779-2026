@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { LoginInput } from 'types';
+import { AppDispatch, LoginInput } from 'types';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -19,8 +19,7 @@ import { useAppDispatch } from '@store';
 import { StyledButton, StyledTextField } from '@styles';
 import { handleErrorFeedback } from '@utils';
 
-
-const Login = ({ onSwitchToSignUp }: {
+export const Login = ({ onSwitchToSignUp }: {
     onSwitchToSignUp: () => void;
 }) => {
     
@@ -135,5 +134,3 @@ const Login = ({ onSwitchToSignUp }: {
         </form>
     );
 };
-
-export { Login };
