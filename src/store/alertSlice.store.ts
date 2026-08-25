@@ -3,6 +3,7 @@ import { Alert } from 'types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
+// initial state of Alert
 const initialState: Alert = {
     severity: null,
     message: '',

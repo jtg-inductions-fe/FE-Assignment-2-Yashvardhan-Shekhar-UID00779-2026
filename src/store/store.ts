@@ -3,12 +3,22 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { AppDispatch, AppStore, RootState } from '@types';
 
-import userReducer from './user.slice';
+import alertReducer from './alertSlice.store';
+import userReducer from './userSlice.store';
 
-// Configure the Redux store
+// dispatch global declaration
+let dispatch: AppDispatch;
+
+// initialization of  global declaration dispatch
+export const setUpDispatch = (dsp: AppDispatch) => {
+    dispatch = dsp;
+};
+
+// main store config
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        alert: alertReducer,
     },
 });
 
@@ -20,3 +30,5 @@ export const useAppSelector = useSelector.withTypes<RootState>();
 
 // Typed Redux store hook
 export const useAppStore = useStore.withTypes<AppStore>();
+
+export { dispatch };
