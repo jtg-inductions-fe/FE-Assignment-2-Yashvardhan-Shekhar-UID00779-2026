@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 
-import { ThemeProvider } from '@components';
 import { Home, OnBoarding } from '@pages';
+import { ThemeProvider } from '@providers';
 import { updateUser, useAppDispatch } from '@store';
 import { AppDispatch, User } from '@types';
 

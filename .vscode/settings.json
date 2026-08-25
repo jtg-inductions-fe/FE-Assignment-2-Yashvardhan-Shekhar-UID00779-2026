@@ -3,5 +3,8 @@
         "source.fixAll.eslint": "always",
         "editor.formatOnSave": "always"
     },
-    "cSpell.words": ["Apna"]
+    "cSpell.words": ["Apna"],
+    "files.insertFinalNewline": true,
+    "notebook.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
 }

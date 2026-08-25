@@ -8,7 +8,8 @@
             "@components": ["components/index"],
             "@types": ["types/index"],
             "@store": ["store/index"],
-            "@pages": ["pages/index"]
+            "@pages": ["pages/index"],
+            "@providers": ["providers/index"]
         }
     }
 }
