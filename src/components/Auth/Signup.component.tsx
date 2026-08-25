@@ -20,18 +20,19 @@ import {
     Typography,
 } from '@mui/material';
 
+import { useAppDispatch } from '@store';
 import { StyledButton, StyledTextField } from '@styles';
-import { SignupInput } from '@types';
+import { AppDispatch, SignupInput } from '@types';
 import { handleErrorFeedback } from '@utils';
 
-interface SignupProps {
-    onSwitchToLogin?: () => void;
-}
-
-const Signup = ({ onSwitchToLogin }: SignupProps) => {
+const Signup = ({ onSwitchToLogin: }: {
+    onSwitchToLogin: () => void;
+}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const dispatch:AppDispatch = useAppDispatch();
 
     const {
         control,
@@ -49,13 +50,12 @@ const Signup = ({ onSwitchToLogin }: SignupProps) => {
     const password = watch('password');
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () =>
-        setShowConfirmPassword((show) => !show);
+    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
     const onSubmit: SubmitHandler<SignupInput> = async (data) => {
         try {
             setIsLoading(true);
-            await signUp(data);
+            await signUp(data, dispatch);
         } catch (e) {
             handleErrorFeedback(e);
         } finally {

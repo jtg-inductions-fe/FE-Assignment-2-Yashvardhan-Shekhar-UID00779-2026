@@ -1,12 +1,15 @@
-import { dispatch, updateUser } from '@store';
-import { LoginInput, SignupInput } from '@types';
+import { updateUser } from '@store';
+import { AppDispatch, LoginInput, SignupInput } from '@types';
 import { alert, getHashedPassword } from '@utils';
 
 // Add an artificial delay for the specified duration.
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Register a new user and store their information locally.
-export const signUp = async (user: SignupInput): Promise<void> => {
+export const signUp = async (
+    user: SignupInput,
+    dispatch: AppDispatch,
+): Promise<void> => {
     await delay(2000);
 
     // Generate a unique ID for the new user.
@@ -37,7 +40,10 @@ export const signUp = async (user: SignupInput): Promise<void> => {
 };
 
 // Authenticate a user using their email and password.
-export const login = async (user: LoginInput): Promise<void> => {
+export const login = async (
+    user: LoginInput,
+    dispatch: AppDispatch,
+): Promise<void> => {
     await delay(2000);
 
     // Hash the provided password for comparison.
@@ -70,7 +76,7 @@ export const login = async (user: LoginInput): Promise<void> => {
 };
 
 // Log out the current user and clear their stored information.
-export const logout = () => {
+export const logout = (dispatch: AppDispatch) => {
     // Update the Redux user state.
     dispatch(updateUser(null));
 

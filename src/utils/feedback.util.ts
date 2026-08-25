@@ -1,8 +1,8 @@
-import { dispatch, updateAlert } from '@store';
-import { Severity } from '@types';
+import { updateAlert } from '@store';
+import { AppDispatch, Severity } from '@types';
 
 // to create alert
-export const alert = (severity: Severity, message: string) => {
+export const alert = (severity: Severity, message: string, dispatch: AppDispatch) => {
     dispatch(
         updateAlert({
             severity: severity,
@@ -12,10 +12,10 @@ export const alert = (severity: Severity, message: string) => {
 };
 
 // handle error feedback
-export const handleErrorFeedback = (error: unknown) => {
+export const handleErrorFeedback = (error: unknown, dispatch: AppDispatch) => {
     if (error instanceof Error) {
-        alert('error', error.message);
+        alert('error', error.message, dispatch);
     } else {
-        alert('error', 'Unknown error has occurred');
+        alert('error', 'Unknown error has occurred', dispatch);
     }
 };

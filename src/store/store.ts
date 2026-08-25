@@ -6,14 +6,6 @@ import { AppDispatch, AppStore, RootState } from '@types';
 import alertReducer from './alert.slice';
 import userReducer from './user.slice';
 
-// dispatch global declaration
-let dispatch: AppDispatch;
-
-// initialization of  global declaration dispatch
-export const setUpDispatch = (dsp: AppDispatch) => {
-    dispatch = dsp;
-};
-
 // main store config
 export const store = configureStore({
     reducer: {
@@ -29,4 +21,3 @@ export const useAppSelector = useSelector.withTypes<RootState>();
 // Typed Redux store hook
 export const useAppStore = useStore.withTypes<AppStore>();
 
-export { dispatch };

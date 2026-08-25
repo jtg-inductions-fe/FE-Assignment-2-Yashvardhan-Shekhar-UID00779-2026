@@ -15,15 +15,19 @@ import {
 } from '@mui/material';
 
 import { login } from '@services';
+import { useAppDispatch } from '@store';
 import { StyledButton, StyledTextField } from '@styles';
+import { handleErrorFeedback } from '@utils';
 
-interface LoginProps {
-    onSwitchToSignUp?: () => void;
-}
 
-const Login = ({ onSwitchToSignUp }: LoginProps) => {
+const Login = ({ onSwitchToSignUp }: {
+    onSwitchToSignUp: () => void;
+}) => {
+    
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const dispatch: AppDispatch = useAppDispatch();
 
     const {
         register,
@@ -34,9 +38,14 @@ const Login = ({ onSwitchToSignUp }: LoginProps) => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const onSubmit: SubmitHandler<LoginInput> = async (data) => {
-        setIsLoading(true);
-        await login(data);
-        setIsLoading(false);
+        try {
+            setIsLoading(true);
+            await login(data, dispatch);
+        } catch (e) {
+            handleErrorFeedback(e, dispatch);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
