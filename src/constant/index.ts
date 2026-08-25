@@ -1,1 +1,6 @@
-export { COLORS, HTML_FONT_SIZE, SCALING_FACTOR } from './themeConstant';
+export {
+    HTML_FONT_SIZE,
+    FONT_WEIGHTS,
+    COLORS,
+    SCALING_FACTOR,
+} from './theme.constant';
