@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { signUp } from 'services/auth.service';
 
-import {Visibility, VisibilityOff }from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     Box,
     FormControl,
@@ -48,9 +48,10 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
     const password = watch('password');
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+    const handleClickShowConfirmPassword = () =>
+        setShowConfirmPassword((show) => !show);
 
-    const handleSubmit: SubmitHandler<SignupInput> = async (data) => {
+    const handleClick: SubmitHandler<SignupInput> = async (data) => {
         try {
             setIsLoading(true);
             await signUp(data, dispatch);
@@ -64,7 +65,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
     return (
         <form
             onSubmit={(e) => {
-                void handleSubmit(handleSubmit)(e);
+                void handleSubmit(handleClick)(e);
             }}
             noValidate
         >
@@ -221,7 +222,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                 </Button>
 
                 {/* Bottom Switch to Login */}
-                <Box textAlign='center'>
+                <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
                         Already have an account?{' '}
                         <Link
@@ -230,7 +231,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                             variant="body2"
                             underline="hover"
                             onClick={onSwitchToLogin}
-                            fontWeight='bold'
+                            fontWeight="bold"
                         >
                             Log In
                         </Link>

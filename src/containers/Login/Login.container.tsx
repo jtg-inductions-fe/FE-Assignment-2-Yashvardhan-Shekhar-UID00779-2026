@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     Box,
     IconButton,
@@ -19,8 +19,7 @@ import { handleErrorFeedback } from '@utils';
 
 import { LoginInput, LoginProp } from './Login.types';
 
-export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
-    
+export const Login = ({ onSwitchToSignUp }: LoginProp) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -34,7 +33,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleSubmit: SubmitHandler<LoginInput> = async (data) => {
+    const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
             setIsLoading(true);
             await login(data, dispatch);
@@ -48,7 +47,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
     return (
         <form
             onSubmit={(e) => {
-                void handleSubmit(handleSubmit)(e);
+                void handleSubmit(handleClick)(e);
             }}
             noValidate
         >
@@ -112,7 +111,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
                     Log In
                 </Button>
 
-                <Box textAlign='center'>
+                <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
                         {"Don't "}have an account?{' '}
                         <Link
@@ -121,7 +120,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
                             variant="body2"
                             underline="hover"
                             onClick={onSwitchToSignUp}
-                            fontWeight='bold' 
+                            fontWeight="bold"
                         >
                             Sign Up
                         </Link>

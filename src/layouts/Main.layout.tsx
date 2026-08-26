@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import { Alert } from '@components';
 import { Home, OnBoarding } from '@pages';
 import { updateUser, useAppDispatch, useAppSelector } from '@store';
-import { Alert as AlertType, User } from '@types';
+import { User } from '@types';
 import { handleErrorFeedback, mockDataSetup } from '@utils';
 
 export const Main = () => {
@@ -11,9 +11,9 @@ export const Main = () => {
 
     const dispatch = useAppDispatch();
 
-    const uid = useAppSelector((state) => state.user.id) as string;
+    const uid = useAppSelector((state) => state.user.id);
 
-    const alert = useAppSelector((state) => state.alert) as AlertType;
+    const alert = useAppSelector((state) => state.alert);
 
     if (!uid) {
         try {

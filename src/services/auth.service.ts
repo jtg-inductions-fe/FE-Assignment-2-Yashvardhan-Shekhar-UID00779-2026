@@ -1,22 +1,22 @@
-import { updateUser } from '@store';
+import { AppDispatch, updateUser } from '@store';
 import { User } from '@types';
 import { alert, getHashedPassword } from '@utils';
 
 type SignupType = User & {
     password: string;
-}
+    confirmPassword: string;
+};
 
 type LoginType = {
-    email: string,
-    password: string,
-}
+    email: string;
+    password: string;
+};
 
 // Register a new user and store their information locally.
 export const signUp = async (
     user: SignupType,
     dispatch: AppDispatch,
 ): Promise<void> => {
-
     // Generate a unique ID for the new user.
     user.id = crypto.randomUUID();
 
@@ -33,7 +33,7 @@ export const signUp = async (
 
     // Remove sensitive fields before storing the current user.
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...userInfo } = { ...user };
+    const { password, confirmPassword, ...userInfo } = { ...user };
 
     localStorage.setItem('user', JSON.stringify(userInfo));
 
@@ -49,13 +49,12 @@ export const login = async (
     user: LoginType,
     dispatch: AppDispatch,
 ): Promise<void> => {
-
     // Hash the provided password for comparison.
     user.password = await getHashedPassword(user.password);
 
     // Retrieve all registered users from local storage.
     const str = localStorage.getItem('allUsers') || '[]';
-    const users = (await JSON.parse(str)) as SignupInput[];
+    const users = (await JSON.parse(str)) as SignupType[];
 
     // Find a registered user matching the provided credentials.
     for (const u of users) {

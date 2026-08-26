@@ -1,8 +1,13 @@
-import { AppDispatch,updateAlert } from '@store';
-import { Severity } from '@types';
+import { AlertColor } from '@mui/material';
+
+import { AppDispatch, updateAlert } from '@store';
 
 // to create alert
-export const alert = (severity: Severity, message: string, dispatch: AppDispatch) => {
+export const alert = (
+    severity: AlertColor,
+    message: string,
+    dispatch: AppDispatch,
+) => {
     dispatch(
         updateAlert({
             severity: severity,
