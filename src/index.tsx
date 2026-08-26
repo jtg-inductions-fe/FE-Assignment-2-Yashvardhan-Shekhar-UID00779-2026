@@ -13,8 +13,8 @@ createRoot(rootElement).render(
     <StrictMode>
         <Provider store={store}>
             <ThemeProvider>
-                <Main/>
+                <Main />
             </ThemeProvider>
         </Provider>
-    </StrictMode>
+    </StrictMode>,
 );

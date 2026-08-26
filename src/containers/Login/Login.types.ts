@@ -5,4 +5,4 @@ export type LoginInput = {
 
 export type LoginProp = {
     onSwitchToSignUp: () => void;
-}
+};

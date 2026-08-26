@@ -20,4 +20,3 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 // Typed Redux store hook
 export const useAppStore = useStore.withTypes<AppStore>();
-
