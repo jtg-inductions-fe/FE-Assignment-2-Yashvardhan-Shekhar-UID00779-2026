@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 
 import { Box } from '@mui/material';
 
@@ -11,6 +11,7 @@ import { StyledContainer } from './Home.styles';
 
 export const Home = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const activeTab = useLocation().pathname.substring(1) || 'home';
 
@@ -34,6 +35,7 @@ export const Home = () => {
                 user={user}
                 activeTab={activeTab}
                 cartCount={cartCount}
+                navigate={navigate}
             />
 
             <ProfileMenu
@@ -53,6 +55,7 @@ export const Home = () => {
                 user={user}
                 activeTab={activeTab}
                 cartCount={cartCount}
+                navigate={navigate}
             />
         </Box>
     );
