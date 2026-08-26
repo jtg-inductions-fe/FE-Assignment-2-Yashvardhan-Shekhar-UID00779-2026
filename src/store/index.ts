@@ -8,3 +8,10 @@ export {
     removeRestaurant,
     setRestaurants,
 } from './restaurants.slice';
+export {
+    setMenuItems,
+    addMenuItem,
+    removeMenuItem,
+    updateMenuItem,
+} from './menu.slice';
+export { removeItemFromCart, addItemToCart } from './cart.slice';

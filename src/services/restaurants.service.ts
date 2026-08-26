@@ -96,3 +96,38 @@ export const deleteRestaurantService = async (
         handleErrorFeedback(e, dispatch);
     }
 };
+
+// Generates a unique ID, adds the menu item to Redux state, and shows a success alert
+export const handleCreateMenuItem = (
+    data: MenuItem,
+    dispatch: AppDispatch,
+): void => {
+    const newMenuItem: MenuItem = {
+        ...data,
+        id: crypto.randomUUID(),
+    };
+    dispatch(addMenuItem(newMenuItem));
+    alert(
+        'success',
+        `Menu item ${newMenuItem.name} has been created.`,
+        dispatch,
+    );
+};
+
+// Updates existing menu item details in Redux state and shows a success alert
+export const handleEditMenuItem = (
+    data: MenuItem,
+    dispatch: AppDispatch,
+): void => {
+    dispatch(updateMenuItem(data));
+    alert('success', `Menu item ${data.name} has been updated.`, dispatch);
+};
+
+// Removes the specified menu item from Redux state and shows a success alert
+export const handleDeleteMenuItem = (
+    data: MenuItem,
+    dispatch: AppDispatch,
+): void => {
+    dispatch(removeMenuItem(data.id));
+    alert('success', `Menu item ${data.name} has been deleted.`, dispatch);
+};

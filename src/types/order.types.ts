@@ -1,9 +1,9 @@
+import { MenuItem } from './restaurant.types';
+
 /**
  * Represents an item stored in the shopping cart.
  */
-export type CartItem = {
-    /** unique id of the item */
-    id: string;
+export type CartItem = MenuItem & {
     /** quantity of the item */
     quantity: number;
 };

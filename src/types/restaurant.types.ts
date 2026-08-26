@@ -17,3 +17,16 @@ export type Restaurant = {
     /** owner of the restaurant */
     owner: string;
 };
+
+export type MenuItem = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    image: string;
+};
+
+export type RestaurantDetails = Restaurant & {
+    menu: MenuItem[];
+};

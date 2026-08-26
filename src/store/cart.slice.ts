@@ -1,6 +1,7 @@
+import { CartItem, MenuItem } from 'types';
+
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { CartItem } from '@types';
 
 import { CartState } from './store.type';
 
@@ -24,29 +25,25 @@ export const cartSlice = createSlice({
          * @param state - Current cart state.
          * @param action - Action containing the ID of the item to add.
          */
-        addItemToCart: (state, action: PayloadAction<string>): void => {
+        addItemToCart: (state, action: PayloadAction<MenuItem>) => {
             const index = state.cartItems.findIndex(
-                (item: CartItem) => item.id === action.payload,
+                (item: CartItem) => item.id === action.payload.id,
             );
 
             if (index !== -1) {
                 state.cartItems[index].quantity += 1;
             } else {
-                state.cartItems.push({
-                    id: action.payload,
-                    quantity: 1,
-                });
+                state.cartItems.push({ ...action.payload, quantity: 1 });
             }
         },
-
         /**
          * Removes one quantity of an item from the cart. Removes the item completely when its quantity reaches zero.
          * @param state - Current cart state.
          * @param action - Action containing the ID of the item to remove.
          */
-        removeItemFromCart: (state, action: PayloadAction<string>): void => {
+        removeItemFromCart: (state, action: PayloadAction<MenuItem>) => {
             const index = state.cartItems.findIndex(
-                (item) => item.id === action.payload,
+                (item: CartItem) => item.id === action.payload.id,
             );
 
             if (index !== -1) {

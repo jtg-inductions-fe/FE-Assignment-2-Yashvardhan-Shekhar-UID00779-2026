@@ -4,4 +4,7 @@ export {
     editRestaurantService,
     deleteRestaurantService,
     getRestaurantsService,
+    handleEditMenuItem,
+    handleCreateMenuItem,
+    handleDeleteMenuItem,
 } from './restaurants.service';

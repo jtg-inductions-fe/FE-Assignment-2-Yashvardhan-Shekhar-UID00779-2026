@@ -15,3 +15,4 @@ export const formatTime = (time: string) => {
         hour12: true,
     });
 };
+

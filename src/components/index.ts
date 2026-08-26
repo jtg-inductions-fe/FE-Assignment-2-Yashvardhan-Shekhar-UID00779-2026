@@ -5,6 +5,8 @@ export { PasswordField } from './PasswordField';
 export { RadioField } from './RadioField';
 export { Dialog } from './Dialog';
 export { RestaurantCard } from './RestaurantCard';
+export { MenuCard } from './MenuCard';
+export { MenuFormDialog } from './MenuFormDialog';
 export { Navbar, ProfileMenu, BottomBar } from './Navigation';
 export { Avatar } from './Avatar';
 export { DeleteDialog } from './DeleteDialog';
