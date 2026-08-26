@@ -1,14 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useLoaderData } from 'react-router';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router';
+import { RootState } from 'store/store.type';
 
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import {
     Box,
-    Container,
     InputAdornment,
-    Stack,
     ToggleButtonGroup,
     Typography,
     useMediaQuery,
@@ -16,30 +16,57 @@ import {
 } from '@mui/material';
 
 import {
-    DeleteRestaurantDialog,
+    DeleteDialog,
     RestaurantCard,
     RestaurantFormDialog,
 } from '@components';
-import { useAppSelector } from '@store';
-import { StyledAddButton, StyledField, StyledToggleButton } from '@styles';
-import { Restaurant } from '@types';
 import {
-    handleCreateRestaurant,
-    handleDeleteRestaurant,
-    handleEditRestaurant,
-} from '@utils';
+    handleCreateRestaurant as createRestaurant,
+    handleDeleteRestaurant as deleteRestaurant,
+    handleEditRestaurant as editRestaurant,
+} from '@services';
+import { setRestaurants, useAppDispatch, useAppSelector } from '@store';
+import { Restaurant } from '@types';
+
+import {
+    EmptyStateBox,
+    FilterStack,
+    HeaderStack,
+    RestaurantGrid,
+    SearchFieldContainer,
+    StyledAddButton,
+    StyledContainer,
+    StyledField,
+    StyledToggleButton,
+} from './Restaurants.styles';
 
 export const Restaurants = () => {
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const canShow = useMediaQuery(theme.breakpoints.up('sm'));
 
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
-    const [restaurants, setRestaurants] =
-        useState<Restaurant[]>(useLoaderData());
+    const dispatch = useAppDispatch();
+    const loaderData: Restaurant[] = useLoaderData();
+
+    // restaurants list directly from Redux state
+    const restaurants = useSelector(
+        (state: RootState) => state.restaurant.restaurants,
+    );
+
+    // update Redux store with loader data on load
+    useEffect(() => {
+        if (loaderData) {
+            dispatch(setRestaurants(loaderData));
+        }
+    }, [loaderData, dispatch]);
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'nonveg'>('all');
+    const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'non-veg'>(
+        'all',
+    );
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [targetDeleteRestaurant, setTargetDeleteRestaurant] =
@@ -47,33 +74,37 @@ export const Restaurants = () => {
     const [targetEditRestaurant, setTargetEditRestaurant] =
         useState<Restaurant | null>(null);
 
-    const onCreateRestaurant = async (data: Restaurant) => {
+    const initialRestaurantState: Restaurant = {
+        id: '',
+        name: '',
+        description: '',
+        openingTime: '09:00',
+        closingTime: '22:00',
+        isVeg: false,
+        image: '',
+        owner: '',
+    };
+
+    const handleCreateRestaurant = (data: Restaurant) => {
+        setIsProcessing(true);
+        createRestaurant(data, dispatch);
+        setIsProcessing(false);
+        setTargetEditRestaurant(null);
+    };
+
+    const handleEditRestaurant = (data: Restaurant) => {
         if (targetEditRestaurant) {
             setIsProcessing(true);
-            setRestaurants(await handleCreateRestaurant(restaurants, data));
+            editRestaurant(data, dispatch);
             setIsProcessing(false);
             setTargetEditRestaurant(null);
         }
     };
 
-    const onEditRestaurant = async (data: Restaurant) => {
-        if (targetEditRestaurant) {
-            setIsProcessing(true);
-            setRestaurants(await handleEditRestaurant(restaurants, data));
-            setIsProcessing(false);
-            setTargetEditRestaurant(null);
-        }
-    };
-
-    const onDeleteRestaurant = async () => {
+    const handleDeleteRestaurant = () => {
         if (targetDeleteRestaurant) {
             setIsProcessing(true);
-            setRestaurants(
-                await handleDeleteRestaurant(
-                    restaurants,
-                    targetDeleteRestaurant?.id,
-                ),
-            );
+            deleteRestaurant(targetDeleteRestaurant, dispatch);
             setIsProcessing(false);
             setTargetDeleteRestaurant(null);
         }
@@ -81,7 +112,6 @@ export const Restaurants = () => {
 
     const onClose = () => setTargetDeleteRestaurant(null);
 
-    // Filter logic based on Owner permissions, search term, and veg status
     const filteredRestaurants = useMemo(
         () =>
             restaurants.filter((r) => {
@@ -94,7 +124,7 @@ export const Restaurants = () => {
                 const matchesVeg =
                     vegFilter === 'all' ||
                     (vegFilter === 'veg' && r.isVeg) ||
-                    (vegFilter === 'nonveg' && !r.isVeg);
+                    (vegFilter === 'non-veg' && !r.isVeg);
 
                 return matchesSearch && matchesVeg;
             }),
@@ -102,20 +132,15 @@ export const Restaurants = () => {
     );
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4 }}>
-            <Stack
+        <StyledContainer maxWidth="xl">
+            <HeaderStack
                 direction="row"
                 justifyContent="space-between"
                 alignItems={{ xs: 'stretch', md: 'center' }}
                 spacing={2}
-                sx={{ mb: 4 }}
             >
                 <Box>
-                    <Typography
-                        variant="h4"
-                        component="h1"
-                        sx={{ fontWeight: 800 }}
-                    >
+                    <Typography variant="h4" component="h1" fontWeight="bold">
                         {isOwnerView ? 'My Restaurants' : 'Explore Restaurants'}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -131,47 +156,39 @@ export const Restaurants = () => {
                         size={canShow ? 'large' : 'small'}
                         startIcon={<AddIcon />}
                         onClick={() =>
-                            setTargetEditRestaurant({
-                                id: '',
-                                name: '',
-                                description: '',
-                                openingTime: '09:00',
-                                closingTime: '22:00',
-                                isVeg: false,
-                                image: '',
-                                owner: '',
-                            })
+                            setTargetEditRestaurant(initialRestaurantState)
                         }
                     >
                         {canShow && 'Add New Restaurant'}
                     </StyledAddButton>
                 )}
-            </Stack>
+            </HeaderStack>
 
-            <Stack
+            <FilterStack
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={2}
                 justifyContent="space-between"
                 alignItems="center"
-                sx={{ mb: 4 }}
             >
-                <StyledField
-                    placeholder="Search restaurants by name or description"
-                    variant="outlined"
-                    size="small"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    sx={{ width: { xs: '100%', sm: 390 } }}
-                    slotProps={{
-                        input: {
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon color="action" />
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                />
+                <SearchFieldContainer>
+                    <StyledField
+                        fullWidth
+                        placeholder="Search restaurants by name or description"
+                        variant="outlined"
+                        size="small"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon color="action" />
+                                    </InputAdornment>
+                                ),
+                            },
+                        }}
+                    />
+                </SearchFieldContainer>
 
                 <ToggleButtonGroup
                     value={vegFilter}
@@ -191,30 +208,20 @@ export const Restaurants = () => {
                         Pure Veg
                     </StyledToggleButton>
                     <StyledToggleButton
-                        onClick={() => setVegFilter('nonveg')}
-                        value="nonveg"
+                        onClick={() => setVegFilter('non-veg')}
+                        value="non-veg"
                     >
                         Non-Veg
                     </StyledToggleButton>
                 </ToggleButtonGroup>
-            </Stack>
+            </FilterStack>
 
-            <Box
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        xs: '1fr',
-                        sm: 'repeat(2, 1fr)',
-                        md: 'repeat(3, 1fr)',
-                        lg: 'repeat(4, 1fr)',
-                    },
-                    gap: 3,
-                }}
-            >
+            <RestaurantGrid>
                 {filteredRestaurants.map((restaurant) => (
                     <RestaurantCard
                         key={restaurant.id}
                         restaurant={restaurant}
+                        navigate={navigate}
                         isOwnerView={isOwnerView}
                         onEdit={() => setTargetEditRestaurant(restaurant)}
                         onDelete={() => setTargetDeleteRestaurant(restaurant)}
@@ -222,38 +229,31 @@ export const Restaurants = () => {
                 ))}
 
                 {filteredRestaurants.length === 0 && (
-                    <Box
-                        sx={{
-                            gridColumn: '1 / -1',
-                            textAlign: 'center',
-                            py: 8,
-                        }}
-                    >
+                    <EmptyStateBox>
                         <Typography variant="h6" color="text.secondary">
                             No matching restaurants found.
                         </Typography>
-                    </Box>
+                    </EmptyStateBox>
                 )}
-            </Box>
+            </RestaurantGrid>
 
-            {targetEditRestaurant && (
+            {!!targetEditRestaurant && (
                 <RestaurantFormDialog
-                    restaurant={targetEditRestaurant}
-                    onClose={() => setTargetEditRestaurant(null)}
+                    restaurant={targetEditRestaurant || initialRestaurantState}
                     isProcessing={isProcessing}
-                    onCreateRestaurant={onCreateRestaurant}
-                    onEditRestaurant={onEditRestaurant}
+                    isOpen={!!targetEditRestaurant}
+                    onClose={() => setTargetEditRestaurant(null)}
+                    handleCreateRestaurant={handleCreateRestaurant}
+                    handleEditRestaurant={handleEditRestaurant}
                 />
             )}
 
-            {targetDeleteRestaurant && (
-                <DeleteRestaurantDialog
-                    restaurantName={targetDeleteRestaurant?.name}
-                    isProcessing={isProcessing}
-                    onClose={onClose}
-                    onConfirm={() => void onDeleteRestaurant()}
-                />
-            )}
-        </Container>
+            <DeleteDialog
+                name={targetDeleteRestaurant?.name}
+                isProcessing={isProcessing}
+                onClose={onClose}
+                onConfirm={() => void handleDeleteRestaurant()}
+            />
+        </StyledContainer>
     );
 };

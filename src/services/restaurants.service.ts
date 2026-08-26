@@ -1,68 +1,39 @@
-import mockRestaurants from '@data/mockRestaurants.json';
+import { AppDispatch } from '@store';
+import { addRestaurant, removeRestaurant, updateRestaurant } from '@store';
 import { Restaurant } from '@types';
-import { alert, delay } from '@utils';
+import { alert } from '@utils';
 
-let restaurantsData: Restaurant[] = [...(mockRestaurants as Restaurant[])];
-
-export const getRestaurants = async (): Promise<Restaurant[]> => {
-    await delay(500);
-    return restaurantsData;
-};
-
-export const createRestaurant = async (
+// Generates a unique ID, adds the restaurant to Redux state, and shows a success alert
+export const handleCreateRestaurant = (
     data: Restaurant,
-): Promise<{ success: boolean; data: Restaurant }> => {
-    await delay(500);
-
-    restaurantsData = [...restaurantsData, data];
-
-    alert('success', `Restaurant ${data.name} has been created.`);
-
-    return {
-        success: true,
-        data,
+    dispatch: AppDispatch,
+): void => {
+    const newRestaurant: Restaurant = {
+        ...data,
+        id: crypto.randomUUID(),
     };
+    dispatch(addRestaurant(newRestaurant));
+    alert(
+        'success',
+        `Restaurant ${newRestaurant.name} has been created.`,
+        dispatch,
+    );
 };
 
-export const editRestaurant = async (
+// Updates existing restaurant details in Redux state and shows a success alert
+export const handleEditRestaurant = (
     data: Restaurant,
-): Promise<{ success: boolean; data: Restaurant }> => {
-    await delay(500);
-
-    restaurantsData = restaurantsData.map((restaurant) =>
-        restaurant.id === data.id ? data : restaurant,
-    );
-
-    alert('success', `Restaurant ${data.name} has been updated.`);
-
-    return {
-        success: true,
-        data,
-    };
+    dispatch: AppDispatch,
+): void => {
+    dispatch(updateRestaurant(data));
+    alert('success', `Restaurant ${data.name} has been updated.`, dispatch);
 };
 
-export const deleteRestaurant = async (
-    id: string,
-): Promise<{ success: boolean }> => {
-    await delay(500);
-
-    const restaurantToDelete = restaurantsData.find(
-        (restaurant) => restaurant.id === id,
-    );
-
-    if (!restaurantToDelete) {
-        return {
-            success: false,
-        };
-    }
-
-    restaurantsData = restaurantsData.filter(
-        (restaurant) => restaurant.id !== id,
-    );
-
-    alert('success', `Restaurant ${restaurantToDelete.name} has been deleted.`);
-
-    return {
-        success: true,
-    };
+// Removes the specified restaurant from Redux state and shows a success alert
+export const handleDeleteRestaurant = (
+    data: Restaurant,
+    dispatch: AppDispatch,
+): void => {
+    dispatch(removeRestaurant(data.id));
+    alert('success', `Restaurant ${data.name} has been deleted.`, dispatch);
 };

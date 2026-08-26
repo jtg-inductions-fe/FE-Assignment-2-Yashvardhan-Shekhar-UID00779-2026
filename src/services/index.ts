@@ -1,7 +1,6 @@
 export { signUp, login, logout } from './auth.service';
 export {
-    getRestaurants,
-    editRestaurant,
-    deleteRestaurant,
-    createRestaurant,
+    handleCreateRestaurant,
+    handleEditRestaurant,
+    handleDeleteRestaurant,
 } from './restaurants.service';

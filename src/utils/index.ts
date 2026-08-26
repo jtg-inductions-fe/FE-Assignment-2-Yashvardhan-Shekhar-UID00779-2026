@@ -7,5 +7,6 @@ export {
     handleDeleteRestaurant,
 } from './restaurants.util';
 
+export { formatTime, getRestaurants } from './restaurants.util';
 export const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));

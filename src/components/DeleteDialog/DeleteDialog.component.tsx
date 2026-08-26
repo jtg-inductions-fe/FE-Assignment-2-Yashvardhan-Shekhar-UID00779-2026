@@ -5,23 +5,22 @@ import {
     DialogTitle,
 } from '@mui/material';
 
-import { StyledButton, StyledDialog } from '@styles';
+import { Button, Dialog } from '@components';
 import { theme } from '@theme';
-
-type DeleteRestaurantDialogProps = {
-    restaurantName: string;
+type DeleteDialogProps = {
+    name: string | undefined;
     isProcessing: boolean;
     onClose: () => void;
     onConfirm: () => void;
 };
 
-export const DeleteRestaurantDialog = ({
-    restaurantName,
+export const DeleteDialog = ({
+    name,
     isProcessing,
     onClose,
     onConfirm,
-}: DeleteRestaurantDialogProps) => (
-    <StyledDialog open={true} onClose={onClose}>
+}: DeleteDialogProps) => (
+    <Dialog open={!!name} onClose={onClose}>
         <DialogTitle variant="h5" sx={{ fontWeight: 'bold' }}>
             Delete Restaurant?
         </DialogTitle>
@@ -30,21 +29,17 @@ export const DeleteRestaurantDialog = ({
             <DialogContentText>
                 Are you sure you want to delete{' '}
                 <strong style={{ color: theme.palette.primary.main }}>
-                    {restaurantName}
+                    {name}
                 </strong>
                 ? This action cannot be undone.
             </DialogContentText>
         </DialogContent>
 
         <DialogActions>
-            <StyledButton
-                onClick={onClose}
-                color="inherit"
-                disabled={isProcessing}
-            >
+            <Button onClick={onClose} color="inherit" disabled={isProcessing}>
                 Cancel
-            </StyledButton>
-            <StyledButton
+            </Button>
+            <Button
                 onClick={onConfirm}
                 variant="contained"
                 color="error"
@@ -52,7 +47,7 @@ export const DeleteRestaurantDialog = ({
                 loadingPosition="end"
             >
                 {'\u00A0 Delete \u00A0'}
-            </StyledButton>
+            </Button>
         </DialogActions>
-    </StyledDialog>
+    </Dialog>
 );
