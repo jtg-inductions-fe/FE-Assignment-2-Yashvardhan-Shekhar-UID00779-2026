@@ -5,18 +5,21 @@ import { Outlet, useLocation } from 'react-router';
 import { Box } from '@mui/material';
 
 import { BottomBar, Navbar, ProfileMenu } from '@components';
-import { useAppSelector } from '@store';
-import { User } from '@types';
+import { useAppDispatch, useAppSelector } from '@store';
 
 import { StyledContainer } from './Home.styles';
 
 export const Home = () => {
+    const dispatch = useAppDispatch();
+
     const activeTab = useLocation().pathname.substring(1) || 'home';
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const user: User = useAppSelector((state) => state.user);
-    const cartCount: number = useAppSelector((state) => state.cart.length);
+    const user = useAppSelector((state) => state.user);
+    const cartCount: number = useAppSelector((state) =>
+        state.cart.reduce((sum, el) => sum + el.quantity, 0),
+    );
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -36,11 +39,12 @@ export const Home = () => {
             <ProfileMenu
                 isMenuOpen={isMenuOpen}
                 anchorEl={anchorEl}
-                handleMenuClose={handleMenuClose}
                 user={user}
+                handleMenuClose={handleMenuClose}
+                dispatch={dispatch}
             />
 
-            <StyledContainer>
+            <StyledContainer maxWidth="xl">
                 <Outlet />
             </StyledContainer>
 

@@ -1,2 +1,1 @@
-const MenuItems = () => <>Menu Items page of </>;
-export { MenuItems };
+export const MenuItems = () => <>Menu Items</>;

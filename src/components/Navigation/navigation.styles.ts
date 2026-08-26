@@ -1,4 +1,15 @@
-import { Avatar, Menu, Paper, styled } from '@mui/material';
+import {
+    AppBar,
+    Avatar,
+    Box,
+    Button,
+    ListItemIcon,
+    Menu,
+    MenuItem,
+    Paper,
+    styled,
+    Toolbar,
+} from '@mui/material';
 
 export const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.typography.pxToRem(32),
@@ -24,3 +35,32 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
         borderRadius: theme.typography.pxToRem(10),
     },
 }));
+
+export const StyledAppBar = styled(AppBar)(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+}));
+
+export const StyledToolbar = styled(Toolbar)({
+    justifyContent: 'space-between',
+});
+
+export const DesktopNavBox = styled(Box)(({ theme }) => ({
+    display: 'none',
+    gap: theme.spacing(1),
+    alignItems: 'center',
+    color: theme.palette.text.secondary,
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
+    },
+}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    color: theme.palette.error.main,
+}));
+
+export const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+    color: theme.palette.error.main,
+}));
+
+export const StyledNavButton = styled(Button)({});

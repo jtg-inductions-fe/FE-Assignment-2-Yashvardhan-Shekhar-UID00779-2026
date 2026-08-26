@@ -1,41 +1,44 @@
 import { User } from 'types';
 
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ListItemIcon, ListSubheader, MenuItem } from '@mui/material';
+import { ListSubheader } from '@mui/material';
 
 import { logout } from '@services';
+import { AppDispatch } from '@store';
 
-import { StyledMenu } from './navigation.styles';
+import {
+    StyledListItemIcon,
+    StyledMenu,
+    StyledMenuItem,
+} from './navigation.styles';
 
 type ProfileMenuProps = {
     isMenuOpen: boolean;
     anchorEl: null | HTMLElement;
-    handleMenuClose: () => void;
     user: User;
+    handleMenuClose: () => void;
+    dispatch: AppDispatch;
 };
 
 export const ProfileMenu = ({
     isMenuOpen,
     anchorEl,
-    handleMenuClose,
     user,
+    handleMenuClose,
+    dispatch,
 }: ProfileMenuProps) => (
     <StyledMenu
         anchorEl={anchorEl}
         open={isMenuOpen}
         onClose={handleMenuClose}
         onClick={handleMenuClose}
-        // MenuListProps={{
-        //   'aria-labelledby': 'basic-button',
-        //   backgroundColor:'yellow',
-        // }}
     >
         <ListSubheader>Hi, {user?.name}</ListSubheader>
-        <MenuItem onClick={logout} sx={{ color: 'error.main' }}>
-            <ListItemIcon sx={{ color: 'error.main' }}>
+        <StyledMenuItem onClick={() => logout(dispatch)}>
+            <StyledListItemIcon>
                 <LogoutIcon fontSize="small" />
-            </ListItemIcon>
+            </StyledListItemIcon>
             Logout
-        </MenuItem>
+        </StyledMenuItem>
     </StyledMenu>
 );
