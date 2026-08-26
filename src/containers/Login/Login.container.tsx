@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AppDispatch, LoginInput } from 'types';
 
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 import {
     Box,
     IconButton,
@@ -14,19 +12,19 @@ import {
     Typography,
 } from '@mui/material';
 
+import { Button, TextField } from '@components';
 import { login } from '@services';
 import { useAppDispatch } from '@store';
-import { StyledButton, StyledTextField } from '@styles';
 import { handleErrorFeedback } from '@utils';
 
-export const Login = ({ onSwitchToSignUp }: {
-    onSwitchToSignUp: () => void;
-}) => {
+import { LoginInput, LoginProp } from './Login.types';
+
+export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
     
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const dispatch: AppDispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const {
         register,
@@ -54,9 +52,9 @@ export const Login = ({ onSwitchToSignUp }: {
             }}
             noValidate
         >
-            <Stack spacing={2.5}>
+            <Stack spacing={2}>
                 {/* email field */}
-                <StyledTextField
+                <TextField
                     label="Email Address"
                     type="email"
                     variant="outlined"
@@ -73,7 +71,7 @@ export const Login = ({ onSwitchToSignUp }: {
                 />
 
                 {/* Password field */}
-                <StyledTextField
+                <TextField
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -104,18 +102,17 @@ export const Login = ({ onSwitchToSignUp }: {
                     })}
                 />
 
-                <StyledButton
+                <Button
                     type="submit"
                     variant="contained"
                     fullWidth
                     loading={isLoading}
                     loadingPosition="end"
-                    sx={{ mt: '2rem !important' }}
                 >
                     Log In
-                </StyledButton>
+                </Button>
 
-                <Box sx={{ textAlign: 'center' }}>
+                <Box textAlign='center'>
                     <Typography variant="body2" color="text.secondary">
                         {"Don't "}have an account?{' '}
                         <Link
@@ -124,7 +121,7 @@ export const Login = ({ onSwitchToSignUp }: {
                             variant="body2"
                             underline="hover"
                             onClick={onSwitchToSignUp}
-                            sx={{ fontWeight: 'bold' }}
+                            fontWeight='bold' 
                         >
                             Sign Up
                         </Link>

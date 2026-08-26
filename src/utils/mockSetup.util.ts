@@ -1,4 +1,4 @@
-import mockUsers from '@data/mockUsers.json';
+import mockUsers from '@data/Users.json';
 
 export const mockDataSetup = () => {
     if (!localStorage.getItem('allUsers')) {

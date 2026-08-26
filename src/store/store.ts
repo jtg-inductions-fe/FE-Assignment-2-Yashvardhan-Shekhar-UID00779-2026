@@ -1,9 +1,9 @@
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import { configureStore } from '@reduxjs/toolkit';
-import { AppDispatch, AppStore, RootState } from '@types';
 
 import alertReducer from './alert.slice';
+import { AppDispatch, AppStore, RootState } from './store.type';
 import userReducer from './user.slice';
 
 // main store config

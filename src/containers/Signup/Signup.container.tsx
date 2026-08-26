@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { signUp } from 'services/auth.service';
 
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {Visibility, VisibilityOff }from '@mui/icons-material';
 import {
     Box,
     FormControl,
@@ -20,19 +19,18 @@ import {
     Typography,
 } from '@mui/material';
 
+import { Button, TextField } from '@components';
 import { useAppDispatch } from '@store';
-import { StyledButton, StyledTextField } from '@styles';
-import { AppDispatch, SignupInput } from '@types';
 import { handleErrorFeedback } from '@utils';
 
-export const Signup = ({ onSwitchToLogin }: {
-    onSwitchToLogin: () => void;
-}) => {
+import { SignupInput, SignupProp } from './Signup.types';
+
+export const Signup = ({ onSwitchToLogin }: SignupProp) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const dispatch:AppDispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const {
         control,
@@ -70,9 +68,9 @@ export const Signup = ({ onSwitchToLogin }: {
             }}
             noValidate
         >
-            <Stack spacing={2.5}>
+            <Stack spacing={2}>
                 {/* Name Field */}
-                <StyledTextField
+                <TextField
                     label="Your Name"
                     variant="outlined"
                     fullWidth
@@ -88,7 +86,7 @@ export const Signup = ({ onSwitchToLogin }: {
                 />
 
                 {/* Email Field */}
-                <StyledTextField
+                <TextField
                     label="Email Address"
                     type="email"
                     variant="outlined"
@@ -105,7 +103,7 @@ export const Signup = ({ onSwitchToLogin }: {
                 />
 
                 {/* Password Field */}
-                <StyledTextField
+                <TextField
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -141,7 +139,7 @@ export const Signup = ({ onSwitchToLogin }: {
                 />
 
                 {/* Confirm Password Field */}
-                <StyledTextField
+                <TextField
                     label="Confirm Password"
                     type={showConfirmPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -182,7 +180,6 @@ export const Signup = ({ onSwitchToLogin }: {
                         <FormControl
                             component="fieldset"
                             error={Boolean(errors.role)}
-                            sx={{ ml: '1rem !important' }}
                         >
                             <FormLabel id="role-radio-group-label">
                                 Account Type
@@ -213,7 +210,7 @@ export const Signup = ({ onSwitchToLogin }: {
                 />
 
                 {/* Submit Button */}
-                <StyledButton
+                <Button
                     type="submit"
                     variant="contained"
                     fullWidth
@@ -221,10 +218,10 @@ export const Signup = ({ onSwitchToLogin }: {
                     loadingPosition="end"
                 >
                     Sign Up
-                </StyledButton>
+                </Button>
 
                 {/* Bottom Switch to Login */}
-                <Box sx={{ textAlign: 'center' }}>
+                <Box textAlign='center'>
                     <Typography variant="body2" color="text.secondary">
                         Already have an account?{' '}
                         <Link
@@ -233,7 +230,7 @@ export const Signup = ({ onSwitchToLogin }: {
                             variant="body2"
                             underline="hover"
                             onClick={onSwitchToLogin}
-                            sx={{ fontWeight: 'bold' }}
+                            fontWeight='bold'
                         >
                             Log In
                         </Link>

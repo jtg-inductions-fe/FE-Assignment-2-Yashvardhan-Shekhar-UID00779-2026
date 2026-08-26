@@ -1,16 +1,12 @@
 import { updateUser } from '@store';
-import { AppDispatch, LoginInput, SignupInput } from '@types';
 import { alert, getHashedPassword } from '@utils';
 
-// Add an artificial delay for the specified duration.
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Register a new user and store their information locally.
 export const signUp = async (
     user: SignupInput,
     dispatch: AppDispatch,
 ): Promise<void> => {
-    await delay(2000);
 
     // Generate a unique ID for the new user.
     user.id = crypto.randomUUID();
@@ -44,7 +40,6 @@ export const login = async (
     user: LoginInput,
     dispatch: AppDispatch,
 ): Promise<void> => {
-    await delay(2000);
 
     // Hash the provided password for comparison.
     user.password = await getHashedPassword(user.password);

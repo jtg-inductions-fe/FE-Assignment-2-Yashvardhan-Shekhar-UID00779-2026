@@ -1,12 +1,10 @@
-import { Alert } from 'components';
-import { setUpDispatch } from 'store';
-
 import { Container } from '@mui/material';
 
-import { ThemeProvider } from '@components';
+import { Alert } from '@containers';
 import { Home, OnBoarding } from '@pages';
+import { ThemeProvider } from '@providers';
 import { updateUser, useAppDispatch, useAppSelector } from '@store';
-import { AppDispatch, User } from '@types';
+import { User } from '@types';
 import { handleErrorFeedback, mockDataSetup } from '@utils';
 
 // import { Alert as AlertType, User } from './types';
@@ -14,9 +12,9 @@ import { handleErrorFeedback, mockDataSetup } from '@utils';
 export const App = () => {
     mockDataSetup();
 
-    const dispatch: AppDispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-    const uid: string | undefined = useAppSelector((state) => state.user.id);
+    const uid = useAppSelector((state) => state.user.id);
 
     if (!uid) {
         try {
@@ -29,7 +27,7 @@ export const App = () => {
 
             if (isPresent) dispatch(updateUser(user));
         } catch (error) {
-            handleErrorFeedback(error);
+            handleErrorFeedback(error, dispatch);
         }
     }
 
@@ -37,7 +35,6 @@ export const App = () => {
         <ThemeProvider>
             <Container maxWidth="xl">
                 <Alert />
-
                 {uid ? <Home /> : <OnBoarding />}
             </Container>
         </ThemeProvider>
