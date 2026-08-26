@@ -50,7 +50,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
-    const onSubmit: SubmitHandler<SignupInput> = async (data) => {
+    const handleSubmit: SubmitHandler<SignupInput> = async (data) => {
         try {
             setIsLoading(true);
             await signUp(data, dispatch);
@@ -64,7 +64,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
     return (
         <form
             onSubmit={(e) => {
-                void handleSubmit(onSubmit)(e);
+                void handleSubmit(handleSubmit)(e);
             }}
             noValidate
         >

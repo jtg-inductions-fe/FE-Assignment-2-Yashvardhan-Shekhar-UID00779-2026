@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // initial state of Alert
 const initialState: Alert = {
-    severity: null,
+    severity: 'info',
     message: '',
 };
 

@@ -7,6 +7,7 @@
             "@components": ["components/index"],
             "@constant": ["constant/index"],
             "@containers": ["containers/index"],
+            "@layouts": ["layouts/index"],
             "@types": ["types/index"],
             "@store": ["store/index"],
             "@pages": ["pages/index"],

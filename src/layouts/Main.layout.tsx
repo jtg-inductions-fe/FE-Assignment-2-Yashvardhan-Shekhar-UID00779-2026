@@ -1,20 +1,19 @@
 import { Container } from '@mui/material';
 
-import { Alert } from '@containers';
+import { Alert } from '@components';
 import { Home, OnBoarding } from '@pages';
-import { ThemeProvider } from '@providers';
 import { updateUser, useAppDispatch, useAppSelector } from '@store';
-import { User } from '@types';
+import { Alert as AlertType, User } from '@types';
 import { handleErrorFeedback, mockDataSetup } from '@utils';
 
-// import { Alert as AlertType, User } from './types';
-
-export const App = () => {
+export const Main = () => {
     mockDataSetup();
 
     const dispatch = useAppDispatch();
 
-    const uid = useAppSelector((state) => state.user.id);
+    const uid = useAppSelector((state) => state.user.id) as string;
+
+    const alert = useAppSelector((state) => state.alert) as AlertType;
 
     if (!uid) {
         try {
@@ -32,11 +31,9 @@ export const App = () => {
     }
 
     return (
-        <ThemeProvider>
-            <Container maxWidth="xl">
-                <Alert />
-                {uid ? <Home /> : <OnBoarding />}
-            </Container>
-        </ThemeProvider>
+        <Container maxWidth="xl">
+            <Alert {...alert} />
+            {uid ? <Home /> : <OnBoarding />}
+        </Container>
     );
 };

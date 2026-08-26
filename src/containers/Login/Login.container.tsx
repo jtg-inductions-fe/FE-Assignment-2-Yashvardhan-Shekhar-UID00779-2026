@@ -34,7 +34,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const onSubmit: SubmitHandler<LoginInput> = async (data) => {
+    const handleSubmit: SubmitHandler<LoginInput> = async (data) => {
         try {
             setIsLoading(true);
             await login(data, dispatch);
@@ -48,7 +48,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp ) => {
     return (
         <form
             onSubmit={(e) => {
-                void handleSubmit(onSubmit)(e);
+                void handleSubmit(handleSubmit)(e);
             }}
             noValidate
         >

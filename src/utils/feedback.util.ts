@@ -1,5 +1,5 @@
-import { updateAlert } from '@store';
-import { AppDispatch, Severity } from '@types';
+import { AppDispatch,updateAlert } from '@store';
+import { Severity } from '@types';
 
 // to create alert
 export const alert = (severity: Severity, message: string, dispatch: AppDispatch) => {
