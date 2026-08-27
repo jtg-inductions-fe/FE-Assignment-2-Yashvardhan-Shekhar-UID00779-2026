@@ -85,6 +85,14 @@ export const Restaurants = () => {
         owner: '',
     };
 
+    const handleCloseFormDialog = () => {
+        if (!isProcessing) setTargetEditRestaurant(null);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        if (!isProcessing) setTargetDeleteRestaurant(null);
+    };
+
     const handleCreateRestaurant = (data: Restaurant) => {
         setIsProcessing(true);
         createRestaurant(data, dispatch);
@@ -235,21 +243,19 @@ export const Restaurants = () => {
                 )}
             </RestaurantGrid>
 
-            {/* {!!targetEditRestaurant && ( */}
             <RestaurantFormDialog
                 restaurant={targetEditRestaurant || initialRestaurantState}
                 isProcessing={isProcessing}
                 isOpen={!!targetEditRestaurant}
-                handleClose={() => setTargetEditRestaurant(null)}
+                handleClose={handleCloseFormDialog}
                 handleCreateRestaurant={handleCreateRestaurant}
                 handleEditRestaurant={handleEditRestaurant}
             />
-            {/* )} */}
 
             <DeleteDialog
                 name={targetDeleteRestaurant?.name}
                 isProcessing={isProcessing}
-                handleClose={() => setTargetDeleteRestaurant(null)}
+                handleClose={handleCloseDeleteDialog}
                 onConfirm={handleDeleteRestaurant}
             />
         </StyledContainer>
