@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useForm } from 'react-hook-form';
 
 import { Stack } from '@mui/material';
@@ -12,17 +14,19 @@ import {
 } from './MenuFormDialog.styles';
 
 type MenuFormDialogProps = {
-    onClose: () => void;
+    menuItem: MenuItem;
     isProcessing: boolean;
+    isOpen: boolean;
+    onClose: () => void;
     handleEditMenuItem: (data: MenuItem) => void;
     handleCreateMenuItem: (data: MenuItem) => void;
-    menuItem: MenuItem;
 };
 
 export const MenuFormDialog = ({
-    onClose,
     menuItem,
     isProcessing,
+    isOpen,
+    onClose,
     handleCreateMenuItem,
     handleEditMenuItem,
 }: MenuFormDialogProps) => {
@@ -32,6 +36,7 @@ export const MenuFormDialog = ({
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<MenuItem>({
         defaultValues: menuItem,
     });
@@ -44,8 +49,12 @@ export const MenuFormDialog = ({
         }
     };
 
+    useEffect(() => {
+        reset(menuItem);
+    }, [isOpen, reset, menuItem]);
+
     return (
-        <Dialog open={true} onClose={onClose} fullWidth>
+        <Dialog open={isOpen} onClose={onClose} fullWidth>
             <StyledDialogTitle variant="h5">
                 {isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
             </StyledDialogTitle>

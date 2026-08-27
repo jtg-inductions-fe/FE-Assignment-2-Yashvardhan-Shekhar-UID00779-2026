@@ -94,7 +94,7 @@
             "name": "Masala Chai",
             "description": "Traditional Indian tea brewed with milk, cardamom, ginger, cinnamon, and aromatic spices.",
             "price": 49,
-            "stock": 30,
+            "stock": 0,
             "category": "Beverages",
             "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=800&q=70"
         },

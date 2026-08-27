@@ -36,13 +36,6 @@ export const Menu = () => {
     // Read menu items directly from Redux store
     const menuItems = useAppSelector((state) => state.menu.menuItems);
 
-    // Update Redux store on initial load
-    useEffect(() => {
-        if (restaurantDetails?.menu) {
-            dispatch(setMenuItems(restaurantDetails.menu));
-        }
-    }, [restaurantDetails, dispatch]);
-
     const [isProcessing, setIsProcessing] = useState(false);
     const [targetDeleteMenuItem, setTargetDeleteMenuItem] =
         useState<MenuItem | null>(null);
@@ -56,6 +49,14 @@ export const Menu = () => {
         price: 0,
         stock: 0,
         image: '',
+    };
+
+    const handleCloseFormDialog = () => {
+        if (!isProcessing) setTargetEditMenuItem(null);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        if (!isProcessing) setTargetDeleteMenuItem(null);
     };
 
     const handleCreateMenuItem = (data: MenuItem) => {
@@ -82,6 +83,13 @@ export const Menu = () => {
             setTargetDeleteMenuItem(null);
         }
     };
+
+    // Update Redux store on initial load
+    useEffect(() => {
+        if (restaurantDetails?.menu) {
+            dispatch(setMenuItems(restaurantDetails.menu));
+        }
+    }, [restaurantDetails, dispatch]);
 
     return (
         <>
@@ -134,24 +142,19 @@ export const Menu = () => {
                 )}
             </MenuGrid>
 
-            {targetEditMenuItem && (
-                <MenuFormDialog
-                    menuItem={targetEditMenuItem || initialMenuState}
-                    onClose={() => {
-                        if (!isProcessing) setTargetEditMenuItem(null);
-                    }}
-                    isProcessing={isProcessing}
-                    handleCreateMenuItem={handleCreateMenuItem}
-                    handleEditMenuItem={handleEditMenuItem}
-                />
-            )}
+            <MenuFormDialog
+                menuItem={targetEditMenuItem || initialMenuState}
+                isOpen={!!targetEditMenuItem}
+                isProcessing={isProcessing}
+                onClose={handleCloseFormDialog}
+                handleCreateMenuItem={handleCreateMenuItem}
+                handleEditMenuItem={handleEditMenuItem}
+            />
 
             <DeleteDialog
                 name={targetDeleteMenuItem?.name}
                 isProcessing={isProcessing}
-                onClose={() => {
-                    if (!isProcessing) setTargetDeleteMenuItem(null);
-                }}
+                handleClose={handleCloseDeleteDialog}
                 onConfirm={() => void handleDeleteMenuItem()}
             />
         </>

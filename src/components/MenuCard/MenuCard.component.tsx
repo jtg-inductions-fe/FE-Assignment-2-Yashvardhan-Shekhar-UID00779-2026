@@ -44,7 +44,7 @@ export const MenuCard = ({
     onDelete,
 }: MenuCardProps) => {
     const quantity = useAppSelector((state): number => {
-        const res = state.cart.find((it) => it.id === item.id);
+        const res = state.cart.cartItems.find((it) => it.id === item.id);
         return res ? res.quantity : 0;
     });
 
@@ -153,10 +153,7 @@ export const MenuCard = ({
                                 <QuantityIconButton
                                     size="small"
                                     color="primary"
-                                    disabled={
-                                        typeof item.stock === 'number' &&
-                                        quantity >= item.stock
-                                    }
+                                    disabled={quantity >= item.stock}
                                     onClick={handleAddToCart}
                                     aria-label="add item to cart"
                                 >
