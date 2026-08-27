@@ -40,7 +40,7 @@ export const Cart = () => {
     const grandTotal = subtotal + bookingFee;
 
     return (
-        <Container>
+        <Container maxWidth="xl">
             <HeaderStack spacing={1}>
                 <Typography variant="h2" component="h1" fontWeight={800}>
                     Order Checkout
