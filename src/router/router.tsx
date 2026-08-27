@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router';
 
 import { PATH } from '@constant';
 import {
+    Cart,
     Login,
     PageNotFound,
     RestaurantDetails,
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'cart',
-                element: <>cart</>,
+                Component: Cart,
             },
         ],
     },

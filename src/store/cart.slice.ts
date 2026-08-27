@@ -60,12 +60,16 @@ export const cartSlice = createSlice({
                 }
             }
         },
+        clearCart: (state) => {
+            state.cartItems.length = 0;
+        },
     },
 });
 
 /**
  * Action creators for adding and removing items from the shopping cart.
  */
-export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, clearCart } =
+    cartSlice.actions;
 
 export default cartSlice.reducer;
