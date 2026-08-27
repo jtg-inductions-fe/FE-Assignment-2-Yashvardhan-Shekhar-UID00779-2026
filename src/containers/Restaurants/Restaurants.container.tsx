@@ -110,8 +110,6 @@ export const Restaurants = () => {
         }
     };
 
-    const onClose = () => setTargetDeleteRestaurant(null);
-
     const filteredRestaurants = useMemo(
         () =>
             restaurants.filter((r) => {
@@ -140,10 +138,10 @@ export const Restaurants = () => {
                 spacing={2}
             >
                 <Box>
-                    <Typography variant="h4" component="h1" fontWeight="bold">
+                    <Typography variant="h2" component="h1" fontWeight="bold">
                         {isOwnerView ? 'My Restaurants' : 'Explore Restaurants'}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="subtitle1" color="text.secondary">
                         {isOwnerView
                             ? 'Manage your menus, opening schedules, and listings.'
                             : 'Discover top-rated spots and treat your appetite.'}
@@ -237,22 +235,22 @@ export const Restaurants = () => {
                 )}
             </RestaurantGrid>
 
-            {!!targetEditRestaurant && (
-                <RestaurantFormDialog
-                    restaurant={targetEditRestaurant || initialRestaurantState}
-                    isProcessing={isProcessing}
-                    isOpen={!!targetEditRestaurant}
-                    onClose={() => setTargetEditRestaurant(null)}
-                    handleCreateRestaurant={handleCreateRestaurant}
-                    handleEditRestaurant={handleEditRestaurant}
-                />
-            )}
+            {/* {!!targetEditRestaurant && ( */}
+            <RestaurantFormDialog
+                restaurant={targetEditRestaurant || initialRestaurantState}
+                isProcessing={isProcessing}
+                isOpen={!!targetEditRestaurant}
+                handleClose={() => setTargetEditRestaurant(null)}
+                handleCreateRestaurant={handleCreateRestaurant}
+                handleEditRestaurant={handleEditRestaurant}
+            />
+            {/* )} */}
 
             <DeleteDialog
                 name={targetDeleteRestaurant?.name}
                 isProcessing={isProcessing}
-                onClose={onClose}
-                onConfirm={() => void handleDeleteRestaurant()}
+                handleClose={() => setTargetDeleteRestaurant(null)}
+                onConfirm={handleDeleteRestaurant}
             />
         </StyledContainer>
     );

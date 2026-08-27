@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+
 import { Controller, useForm } from 'react-hook-form';
 
-import { FormControlLabel, Stack, Switch } from '@mui/material';
+import { Stack, Switch } from '@mui/material';
 
 import { Button, Dialog, TextField } from '@components';
 import { Restaurant } from '@types';
@@ -9,11 +11,12 @@ import {
     StyledDialogActions,
     StyledDialogContent,
     StyledDialogTitle,
+    StyledFormControlLabel,
 } from './RestaurantFormDialog.styles';
 
 type RestaurantFormDialogProps = {
     restaurant: Restaurant;
-    onClose: () => void;
+    handleClose: () => void;
     isProcessing: boolean;
     isOpen: boolean;
     handleEditRestaurant: (data: Restaurant) => void;
@@ -24,20 +27,11 @@ export const RestaurantFormDialog = ({
     restaurant,
     isProcessing,
     isOpen,
-    onClose,
+    handleClose,
     handleCreateRestaurant,
     handleEditRestaurant,
 }: RestaurantFormDialogProps) => {
     const isEditMode = restaurant?.id !== '';
-
-    const {
-        register,
-        handleSubmit,
-        control,
-        formState: { errors },
-    } = useForm<Restaurant>({
-        defaultValues: restaurant,
-    });
 
     const handleFormSubmit = (data: Restaurant) => {
         if (isEditMode) {
@@ -47,8 +41,22 @@ export const RestaurantFormDialog = ({
         }
     };
 
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+        reset,
+    } = useForm<Restaurant>({
+        defaultValues: restaurant,
+    });
+
+    useEffect(() => {
+        reset(restaurant);
+    }, [isOpen, reset, restaurant]);
+
     return (
-        <Dialog open={isOpen} onClose={onClose} fullWidth>
+        <Dialog open={isOpen} onClose={handleClose} fullWidth>
             <StyledDialogTitle variant="h5">
                 {isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'}
             </StyledDialogTitle>
@@ -114,14 +122,13 @@ export const RestaurantFormDialog = ({
                             name="isVeg"
                             control={control}
                             render={({ field }) => (
-                                <FormControlLabel
+                                <StyledFormControlLabel
+                                    sx={{ width: 'fit-content' }}
                                     control={
                                         <Switch
                                             checked={field.value}
-                                            onChange={(event) =>
-                                                field.onChange(
-                                                    event.target.checked,
-                                                )
+                                            onChange={(e) =>
+                                                field.onChange(e.target.checked)
                                             }
                                             color="success"
                                         />
@@ -135,7 +142,7 @@ export const RestaurantFormDialog = ({
 
                 <StyledDialogActions>
                     <Button
-                        onClick={onClose}
+                        onClick={handleClose}
                         color="inherit"
                         disabled={isProcessing}
                     >

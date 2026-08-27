@@ -2,6 +2,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    FormControlLabel,
     styled,
 } from '@mui/material';
 
@@ -22,3 +23,8 @@ export const StyledDialogActions = styled(DialogActions)(({ theme }) => ({
     padding: theme.typography.pxToRem(16),
     gap: theme.spacing(1),
 }));
+
+export const StyledFormControlLabel = styled(FormControlLabel)({
+    userSelect: 'none',
+    width: 'fit-content',
+});

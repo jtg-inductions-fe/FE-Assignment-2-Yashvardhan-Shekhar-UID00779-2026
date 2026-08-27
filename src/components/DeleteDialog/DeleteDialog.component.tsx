@@ -10,17 +10,17 @@ import { theme } from '@theme';
 type DeleteDialogProps = {
     name: string | undefined;
     isProcessing: boolean;
-    onClose: () => void;
+    handleClose: () => void;
     onConfirm: () => void;
 };
 
 export const DeleteDialog = ({
     name,
     isProcessing,
-    onClose,
+    handleClose,
     onConfirm,
 }: DeleteDialogProps) => (
-    <Dialog open={!!name} onClose={onClose}>
+    <Dialog open={!!name} onClose={handleClose}>
         <DialogTitle variant="h5" sx={{ fontWeight: 'bold' }}>
             Delete Restaurant?
         </DialogTitle>
@@ -36,7 +36,11 @@ export const DeleteDialog = ({
         </DialogContent>
 
         <DialogActions>
-            <Button onClick={onClose} color="inherit" disabled={isProcessing}>
+            <Button
+                onClick={handleClose}
+                color="inherit"
+                disabled={isProcessing}
+            >
                 Cancel
             </Button>
             <Button
