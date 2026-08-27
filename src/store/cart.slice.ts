@@ -3,7 +3,13 @@ import { CartItem } from 'types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: CartItem[] = [];
+type CartState = {
+    cartItems: CartItem[];
+};
+
+const initialState: CartState = {
+    cartItems: [],
+};
 
 // creating slice and reduces for cart to update values
 export const cartSlice = createSlice({
@@ -11,22 +17,23 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addItemToCart: (state, action: PayloadAction<string>) => {
-            const index = state.findIndex(
+            const index = state.cartItems.findIndex(
                 (item: CartItem) => item.id === action.payload,
             );
             if (index !== -1) {
-                state[index].quantity += 1;
+                state.cartItems[index].quantity += 1;
             } else {
-                state.push({ id: action.payload, quantity: 1 });
+                state.cartItems.push({ id: action.payload, quantity: 1 });
             }
         },
         removeItemFromCart: (state, action: PayloadAction<string>) => {
-            const index = state.findIndex(
-                (item: CartItem) => item.id === action.payload,
+            const index = state.cartItems.findIndex(
+                (item) => item.id === action.payload,
             );
             if (index !== -1) {
-                state[index].quantity -= 1;
-                if (state[index].quantity === 0) state.splice(index, 1);
+                state.cartItems[index].quantity -= 1;
+                if (state.cartItems[index].quantity === 0)
+                    state.cartItems.splice(index, 1);
             }
         },
     },

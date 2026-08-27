@@ -19,7 +19,7 @@ export const Home = () => {
 
     const user = useAppSelector((state) => state.user);
     const cartCount: number = useAppSelector((state) =>
-        state.cart.reduce((sum, el) => sum + el.quantity, 0),
+        state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
 
     const isMenuOpen = Boolean(anchorEl);
