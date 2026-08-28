@@ -1,7 +1,7 @@
 import { TextFieldProps } from '@mui/material';
 
-import { StyledTextField } from './TextField.styles';
+import { StyledIconTextField } from './TextField.styles';
 
-export const TextField = (props: TextFieldProps) => (
-    <StyledTextField {...props} />
+export const IconTextField = (props: TextFieldProps) => (
+    <StyledIconTextField {...props} />
 );

@@ -1,1 +1,1 @@
-export { TextField } from './TextField.component';
+export { IconTextField } from './TextField.component';

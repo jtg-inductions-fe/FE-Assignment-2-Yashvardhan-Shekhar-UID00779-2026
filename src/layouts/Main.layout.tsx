@@ -4,11 +4,9 @@ import { Alert } from '@components';
 import { Home, OnBoarding } from '@pages';
 import { updateUser, useAppDispatch, useAppSelector } from '@store';
 import { User } from '@types';
-import { handleErrorFeedback, mockDataSetup } from '@utils';
+import { handleErrorFeedback } from '@utils';
 
 export const Main = () => {
-    mockDataSetup();
-
     const dispatch = useAppDispatch();
 
     const uid = useAppSelector((state) => state.user.id);

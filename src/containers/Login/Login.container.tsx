@@ -9,17 +9,22 @@ import {
     InputAdornment,
     Link,
     Stack,
+    TextField,
     Typography,
 } from '@mui/material';
 
-import { Button, TextField } from '@components';
+import { Button, IconTextField } from '@components';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { login } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
+import { schema } from './Login.schema';
 import { LoginInput, LoginProp } from './Login.types';
 
-export const Login = ({ onSwitchToSignUp }: LoginProp) => {
+export const Login = (props: LoginProp) => {
+    const { onSwitchToSignUp } = props;
+
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -29,9 +34,13 @@ export const Login = ({ onSwitchToSignUp }: LoginProp) => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginInput>();
+    } = useForm<LoginInput>({
+        resolver: zodResolver(schema),
+    });
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPassword = () => {
+        setShowPassword((show) => !show);
+    };
 
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
@@ -60,17 +69,11 @@ export const Login = ({ onSwitchToSignUp }: LoginProp) => {
                     fullWidth
                     error={Boolean(errors.email)}
                     helperText={errors.email?.message}
-                    {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: 'Invalid email address',
-                        },
-                    })}
+                    {...register('email')}
                 />
 
                 {/* Password field */}
-                <TextField
+                <IconTextField
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -96,9 +99,7 @@ export const Login = ({ onSwitchToSignUp }: LoginProp) => {
                             ),
                         },
                     }}
-                    {...register('password', {
-                        required: 'Password is required',
-                    })}
+                    {...register('password')}
                 />
 
                 <Button

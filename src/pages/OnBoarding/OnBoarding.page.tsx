@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import onboardingImg from 'assets/images/onboarding-bg.webp';
-
 import { Typography } from '@mui/material';
 
+import onboardingImg from '@assets/images/onboarding-bg.webp';
 import { Login, Signup } from '@containers';
 
 import {

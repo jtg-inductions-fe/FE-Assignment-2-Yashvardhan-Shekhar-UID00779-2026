@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { signUp } from 'services/auth.service';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -16,16 +15,22 @@ import {
     Radio,
     RadioGroup,
     Stack,
+    TextField,
     Typography,
 } from '@mui/material';
 
-import { Button, TextField } from '@components';
+import { Button, IconTextField } from '@components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUp } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
+import { schema } from './Signup.schema';
 import { SignupInput, SignupProp } from './Signup.types';
 
-export const Signup = ({ onSwitchToLogin }: SignupProp) => {
+export const Signup = (props: SignupProp) => {
+    const { onSwitchToLogin } = props;
+
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -36,16 +41,13 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
         control,
         handleSubmit,
         register,
-        watch,
         formState: { errors },
     } = useForm<SignupInput>({
+        resolver: zodResolver(schema),
         defaultValues: {
             role: 'customer',
         },
     });
-
-    // to validate both password are same
-    const password = watch('password');
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () =>
@@ -77,13 +79,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                     fullWidth
                     error={Boolean(errors.name)}
                     helperText={errors.name?.message}
-                    {...register('name', {
-                        required: 'Name is required',
-                        minLength: {
-                            value: 3,
-                            message: 'Name must be at least 3 characters',
-                        },
-                    })}
+                    {...register('name')}
                 />
 
                 {/* Email Field */}
@@ -94,17 +90,11 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                     fullWidth
                     error={Boolean(errors.email)}
                     helperText={errors.email?.message}
-                    {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: 'Invalid email address',
-                        },
-                    })}
+                    {...register('email')}
                 />
 
                 {/* Password Field */}
-                <TextField
+                <IconTextField
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -114,7 +104,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                     slotProps={{
                         input: {
                             endAdornment: (
-                                <InputAdornment position="end">
+                                <InputAdornment position="start">
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
@@ -130,17 +120,11 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                             ),
                         },
                     }}
-                    {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                            value: 6,
-                            message: 'Password must be at least 6 characters',
-                        },
-                    })}
+                    {...register('password')}
                 />
 
                 {/* Confirm Password Field */}
-                <TextField
+                <IconTextField
                     label="Confirm Password"
                     type={showConfirmPassword ? 'text' : 'password'}
                     variant="outlined"
@@ -150,7 +134,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                     slotProps={{
                         input: {
                             endAdornment: (
-                                <InputAdornment position="end">
+                                <InputAdornment position="start">
                                     <IconButton
                                         aria-label="toggle confirm password visibility"
                                         onClick={handleClickShowConfirmPassword}
@@ -166,11 +150,7 @@ export const Signup = ({ onSwitchToLogin }: SignupProp) => {
                             ),
                         },
                     }}
-                    {...register('confirmPassword', {
-                        required: 'Please confirm your password',
-                        validate: (value) =>
-                            value === password || 'Passwords do not match',
-                    })}
+                    {...register('confirmPassword')}
                 />
 
                 {/* Role Radio Group */}

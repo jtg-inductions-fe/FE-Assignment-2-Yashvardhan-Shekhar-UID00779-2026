@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import { AlertProps as MuiAlertProps, Snackbar } from '@mui/material';
+import { Snackbar } from '@mui/material';
+
+import { Alert as AlertTypeProp } from '@types';
 
 import { StyledAlert } from './Alert.styles';
 
-type AlertProps = Pick<MuiAlertProps, 'severity'> & {
-    message: string;
-};
-
-export const Alert = (alertProp: AlertProps) => {
+export const Alert = (alertProp: AlertTypeProp) => {
     const { severity, message } = alertProp;
 
     const [isOpen, setIsOpen] = useState(false);
 
+    // closing alert Snackbar
     const handleAlertClose = () => {
         setIsOpen(false);
     };
 
+    // based on changing the message and if exist then showing alert
     useEffect(() => {
-        if (message) setIsOpen(true);
+        if (message) {
+            setIsOpen(true);
+        }
     }, [message]);
 
     return (

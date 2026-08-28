@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, BoxProps, styled } from '@mui/material';
 
 // Outer wrapper viewport container
 export const PageContainer = styled(Box)(({ theme }) => ({
@@ -43,11 +43,7 @@ export const HeaderTextWrapper = styled(Box)({
 });
 
 // Structural illustration wrapper
-export const OnboardingImage = styled(Box)<{
-    component: 'img';
-    img: 'string';
-    alt: 'string';
-}>({
+export const OnboardingImage = styled(Box)<BoxProps<'img'>>({
     width: '100%',
     maxHeight: 400,
     objectFit: 'contain',
