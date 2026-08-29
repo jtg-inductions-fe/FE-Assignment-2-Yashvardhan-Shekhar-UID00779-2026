@@ -16,6 +16,10 @@ export const PasswordField = (props: PasswordFieldProps) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const handleClickShowPassword = () => {
+        setShowPassword((show) => !show);
+    };
+
     return (
         <IconTextField
             label={label}
@@ -29,8 +33,8 @@ export const PasswordField = (props: PasswordFieldProps) => {
                     endAdornment: (
                         <InputAdornment position="end">
                             <IconButton
-                                aria-label={`toggle ${label.toLowerCase()} visibility`}
-                                onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={`toggle ${label} visibility`}
+                                onClick={handleClickShowPassword}
                                 edge="end"
                             >
                                 {showPassword ? (

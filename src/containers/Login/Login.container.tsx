@@ -60,7 +60,7 @@ export const Login = (props: LoginProp) => {
 
                 {/* Password field */}
                 <PasswordField
-                    label="password"
+                    label="Password"
                     isError={!!errors.password}
                     helperText={errors.password?.message}
                     register={{ ...register('password') }}

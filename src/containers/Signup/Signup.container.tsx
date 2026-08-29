@@ -86,7 +86,7 @@ export const Signup = (props: SignupProp) => {
 
                 {/* Password Field */}
                 <PasswordField
-                    label="password"
+                    label="Password"
                     isError={!!errors.password}
                     helperText={errors.password?.message}
                     register={{ ...register('password') }}
