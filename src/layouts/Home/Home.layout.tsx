@@ -13,8 +13,6 @@ export const Home = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const activeTab = useLocation().pathname.substring(1) || 'home';
-
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const user = useAppSelector((state) => state.user);
@@ -22,11 +20,18 @@ export const Home = () => {
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
 
+    const activeTab = useLocation().pathname.substring(1) || 'home';
     const isMenuOpen = Boolean(anchorEl);
 
-    const handleProfileClick = (event: React.MouseEvent<HTMLElement>) =>
+    // Opens the profile menu by setting the clicked element as its anchor.
+    const handleProfileClick = (event: React.MouseEvent<HTMLElement>): void => {
         setAnchorEl(event.currentTarget);
-    const handleMenuClose = () => setAnchorEl(null);
+    };
+
+    // Closes the profile menu.
+    const handleMenuClose = (): void => {
+        setAnchorEl(null);
+    };
 
     return (
         <Box height="100vh">

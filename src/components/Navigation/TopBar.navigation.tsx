@@ -12,72 +12,74 @@ import {
 } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
-export const Navbar = ({
-    handleProfileClick,
-    user,
-    activeTab,
-    cartCount,
-    navigate,
-}: BarProps) => (
-    <StyledAppBar position="sticky" elevation={1}>
-        <Container maxWidth="xl">
-            <StyledToolbar disableGutters>
-                {/* Brand Logo / Home Link */}
-                <Link
-                    variant="h6"
-                    component="button"
-                    onClick={() => void navigate('/')}
-                    fontWeight="700"
-                    underline="none"
-                >
-                    Apna Restaurant
-                </Link>
+export const Navbar = (props: BarProps) => {
+    const { handleProfileClick, user, activeTab, cartCount, navigate } = props;
 
-                {/* Desktop Menu Links */}
-                <DesktopNavBox>
-                    <StyledNavButton
-                        color={activeTab === 'home' ? 'primary' : 'inherit'}
-                        onClick={() => void navigate('/home')}
+    return (
+        <StyledAppBar position="sticky" elevation={1}>
+            <Container maxWidth="xl">
+                <StyledToolbar disableGutters>
+                    {/* Brand Logo / Home Link */}
+                    <Link
+                        variant="h6"
+                        component="button"
+                        onClick={() => void navigate('/')}
+                        fontWeight="700"
+                        underline="none"
                     >
-                        <HomeOutlinedIcon sx={{ mr: 1 }} /> Home
-                    </StyledNavButton>
+                        Apna Restaurant
+                    </Link>
 
-                    {user?.role === 'customer' && (
+                    {/* Desktop Menu Links */}
+                    <DesktopNavBox>
                         <StyledNavButton
-                            color={activeTab === 'cart' ? 'primary' : 'inherit'}
-                            onClick={() => void navigate('/cart')}
+                            color={activeTab === 'home' ? 'primary' : 'inherit'}
+                            onClick={() => void navigate('/home')}
                         >
-                            <Badge
-                                badgeContent={cartCount}
-                                color="primary"
-                                sx={{ mr: 1 }}
-                            >
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                            Cart
+                            <HomeOutlinedIcon sx={{ mr: 1 }} /> Home
                         </StyledNavButton>
-                    )}
 
-                    <StyledNavButton
-                        color={activeTab === 'orders' ? 'primary' : 'inherit'}
-                        onClick={() => void navigate('/orders')}
-                    >
-                        <HistoryIcon sx={{ mr: 1 }} /> Orders
-                    </StyledNavButton>
+                        {user?.role === 'customer' && (
+                            <StyledNavButton
+                                color={
+                                    activeTab === 'cart' ? 'primary' : 'inherit'
+                                }
+                                onClick={() => void navigate('/cart')}
+                            >
+                                <Badge
+                                    badgeContent={cartCount}
+                                    color="primary"
+                                    sx={{ mr: 1 }}
+                                >
+                                    <ShoppingCartOutlinedIcon />
+                                </Badge>
+                                Cart
+                            </StyledNavButton>
+                        )}
 
-                    {/* Profile Menu Trigger */}
-                    <IconButton
-                        color="inherit"
-                        onClick={handleProfileClick}
-                        size="small"
-                        aria-label="opening the profile menu"
-                    >
-                        <StyledAvatar>
-                            {user?.name?.[0]?.toUpperCase()}
-                        </StyledAvatar>
-                    </IconButton>
-                </DesktopNavBox>
-            </StyledToolbar>
-        </Container>
-    </StyledAppBar>
-);
+                        <StyledNavButton
+                            color={
+                                activeTab === 'orders' ? 'primary' : 'inherit'
+                            }
+                            onClick={() => void navigate('/orders')}
+                        >
+                            <HistoryIcon sx={{ mr: 1 }} /> Orders
+                        </StyledNavButton>
+
+                        {/* Profile Menu Trigger */}
+                        <IconButton
+                            color="inherit"
+                            onClick={handleProfileClick}
+                            size="small"
+                            aria-label="opening the profile menu"
+                        >
+                            <StyledAvatar>
+                                {user?.name?.[0]?.toUpperCase()}
+                            </StyledAvatar>
+                        </IconButton>
+                    </DesktopNavBox>
+                </StyledToolbar>
+            </Container>
+        </StyledAppBar>
+    );
+};

@@ -6,49 +6,47 @@ import { Badge, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { StyledAvatar, StyledPaper } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
-export const BottomBar = ({
-    handleProfileClick,
-    user,
-    activeTab,
-    cartCount,
-    navigate,
-}: BarProps) => (
-    <StyledPaper elevation={10}>
-        <BottomNavigation showLabels value={activeTab}>
-            <BottomNavigationAction
-                label="Home"
-                value="home"
-                icon={<HomeOutlinedIcon />}
-                onClick={() => void navigate('/home')}
-            />
-            {user?.role === 'customer' && (
+export const BottomBar = (props: BarProps) => {
+    const { handleProfileClick, user, activeTab, cartCount, navigate } = props;
+
+    return (
+        <StyledPaper elevation={10}>
+            <BottomNavigation showLabels value={activeTab}>
                 <BottomNavigationAction
-                    label="Cart"
-                    value="cart"
-                    icon={
-                        <Badge badgeContent={cartCount} color="primary">
-                            <ShoppingCartOutlinedIcon />
-                        </Badge>
-                    }
-                    onClick={() => void navigate('/cart')}
+                    label="Home"
+                    value="home"
+                    icon={<HomeOutlinedIcon />}
+                    onClick={() => void navigate('/home')}
                 />
-            )}
-            <BottomNavigationAction
-                onClick={() => void navigate('/orders')}
-                label="Orders"
-                value="orders"
-                icon={<HistoryIcon />}
-            />
-            <BottomNavigationAction
-                label="Profile"
-                value="profile"
-                icon={
-                    <StyledAvatar>
-                        {user?.name?.[0]?.toUpperCase()}
-                    </StyledAvatar>
-                }
-                onClick={handleProfileClick}
-            />
-        </BottomNavigation>
-    </StyledPaper>
-);
+                {user?.role === 'customer' && (
+                    <BottomNavigationAction
+                        label="Cart"
+                        value="cart"
+                        icon={
+                            <Badge badgeContent={cartCount} color="primary">
+                                <ShoppingCartOutlinedIcon />
+                            </Badge>
+                        }
+                        onClick={() => void navigate('/cart')}
+                    />
+                )}
+                <BottomNavigationAction
+                    onClick={() => void navigate('/orders')}
+                    label="Orders"
+                    value="orders"
+                    icon={<HistoryIcon />}
+                />
+                <BottomNavigationAction
+                    label="Profile"
+                    value="profile"
+                    icon={
+                        <StyledAvatar>
+                            {user?.name?.[0]?.toUpperCase()}
+                        </StyledAvatar>
+                    }
+                    onClick={handleProfileClick}
+                />
+            </BottomNavigation>
+        </StyledPaper>
+    );
+};
