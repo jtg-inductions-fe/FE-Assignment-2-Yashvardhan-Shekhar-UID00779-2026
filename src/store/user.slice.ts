@@ -2,6 +2,9 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '@types';
 
+/**
+ * Defines the initial state for the user slice.
+ */
 const initialState: User = {
     id: '',
     name: '',
@@ -9,12 +12,25 @@ const initialState: User = {
     role: 'customer',
 };
 
-// creating slice and reduces for user to update values
+/**
+ * Redux slice responsible for managing the authenticated user's state.
+ *
+ * Provides an action to update user information or reset it to default values.
+ */
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        updateUser: (state, action: PayloadAction<User | null>) => {
+        /**
+         * Updates the current user state with the provided user information.
+         *
+         * Resets the user state to default values when no user is provided.
+         *
+         * @param {User} state - Current user state.
+         * @param {PayloadAction<User | null>} action - Action containing the updated user data or null.
+         * @returns {void} No value is returned.
+         */
+        updateUser: (state, action: PayloadAction<User | null>): void => {
             state.id = action.payload?.id || '';
             state.name = action.payload?.name || '';
             state.email = action.payload?.email || '';
@@ -23,6 +39,9 @@ export const userSlice = createSlice({
     },
 });
 
+/**
+ * Action creator for updating the authenticated user's state.
+ */
 export const { updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

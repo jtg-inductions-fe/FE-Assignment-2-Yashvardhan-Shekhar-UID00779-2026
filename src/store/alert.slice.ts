@@ -3,24 +3,40 @@ import { Alert } from 'types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-// initial state of Alert
+/**
+ * Defines the initial state for the alert slice.
+ */
 const initialState: Alert = {
     severity: 'info',
     message: '',
 };
 
-// creating slice and reduces for alert to update values
+/**
+ * Redux slice responsible for managing application alert state.
+ *
+ * Provides an action to update the alert severity and message.
+ */
 export const alertSlice = createSlice({
     name: 'alert',
     initialState,
     reducers: {
-        updateAlert: (state, action: PayloadAction<Alert>) => {
+        /**
+         * Updates the current alert state with the provided severity and message.
+         *
+         * @param {Alert} state - Current alert state.
+         * @param {PayloadAction<Alert>} action - Action containing the updated alert data.
+         * @returns {void} No value is returned.
+         */
+        updateAlert: (state, action: PayloadAction<Alert>): void => {
             state.severity = action.payload?.severity;
             state.message = action.payload?.message;
         },
     },
 });
 
+/**
+ * Action creator for updating the application alert state.
+ */
 export const { updateAlert } = alertSlice.actions;
 
 export default alertSlice.reducer;

@@ -1,6 +1,8 @@
 import { AlertProps as MuiAlertProps } from '@mui/material';
 
-// Defines the structure of an alert message.
+/**
+ * Represents an application alert containing a message and its severity level.
+ */
 export type Alert = Pick<MuiAlertProps, 'severity'> & {
     message: string;
 };

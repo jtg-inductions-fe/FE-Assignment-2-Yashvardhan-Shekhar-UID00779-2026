@@ -1,4 +1,6 @@
-// an authenticated user's basic information.
+/**
+ * Represents the basic information of an authenticated user.
+ */
 export type User = {
     id?: string;
     email: string;

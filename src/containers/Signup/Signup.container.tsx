@@ -2,15 +2,12 @@ import { useState } from 'react';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     Box,
     FormControl,
     FormControlLabel,
     FormHelperText,
     FormLabel,
-    IconButton,
-    InputAdornment,
     Link,
     Radio,
     RadioGroup,
@@ -19,7 +16,7 @@ import {
     Typography,
 } from '@mui/material';
 
-import { Button, IconTextField } from '@components';
+import { Button, PasswordField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUp } from '@services';
 import { useAppDispatch } from '@store';
@@ -32,8 +29,6 @@ export const Signup = (props: SignupProp) => {
     const { onSwitchToLogin } = props;
 
     const [isLoading, setIsLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const dispatch = useAppDispatch();
 
@@ -48,10 +43,6 @@ export const Signup = (props: SignupProp) => {
             role: 'customer',
         },
     });
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () =>
-        setShowConfirmPassword((show) => !show);
 
     const handleClick: SubmitHandler<SignupInput> = async (data) => {
         try {
@@ -94,63 +85,19 @@ export const Signup = (props: SignupProp) => {
                 />
 
                 {/* Password Field */}
-                <IconTextField
-                    label="Password"
-                    type={showPassword ? 'text' : 'password'}
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.password)}
+                <PasswordField
+                    label="password"
+                    isError={!!errors.password}
                     helperText={errors.password?.message}
-                    slotProps={{
-                        input: {
-                            endAdornment: (
-                                <InputAdornment position="start">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                    {...register('password')}
+                    register={{ ...register('password') }}
                 />
 
                 {/* Confirm Password Field */}
-                <IconTextField
+                <PasswordField
                     label="Confirm Password"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.confirmPassword)}
+                    isError={!!errors.confirmPassword}
                     helperText={errors.confirmPassword?.message}
-                    slotProps={{
-                        input: {
-                            endAdornment: (
-                                <InputAdornment position="start">
-                                    <IconButton
-                                        aria-label="toggle confirm password visibility"
-                                        onClick={handleClickShowConfirmPassword}
-                                        edge="end"
-                                    >
-                                        {showConfirmPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                    {...register('confirmPassword')}
+                    register={{ ...register('confirmPassword') }}
                 />
 
                 {/* Role Radio Group */}

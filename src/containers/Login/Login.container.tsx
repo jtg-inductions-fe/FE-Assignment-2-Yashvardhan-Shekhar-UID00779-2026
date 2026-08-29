@@ -2,18 +2,9 @@ import { useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import {
-    Box,
-    IconButton,
-    InputAdornment,
-    Link,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material';
+import { Box, Link, Stack, TextField, Typography } from '@mui/material';
 
-import { Button, IconTextField } from '@components';
+import { Button, PasswordField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { login } from '@services';
 import { useAppDispatch } from '@store';
@@ -26,7 +17,6 @@ export const Login = (props: LoginProp) => {
     const { onSwitchToSignUp } = props;
 
     const [isLoading, setIsLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useAppDispatch();
 
@@ -37,10 +27,6 @@ export const Login = (props: LoginProp) => {
     } = useForm<LoginInput>({
         resolver: zodResolver(schema),
     });
-
-    const handleClickShowPassword = () => {
-        setShowPassword((show) => !show);
-    };
 
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
@@ -73,33 +59,11 @@ export const Login = (props: LoginProp) => {
                 />
 
                 {/* Password field */}
-                <IconTextField
-                    label="Password"
-                    type={showPassword ? 'text' : 'password'}
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.password)}
+                <PasswordField
+                    label="password"
+                    isError={!!errors.password}
                     helperText={errors.password?.message}
-                    slotProps={{
-                        input: {
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                    {...register('password')}
+                    register={{ ...register('password') }}
                 />
 
                 <Button

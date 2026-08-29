@@ -2,17 +2,41 @@ import { AppDispatch, updateUser } from '@store';
 import { User } from '@types';
 import { alert, handleErrorFeedback } from '@utils';
 
+/**
+ * Represents the data required to register a new user.
+ *
+ * @typedef {User & {
+ *     password: string;
+ *     confirmPassword: string;
+ * }} SignupType
+ */
 type SignupType = User & {
     password: string;
     confirmPassword: string;
 };
 
+/**
+ * Represents the credentials required to authenticate a user.
+ *
+ * @typedef {{
+ *     email: string;
+ *     password: string;
+ * }} LoginType
+ */
 type LoginType = {
     email: string;
     password: string;
 };
 
-// Register a new user and store their information locally.
+/**
+ * Registers a new user, stores their information locally,
+ * and updates the Redux user state.
+ *
+ * @param {SignupType} user - User registration details.
+ * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback.
+ * @returns {Promise<void>} A promise that resolves when the registration process is complete.
+ * @throws Handles registration errors and displays appropriate feedback.
+ */
 export const signUp = async (
     user: SignupType,
     dispatch: AppDispatch,
@@ -36,7 +60,15 @@ export const signUp = async (
     }
 };
 
-// Authenticate a user using their email and password.
+/**
+ * Authenticates a user using their email and password,
+ * stores their information locally, and updates the Redux user state.
+ *
+ * @param {LoginType} user - User login credentials.
+ * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback.
+ * @returns {Promise<void>} A promise that resolves when the login process is complete.
+ * @throws Handles authentication errors and displays appropriate feedback.
+ */
 export const login = async (
     user: LoginType,
     dispatch: AppDispatch,
@@ -60,8 +92,14 @@ export const login = async (
     }
 };
 
-// Log out the current user and clear their stored information.
-export const logout = (dispatch: AppDispatch) => {
+/**
+ * Logs out the current user by clearing the Redux user state
+ * and removing stored user information from local storage.
+ *
+ * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback.
+ * @returns {void} No value is returned.
+ */
+export const logout = (dispatch: AppDispatch): void => {
     // Update the Redux user state.
     dispatch(updateUser(null));
 
