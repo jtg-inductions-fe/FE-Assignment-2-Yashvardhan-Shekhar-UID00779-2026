@@ -8,8 +8,6 @@ import {
     ToggleButton,
 } from '@mui/material';
 
-import { BORDER_RADIUS } from '@constant';
-
 export const StyledContainer = styled(Container)(({ theme }) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -53,8 +51,6 @@ export const EmptyStateBox = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledAddButton = styled(Button)(({ theme }) => ({
-    borderRadius: theme.typography.pxToRem(BORDER_RADIUS),
-
     [theme.breakpoints.down('sm')]: {
         borderRadius: '50%',
         minWidth: 40,
@@ -69,7 +65,6 @@ export const StyledAddButton = styled(Button)(({ theme }) => ({
 }));
 
 export const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-    borderRadius: theme.typography.pxToRem(BORDER_RADIUS),
     paddingInline: theme.typography.pxToRem(16),
 }));
 

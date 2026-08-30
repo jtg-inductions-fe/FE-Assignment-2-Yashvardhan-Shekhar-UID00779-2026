@@ -10,3 +10,5 @@ export {
 export { formatTime, getRestaurants } from './restaurants.util';
 export const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
+export { alert, handleErrorFeedback, delay } from './feedback.util';
+export { formatTime } from './restaurants.util';

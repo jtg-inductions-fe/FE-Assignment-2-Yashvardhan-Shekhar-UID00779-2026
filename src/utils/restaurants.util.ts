@@ -1,8 +1,9 @@
-import mockRestaurants from '@data/mockRestaurants.json';
-import { Restaurant } from '@types';
-
-// restaurantUtils.ts
-export const getRestaurants = () => mockRestaurants as Restaurant[];
+/**
+ * Converts a 24-hour time string into a 12-hour AM/PM format.
+ *
+ * @param {string} time - Time in `HH:mm` format.
+ * @returns {string} Formatted time in `h:mm AM/PM` format.
+ */
 
 export const formatTime = (time: string) => {
     const [hours, minutes] = time.split(':');

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { RootState } from 'store/store.type';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -21,11 +21,12 @@ import {
     RestaurantFormDialog,
 } from '@components';
 import {
-    handleCreateRestaurant as createRestaurant,
-    handleDeleteRestaurant as deleteRestaurant,
-    handleEditRestaurant as editRestaurant,
+    createRestaurantService,
+    deleteRestaurantService,
+    editRestaurantService,
+    getRestaurantsService,
 } from '@services';
-import { setRestaurants, useAppDispatch, useAppSelector } from '@store';
+import { useAppDispatch, useAppSelector } from '@store';
 import { Restaurant } from '@types';
 
 import {
@@ -42,26 +43,21 @@ import {
 
 export const Restaurants = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const theme = useTheme();
     const canShow = useMediaQuery(theme.breakpoints.up('sm'));
 
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
-    const dispatch = useAppDispatch();
-    const loaderData: Restaurant[] = useLoaderData();
-
-    // restaurants list directly from Redux state
     const restaurants = useSelector(
         (state: RootState) => state.restaurant.restaurants,
     );
 
     // update Redux store with loader data on load
     useEffect(() => {
-        if (loaderData) {
-            dispatch(setRestaurants(loaderData));
-        }
-    }, [loaderData, dispatch]);
+        void getRestaurantsService(dispatch);
+    }, [navigate, dispatch]);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'non-veg'>(
@@ -93,26 +89,26 @@ export const Restaurants = () => {
         if (!isProcessing) setTargetDeleteRestaurant(null);
     };
 
-    const handleCreateRestaurant = (data: Restaurant) => {
+    const handleCreateRestaurant = async (data: Restaurant) => {
         setIsProcessing(true);
-        createRestaurant(data, dispatch);
+        await createRestaurantService(data, dispatch);
         setIsProcessing(false);
         setTargetEditRestaurant(null);
     };
 
-    const handleEditRestaurant = (data: Restaurant) => {
+    const handleEditRestaurant = async (data: Restaurant) => {
         if (targetEditRestaurant) {
             setIsProcessing(true);
-            editRestaurant(data, dispatch);
+            await editRestaurantService(data, dispatch);
             setIsProcessing(false);
             setTargetEditRestaurant(null);
         }
     };
 
-    const handleDeleteRestaurant = () => {
+    const handleDeleteRestaurant = async () => {
         if (targetDeleteRestaurant) {
             setIsProcessing(true);
-            deleteRestaurant(targetDeleteRestaurant, dispatch);
+            await deleteRestaurantService(targetDeleteRestaurant, dispatch);
             setIsProcessing(false);
             setTargetDeleteRestaurant(null);
         }

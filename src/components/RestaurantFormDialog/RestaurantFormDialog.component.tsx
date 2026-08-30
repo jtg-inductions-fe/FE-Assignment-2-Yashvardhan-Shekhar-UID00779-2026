@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 
-import { Stack, Switch } from '@mui/material';
+import { Stack, Switch, TextField } from '@mui/material';
 
-import { Button, Dialog, TextField } from '@components';
+import { Button, Dialog } from '@components';
 import { Restaurant } from '@types';
 
 import {
@@ -13,31 +13,25 @@ import {
     StyledDialogTitle,
     StyledFormControlLabel,
 } from './RestaurantFormDialog.styles';
+import { RestaurantFormDialogProps } from './RestaurantFormDialog.types';
 
-type RestaurantFormDialogProps = {
-    restaurant: Restaurant;
-    handleClose: () => void;
-    isProcessing: boolean;
-    isOpen: boolean;
-    handleEditRestaurant: (data: Restaurant) => void;
-    handleCreateRestaurant: (data: Restaurant) => void;
-};
+export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
+    const {
+        restaurant,
+        isProcessing,
+        isOpen,
+        handleClose,
+        handleCreateRestaurant,
+        handleEditRestaurant,
+    } = props;
 
-export const RestaurantFormDialog = ({
-    restaurant,
-    isProcessing,
-    isOpen,
-    handleClose,
-    handleCreateRestaurant,
-    handleEditRestaurant,
-}: RestaurantFormDialogProps) => {
     const isEditMode = restaurant?.id !== '';
 
-    const handleFormSubmit = (data: Restaurant) => {
+    const handleFormSubmit = async (data: Restaurant) => {
         if (isEditMode) {
-            handleEditRestaurant(data);
+            await handleEditRestaurant(data);
         } else {
-            handleCreateRestaurant(data);
+            await handleCreateRestaurant(data);
         }
     };
 
