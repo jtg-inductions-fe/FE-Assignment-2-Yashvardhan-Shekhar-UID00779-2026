@@ -33,7 +33,7 @@ export const PasswordField = (allProps: PasswordFieldProps) => {
             {...props}
             type={showPassword ? 'text' : 'password'}
             error={!!errors[field]}
-            helperText={errors[field]?.message}
+            helperText={errors[field]?.message as string}
             slotProps={{
                 input: {
                     endAdornment: (

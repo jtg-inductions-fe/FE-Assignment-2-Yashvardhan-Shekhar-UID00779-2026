@@ -18,7 +18,7 @@ export const signUp = async (
 ): Promise<void> => {
     try {
         // replace this block with actual api
-        const res = await fetch('data/Users.json');
+        const res = await fetch('data/users.json');
         const data = (await res.json()) as User[];
         const userInfo = data[0];
         userInfo.role = user.role;
