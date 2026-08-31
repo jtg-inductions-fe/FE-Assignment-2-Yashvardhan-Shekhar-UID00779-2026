@@ -22,7 +22,7 @@ import { signUp } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
-import { schema } from './Signup.schema';
+import { SignupSchema } from './Signup.schema';
 import { SignupInput, SignupProp } from './Signup.types';
 
 export const Signup = (props: SignupProp) => {
@@ -38,13 +38,20 @@ export const Signup = (props: SignupProp) => {
         register,
         formState: { errors },
     } = useForm<SignupInput>({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(SignupSchema),
         defaultValues: {
             role: 'customer',
         },
     });
 
-    const handleClick: SubmitHandler<SignupInput> = async (data) => {
+    /**
+     *  handle toggle of the password visibility
+     *  @param data - data of the form
+     *  @returns {Promise<void>} returns a void promise
+     */
+    const handleClick: SubmitHandler<SignupInput> = async (
+        data,
+    ): Promise<void> => {
         try {
             setIsLoading(true);
             await signUp(data, dispatch);
@@ -89,7 +96,7 @@ export const Signup = (props: SignupProp) => {
                     label="Password"
                     isError={!!errors.password}
                     helperText={errors.password?.message}
-                    register={{ ...register('password') }}
+                    registerPassword={{ ...register('password') }}
                 />
 
                 {/* Confirm Password Field */}
@@ -97,7 +104,7 @@ export const Signup = (props: SignupProp) => {
                     label="Confirm Password"
                     isError={!!errors.confirmPassword}
                     helperText={errors.confirmPassword?.message}
-                    register={{ ...register('confirmPassword') }}
+                    registerPassword={{ ...register('confirmPassword') }}
                 />
 
                 {/* Role Radio Group */}

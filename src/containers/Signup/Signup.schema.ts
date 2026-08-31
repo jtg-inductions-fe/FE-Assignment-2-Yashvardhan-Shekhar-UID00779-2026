@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 /**
  * Zod validation schema for user signup form data.
@@ -6,7 +6,7 @@ import * as z from 'zod';
  * Validates the user's name, email, password, password confirmation,
  * and account role, including matching password confirmation.
  */
-export const schema = z
+export const SignupSchema = z
     .object({
         name: z
             .string()
@@ -22,7 +22,7 @@ export const schema = z
 
         confirmPassword: z.string().min(1, 'Please confirm your password'),
 
-        role: z.literal(['owner', 'customer']),
+        role: z.enum(['owner', 'customer']),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Passwords do not match',

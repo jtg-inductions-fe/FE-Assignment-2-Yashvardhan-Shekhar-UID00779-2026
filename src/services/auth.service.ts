@@ -2,31 +2,7 @@ import { AppDispatch, updateUser } from '@store';
 import { User } from '@types';
 import { alert, handleErrorFeedback } from '@utils';
 
-/**
- * Represents the data required to register a new user.
- *
- * @typedef {User & {
- *     password: string;
- *     confirmPassword: string;
- * }} SignupType
- */
-type SignupType = User & {
-    password: string;
-    confirmPassword: string;
-};
-
-/**
- * Represents the credentials required to authenticate a user.
- *
- * @typedef {{
- *     email: string;
- *     password: string;
- * }} LoginType
- */
-type LoginType = {
-    email: string;
-    password: string;
-};
+import { LoginType, SignupType } from './auth.types';
 
 /**
  * Registers a new user, stores their information locally,
@@ -43,7 +19,7 @@ export const signUp = async (
 ): Promise<void> => {
     try {
         // replace this block with actual api
-        const res = await fetch('src/data/Users.json');
+        const res = await fetch('data/Users.json');
         const userInfo = (await res.json()) as User;
         userInfo.role = user.role;
 
@@ -75,7 +51,7 @@ export const login = async (
 ): Promise<void> => {
     try {
         // replace this block with actual api
-        const res = await fetch('src/data/Users.json');
+        const res = await fetch('data/user.json');
         const userInfo = (await res.json()) as User;
         userInfo.email = user.email;
 

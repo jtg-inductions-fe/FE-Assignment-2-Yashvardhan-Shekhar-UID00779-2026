@@ -1,1 +1,1 @@
-export { IconTextField, PasswordField } from './TextField.component';
+export { IconTextField } from './TextField.component';

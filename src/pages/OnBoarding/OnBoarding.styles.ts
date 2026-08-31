@@ -3,7 +3,7 @@ import { Box, BoxProps, styled } from '@mui/material';
 // Outer wrapper viewport container
 export const PageContainer = styled(Box)(({ theme }) => ({
     height: '100vh',
-    minHeight: 650,
+    minHeight: theme.typography.pxToRem(650),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -29,8 +29,7 @@ export const BrandingColumn = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: theme.spacing(3),
-    maxWidth: 500,
-    objectFit: 'contain',
+    maxWidth: theme.typography.pxToRem(500),
     maxHeight: 0,
     [theme.breakpoints.up('md')]: {
         maxHeight: 'none',
@@ -43,20 +42,20 @@ export const HeaderTextWrapper = styled(Box)({
 });
 
 // Structural illustration wrapper
-export const OnboardingImage = styled(Box)<BoxProps<'img'>>({
+export const OnboardingImage = styled(Box)<BoxProps<'img'>>(({ theme }) => ({
     width: '100%',
-    maxHeight: 400,
+    maxHeight: theme.typography.pxToRem(400),
     objectFit: 'contain',
     aspectRatio: '1/1',
-});
+}));
 
 // Right column form card layout
 export const FormCard = styled(Box)(({ theme }) => ({
     backdropFilter: 'blur(10px)',
-    borderRadius: theme.shape.borderRadius * 2.5,
+    borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(3),
     width: '100%',
-    maxWidth: 400,
+    maxWidth: theme.typography.pxToRem(400),
 
     [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(4),

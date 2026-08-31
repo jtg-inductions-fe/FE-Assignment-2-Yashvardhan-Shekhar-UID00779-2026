@@ -29,4 +29,7 @@ export const COLORS = {
     },
 };
 
+/**
+ *  Border radius for pill shaped structure
+ */
 export const BORDER_RADIUS = 30;

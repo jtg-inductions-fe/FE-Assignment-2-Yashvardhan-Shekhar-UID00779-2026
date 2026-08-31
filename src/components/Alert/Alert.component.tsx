@@ -11,12 +11,18 @@ export const Alert = (alertProp: AlertTypeProp) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    // closing alert Snackbar
-    const handleAlertClose = () => {
+    /**
+     * closing alert Snackbar
+     *
+     * @returns {void} No value is returned.
+     */
+    const handleAlertClose = (): void => {
         setIsOpen(false);
     };
 
-    // based on changing the message and if exist then showing alert
+    /**
+     * based on changing the message and if exist then showing alert
+     */
     useEffect(() => {
         if (message) {
             setIsOpen(true);

@@ -10,7 +10,7 @@ import { login } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
-import { schema } from './Login.schema';
+import { LoginSchema } from './Login.schema';
 import { LoginInput, LoginProp } from './Login.types';
 
 export const Login = (props: LoginProp) => {
@@ -25,7 +25,7 @@ export const Login = (props: LoginProp) => {
         handleSubmit,
         formState: { errors },
     } = useForm<LoginInput>({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(LoginSchema),
     });
 
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
@@ -63,7 +63,7 @@ export const Login = (props: LoginProp) => {
                     label="Password"
                     isError={!!errors.password}
                     helperText={errors.password?.message}
-                    register={{ ...register('password') }}
+                    registerPassword={{ ...register('password') }}
                 />
 
                 <Button
@@ -78,7 +78,7 @@ export const Login = (props: LoginProp) => {
 
                 <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
-                        {"Don't "}have an account?{' '}
+                        {"Don't have an account? "}
                         <Link
                             component="button"
                             type="button"
