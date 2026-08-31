@@ -12,9 +12,7 @@ const initialState: Alert = {
 };
 
 /**
- * Redux slice responsible for managing application alert state.
- *
- * Provides an action to update the alert severity and message.
+ * Redux slice responsible for managing application alert state Provides an action to update the alert severity and message.
  */
 export const alertSlice = createSlice({
     name: 'alert',

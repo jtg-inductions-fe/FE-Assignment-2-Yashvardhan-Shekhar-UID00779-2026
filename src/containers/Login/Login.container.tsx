@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Box, Link, Stack, TextField, Typography } from '@mui/material';
+import { Box, Link, Stack, Typography } from '@mui/material';
 
-import { Button, PasswordField } from '@components';
+import { Button, PasswordField, TextField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { login } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
-import { LoginSchema } from './Login.schema';
+import { LoginSchema } from './Login.config';
 import { LoginInput, LoginProp } from './Login.types';
 
 export const Login = (props: LoginProp) => {
@@ -20,13 +20,11 @@ export const Login = (props: LoginProp) => {
 
     const dispatch = useAppDispatch();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginInput>({
+    const methods = useForm<LoginInput>({
         resolver: zodResolver(LoginSchema),
     });
+
+    const { handleSubmit } = methods;
 
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
@@ -40,58 +38,53 @@ export const Login = (props: LoginProp) => {
     };
 
     return (
-        <form
-            onSubmit={(e) => {
-                void handleSubmit(handleClick)(e);
-            }}
-            noValidate
-        >
-            <Stack spacing={2}>
-                {/* email field */}
-                <TextField
-                    label="Email Address"
-                    type="email"
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.email)}
-                    helperText={errors.email?.message}
-                    {...register('email')}
-                />
+        <FormProvider {...methods}>
+            <form
+                onSubmit={(e) => {
+                    void handleSubmit(handleClick)(e);
+                }}
+                noValidate
+            >
+                <Stack spacing={2}>
+                    {/* email field */}
+                    <TextField
+                        label="Email Address"
+                        type="email"
+                        variant="outlined"
+                        fullWidth
+                        field="email"
+                    />
 
-                {/* Password field */}
-                <PasswordField
-                    label="Password"
-                    isError={!!errors.password}
-                    helperText={errors.password?.message}
-                    registerPassword={{ ...register('password') }}
-                />
+                    {/* Password field */}
+                    <PasswordField label="Password" field="password" />
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    loading={isLoading}
-                    loadingPosition="end"
-                >
-                    Log In
-                </Button>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        loading={isLoading}
+                        loadingPosition="end"
+                    >
+                        Log In
+                    </Button>
 
-                <Box textAlign="center">
-                    <Typography variant="body2" color="text.secondary">
-                        {"Don't have an account? "}
-                        <Link
-                            component="button"
-                            type="button"
-                            variant="body2"
-                            underline="hover"
-                            onClick={onSwitchToSignUp}
-                            fontWeight="bold"
-                        >
-                            Sign Up
-                        </Link>
-                    </Typography>
-                </Box>
-            </Stack>
-        </form>
+                    <Box textAlign="center">
+                        <Typography variant="body2" color="text.secondary">
+                            {"Don't have an account? "}
+                            <Link
+                                component="button"
+                                type="button"
+                                variant="body2"
+                                underline="hover"
+                                onClick={onSwitchToSignUp}
+                                fontWeight="bold"
+                            >
+                                Sign Up
+                            </Link>
+                        </Typography>
+                    </Box>
+                </Stack>
+            </form>
+        </FormProvider>
     );
 };

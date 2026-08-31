@@ -18,7 +18,11 @@ export const SignupSchema = z
         password: z
             .string()
             .min(1, 'Password is required')
-            .min(6, 'Password must be at least 6 characters'),
+            .min(8, { message: 'Password should have minimum length of 8' })
+            .regex(/^(?=.*[A-Z]).{8,}$/, {
+                message:
+                    'Should Contain at least one uppercase letter and have a minimum length of 8 characters.',
+            }),
 
         confirmPassword: z.string().min(1, 'Please confirm your password'),
 

@@ -1,7 +1,23 @@
-import { TextFieldProps } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
-import { StyledIconTextField } from './TextField.styles';
+import { TextField as MuiTextField } from '@mui/material';
 
-export const IconTextField = (props: TextFieldProps) => (
-    <StyledIconTextField {...props} />
-);
+import { TextFieldProps } from './TextField.types';
+
+export const TextField = (allProps: TextFieldProps) => {
+    const { field, ...props } = allProps;
+
+    const {
+        formState: { errors },
+        register,
+    } = useFormContext();
+
+    return (
+        <MuiTextField
+            {...props}
+            error={Boolean(errors[field])}
+            helperText={errors[field]?.message as string}
+            {...register(field)}
+        />
+    );
+};

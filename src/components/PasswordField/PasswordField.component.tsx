@@ -1,13 +1,20 @@
 import { useState } from 'react';
 
 import { PasswordFieldProps } from 'components/PasswordField/PasswordField.types';
-import { IconTextField } from 'components/TextField';
+import { useFormContext } from 'react-hook-form';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 
-export const PasswordField = (props: PasswordFieldProps) => {
-    const { label = 'Password', isError, helperText, registerPassword } = props;
+import { StyledIconTextField } from './PasswordField.styles';
+
+export const PasswordField = (allProps: PasswordFieldProps) => {
+    const { field, ...props } = allProps;
+
+    const {
+        formState: { errors },
+        register,
+    } = useFormContext();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -22,19 +29,17 @@ export const PasswordField = (props: PasswordFieldProps) => {
     };
 
     return (
-        <IconTextField
-            label={label}
+        <StyledIconTextField
+            {...props}
             type={showPassword ? 'text' : 'password'}
-            variant="outlined"
-            fullWidth
-            error={isError}
-            helperText={helperText}
+            error={!!errors[field]}
+            helperText={errors[field]?.message}
             slotProps={{
                 input: {
                     endAdornment: (
                         <InputAdornment position="end">
                             <IconButton
-                                aria-label={`toggle ${label} visibility`}
+                                aria-label={`toggle visibility`}
                                 onClick={handleClickShowPassword}
                                 edge="end"
                             >
@@ -48,7 +53,7 @@ export const PasswordField = (props: PasswordFieldProps) => {
                     ),
                 },
             }}
-            {...registerPassword}
+            {...register(field)}
         />
     );
 };

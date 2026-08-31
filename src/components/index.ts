@@ -1,4 +1,5 @@
 export { Alert } from './Alert';
 export { Button } from './Button';
-export { IconTextField } from './TextField';
+export { TextField } from './TextField';
 export { PasswordField } from './PasswordField';
+export { RadioField } from './RadioField';

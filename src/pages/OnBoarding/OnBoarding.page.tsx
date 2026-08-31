@@ -18,7 +18,6 @@ export const OnBoarding = () => {
 
     return (
         <PageContainer>
-            {/* Left Column: Branding & Illustration */}
             <BrandingColumn>
                 <HeaderTextWrapper>
                     <Typography
@@ -35,15 +34,12 @@ export const OnBoarding = () => {
                         for both sides of the table.
                     </Typography>
                 </HeaderTextWrapper>
-
                 <OnboardingImage
                     component="img"
                     src={onboardingImg}
                     alt="Onboarding-Illustration"
                 />
             </BrandingColumn>
-
-            {/* Right Column: Auth Form Card */}
             <FormCard>
                 <Typography
                     variant="h4"
@@ -54,7 +50,6 @@ export const OnBoarding = () => {
                 >
                     {isLogin ? 'Log In' : 'Sign Up'}
                 </Typography>
-
                 {isLogin ? (
                     <Login onSwitchToSignUp={() => setIsLogin(false)} />
                 ) : (

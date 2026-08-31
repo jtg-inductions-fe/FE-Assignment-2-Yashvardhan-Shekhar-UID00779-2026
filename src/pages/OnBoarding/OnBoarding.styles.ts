@@ -30,10 +30,6 @@ export const BrandingColumn = styled(Box)(({ theme }) => ({
     alignItems: 'center',
     padding: theme.spacing(3),
     maxWidth: theme.typography.pxToRem(500),
-    maxHeight: 0,
-    [theme.breakpoints.up('md')]: {
-        maxHeight: 'none',
-    },
 }));
 
 // Text alignment layout wrapper
@@ -51,8 +47,6 @@ export const OnboardingImage = styled(Box)<BoxProps<'img'>>(({ theme }) => ({
 
 // Right column form card layout
 export const FormCard = styled(Box)(({ theme }) => ({
-    backdropFilter: 'blur(10px)',
-    borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(3),
     width: '100%',
     maxWidth: theme.typography.pxToRem(400),

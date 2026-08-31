@@ -1,28 +1,16 @@
 import { useState } from 'react';
 
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
-import {
-    Box,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    FormLabel,
-    Link,
-    Radio,
-    RadioGroup,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material';
+import { Box, Link, Stack, Typography } from '@mui/material';
 
-import { Button, PasswordField } from '@components';
+import { Button, PasswordField, RadioField, TextField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUp } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
-import { SignupSchema } from './Signup.schema';
+import { SignupSchema } from './Signup.config';
 import { SignupInput, SignupProp } from './Signup.types';
 
 export const Signup = (props: SignupProp) => {
@@ -32,12 +20,7 @@ export const Signup = (props: SignupProp) => {
 
     const dispatch = useAppDispatch();
 
-    const {
-        control,
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm<SignupInput>({
+    const methods = useForm<SignupInput>({
         resolver: zodResolver(SignupSchema),
         defaultValues: {
             role: 'customer',
@@ -63,115 +46,62 @@ export const Signup = (props: SignupProp) => {
     };
 
     return (
-        <form
-            onSubmit={(e) => {
-                void handleSubmit(handleClick)(e);
-            }}
-            noValidate
-        >
-            <Stack spacing={2}>
-                {/* Name Field */}
-                <TextField
-                    label="Your Name"
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.name)}
-                    helperText={errors.name?.message}
-                    {...register('name')}
-                />
+        <FormProvider {...methods}>
+            <form
+                onSubmit={(e) => {
+                    void methods.handleSubmit(handleClick)(e);
+                }}
+                noValidate
+            >
+                <Stack spacing={2}>
+                    <TextField label="Your Name" field="name" />
 
-                {/* Email Field */}
-                <TextField
-                    label="Email Address"
-                    type="email"
-                    variant="outlined"
-                    fullWidth
-                    error={Boolean(errors.email)}
-                    helperText={errors.email?.message}
-                    {...register('email')}
-                />
+                    <TextField
+                        label="Email Address"
+                        type="email"
+                        field="email"
+                    />
 
-                {/* Password Field */}
-                <PasswordField
-                    label="Password"
-                    isError={!!errors.password}
-                    helperText={errors.password?.message}
-                    registerPassword={{ ...register('password') }}
-                />
+                    <PasswordField label="Password" field="password" />
 
-                {/* Confirm Password Field */}
-                <PasswordField
-                    label="Confirm Password"
-                    isError={!!errors.confirmPassword}
-                    helperText={errors.confirmPassword?.message}
-                    registerPassword={{ ...register('confirmPassword') }}
-                />
+                    <PasswordField
+                        label="Confirm Password"
+                        field="confirmPassword"
+                    />
 
-                {/* Role Radio Group */}
-                <Controller
-                    name="role"
-                    control={control}
-                    render={({ field }) => (
-                        <FormControl
-                            component="fieldset"
-                            error={Boolean(errors.role)}
-                        >
-                            <FormLabel id="role-radio-group-label">
-                                Account Type
-                            </FormLabel>
-                            <RadioGroup
-                                {...field}
-                                aria-labelledby="role-radio-group-label"
-                                row
+                    <RadioField
+                        fieldName="role"
+                        heading="Account Type"
+                        options={['customer', 'owner']}
+                    />
+
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        loading={isLoading}
+                        loadingPosition="end"
+                    >
+                        Sign Up
+                    </Button>
+
+                    <Box textAlign="center">
+                        <Typography variant="body2" color="text.secondary">
+                            Already have an account?{' '}
+                            <Link
+                                component="button"
+                                type="button"
+                                variant="body2"
+                                underline="hover"
+                                onClick={onSwitchToLogin}
+                                fontWeight="bold"
                             >
-                                <FormControlLabel
-                                    value="customer"
-                                    control={<Radio />}
-                                    label="Customer"
-                                />
-                                <FormControlLabel
-                                    value="owner"
-                                    control={<Radio />}
-                                    label="Owner"
-                                />
-                            </RadioGroup>
-                            {errors.role && (
-                                <FormHelperText>
-                                    {errors.role.message}
-                                </FormHelperText>
-                            )}
-                        </FormControl>
-                    )}
-                />
-
-                {/* Submit Button */}
-                <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    loading={isLoading}
-                    loadingPosition="end"
-                >
-                    Sign Up
-                </Button>
-
-                {/* Bottom Switch to Login */}
-                <Box textAlign="center">
-                    <Typography variant="body2" color="text.secondary">
-                        Already have an account?{' '}
-                        <Link
-                            component="button"
-                            type="button"
-                            variant="body2"
-                            underline="hover"
-                            onClick={onSwitchToLogin}
-                            fontWeight="bold"
-                        >
-                            Log In
-                        </Link>
-                    </Typography>
-                </Box>
-            </Stack>
-        </form>
+                                Log In
+                            </Link>
+                        </Typography>
+                    </Box>
+                </Stack>
+            </form>
+        </FormProvider>
     );
 };
