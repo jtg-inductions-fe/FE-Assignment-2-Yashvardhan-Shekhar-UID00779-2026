@@ -30,7 +30,7 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export const StyledMenu = styled(Menu)(({ theme }) => ({
-    '& .MuiPaper-root': {
+    root: {
         minWidth: theme.typography.pxToRem(180),
         borderRadius: theme.typography.pxToRem(10),
     },

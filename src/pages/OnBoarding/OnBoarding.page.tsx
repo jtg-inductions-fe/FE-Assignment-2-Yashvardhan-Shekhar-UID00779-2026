@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { Outlet } from 'react-router';
 
 import { Box, Typography } from '@mui/material';
 
 import onboardingImg from '@assets/images/onboarding-bg.webp';
-import { Login, Signup } from '@containers';
 
 import {
     BrandingColumn,
@@ -13,8 +12,6 @@ import {
 } from './OnBoarding.styles';
 
 export const OnBoarding = () => {
-    const [isLogin, setIsLogin] = useState(false);
-
     return (
         <PageContainer>
             <BrandingColumn>
@@ -40,20 +37,7 @@ export const OnBoarding = () => {
                 />
             </BrandingColumn>
             <FormCard>
-                <Typography
-                    variant="h4"
-                    component="h1"
-                    gutterBottom
-                    align="center"
-                    fontWeight="medium"
-                >
-                    {isLogin ? 'Log In' : 'Sign Up'}
-                </Typography>
-                {isLogin ? (
-                    <Login onSwitchToSignUp={() => setIsLogin(false)} />
-                ) : (
-                    <Signup onSwitchToLogin={() => setIsLogin(true)} />
-                )}
+                <Outlet />
             </FormCard>
         </PageContainer>
     );

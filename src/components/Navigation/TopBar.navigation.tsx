@@ -3,6 +3,8 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge, Container, IconButton, Link } from '@mui/material';
 
+import { PATH } from '@constant';
+
 import {
     DesktopNavBox,
     StyledAppBar,
@@ -19,24 +21,22 @@ export const Navbar = (props: BarProps) => {
         <StyledAppBar position="sticky" elevation={1}>
             <Container maxWidth="xl">
                 <StyledToolbar disableGutters>
-                    {/* Brand Logo / Home Link */}
                     <Link
                         variant="h6"
                         component="button"
-                        onClick={() => void navigate('/')}
+                        onClick={() => void navigate(PATH.HOME)}
                         fontWeight="700"
                         underline="none"
                     >
                         Apna Restaurant
                     </Link>
 
-                    {/* Desktop Menu Links */}
                     <DesktopNavBox>
                         <StyledNavButton
                             color={activeTab === 'home' ? 'primary' : 'inherit'}
-                            onClick={() => void navigate('/home')}
+                            onClick={() => void navigate(PATH.HOME)}
                         >
-                            <HomeOutlinedIcon sx={{ mr: 1 }} /> Home
+                            <HomeOutlinedIcon sx={{ mr: 1 }} /> Restaurants
                         </StyledNavButton>
 
                         {user?.role === 'customer' && (
@@ -44,7 +44,7 @@ export const Navbar = (props: BarProps) => {
                                 color={
                                     activeTab === 'cart' ? 'primary' : 'inherit'
                                 }
-                                onClick={() => void navigate('/cart')}
+                                onClick={() => void navigate(PATH.CART)}
                             >
                                 <Badge
                                     badgeContent={cartCount}
@@ -61,12 +61,11 @@ export const Navbar = (props: BarProps) => {
                             color={
                                 activeTab === 'orders' ? 'primary' : 'inherit'
                             }
-                            onClick={() => void navigate('/orders')}
+                            onClick={() => void navigate(PATH.ORDERS)}
                         >
                             <HistoryIcon sx={{ mr: 1 }} /> Orders
                         </StyledNavButton>
 
-                        {/* Profile Menu Trigger */}
                         <IconButton
                             color="inherit"
                             onClick={handleProfileClick}

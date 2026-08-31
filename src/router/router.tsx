@@ -1,56 +1,49 @@
-import { useEffect } from 'react';
+import { Home } from 'layouts/Home';
+import { createBrowserRouter, Navigate } from 'react-router';
 
-import { useDispatch } from 'react-redux';
-import {
-    createBrowserRouter,
-    Navigate,
-    RouterProvider,
-    useNavigate,
-} from 'react-router';
+import { PATH } from '@constant';
+import { Login, PageNotFound, Signup } from '@containers';
+// import { Home } from '@layouts'
+import { OnBoarding } from '@pages';
 
-import { Cart } from '@components';
-import { MenuItems } from '@components';
-import { Orders } from '@components';
-import { Restaurants } from '@components';
-import { Home } from '@pages';
-import { alert } from '@utils';
-
-const PageNotFound = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        alert('warning', 'Requested page does not exist', dispatch);
-        void navigate('/home', { replace: true });
-    }, [navigate, dispatch]);
-
-    return null;
-};
-
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <OnBoarding />,
+        children: [
+            {
+                path: 'signup',
+                element: <Signup />,
+            },
+            {
+                path: 'login',
+                element: <Login />,
+            },
+        ],
+    },
     {
         path: '/',
         element: <Home />,
         children: [
             {
                 index: true,
-                element: <Navigate to="/home" replace />,
+                element: <Navigate to={PATH.HOME} replace />,
             },
             {
-                path: 'home',
-                element: <Restaurants />,
+                path: 'restaurants',
+                element: <>home</>,
             },
             {
-                path: 'restaurant/:restaurantId',
-                element: <MenuItems />,
+                path: 'restaurants/:restaurantId',
+                element: <>restaurant page</>,
             },
             {
                 path: 'orders',
-                element: <Orders />,
+                element: <>orders</>,
             },
             {
                 path: 'cart',
-                element: <Cart />,
+                element: <>cart</>,
             },
         ],
     },
@@ -59,5 +52,3 @@ const router = createBrowserRouter([
         Component: PageNotFound,
     },
 ]);
-
-export const Router = () => <RouterProvider router={router} />;

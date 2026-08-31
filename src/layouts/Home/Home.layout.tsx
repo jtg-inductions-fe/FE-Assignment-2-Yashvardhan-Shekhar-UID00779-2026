@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Outlet, useLocation, useNavigate } from 'react-router';
 
 import { Box } from '@mui/material';
 
 import { BottomBar, Navbar, ProfileMenu } from '@components';
+import { logout } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
+import { handleUser } from '@utils';
 
 import { StyledContainer } from './Home.styles';
 
@@ -23,15 +25,36 @@ export const Home = () => {
     const activeTab = useLocation().pathname.substring(1) || 'home';
     const isMenuOpen = Boolean(anchorEl);
 
-    // Opens the profile menu by setting the clicked element as its anchor.
-    const handleProfileClick = (event: React.MouseEvent<HTMLElement>): void => {
+    /**
+     *  Opens the profile menu by setting the clicked element as its anchor.
+     * @param {React.MouseEvent<HTMLElement, MouseEvent> } event - event of the click
+     * @returns {void} return nothing
+     */
+    const handleProfileClick = (
+        event: React.MouseEvent<HTMLElement, MouseEvent>,
+    ): void => {
         setAnchorEl(event.currentTarget);
     };
 
-    // Closes the profile menu.
+    /**
+     *  Closes the profile menu.
+     *  @returns {void}
+     */
     const handleMenuClose = (): void => {
         setAnchorEl(null);
     };
+
+    /**
+     *  logout functionality
+     *  @returns {void}
+     */
+    const handleLogOut = (): void => {
+        logout(dispatch);
+    };
+
+    useEffect(() => {
+        handleUser(dispatch, navigate);
+    }, [user, dispatch, navigate]);
 
     return (
         <Box height="100vh">
@@ -48,7 +71,7 @@ export const Home = () => {
                 anchorEl={anchorEl}
                 user={user}
                 handleMenuClose={handleMenuClose}
-                dispatch={dispatch}
+                handleLogOut={handleLogOut}
             />
 
             <StyledContainer maxWidth="xl">

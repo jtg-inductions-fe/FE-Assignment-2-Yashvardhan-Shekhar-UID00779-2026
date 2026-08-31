@@ -1,8 +1,6 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ListSubheader } from '@mui/material';
 
-import { logout } from '@services';
-
 import {
     StyledListItemIcon,
     StyledMenu,
@@ -11,7 +9,7 @@ import {
 import { ProfileMenuProps } from './navigation.types';
 
 export const ProfileMenu = (props: ProfileMenuProps) => {
-    const { isMenuOpen, anchorEl, user, handleMenuClose, dispatch } = props;
+    const { isMenuOpen, anchorEl, user, handleMenuClose, handleLogOut } = props;
 
     return (
         <StyledMenu
@@ -21,7 +19,7 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
             onClick={handleMenuClose}
         >
             <ListSubheader>Hi, {user?.name}</ListSubheader>
-            <StyledMenuItem onClick={() => logout(dispatch)}>
+            <StyledMenuItem onClick={handleLogOut}>
                 <StyledListItemIcon>
                     <LogoutIcon fontSize="small" />
                 </StyledListItemIcon>

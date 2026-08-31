@@ -1,13 +1,21 @@
 import { NavigateFunction } from 'react-router';
 
-import { AppDispatch } from '@store';
 import { User } from '@types';
 
 /**
  * Represents the properties required by the navigation bar components.
+ * @type {
+ *     handleProfileClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+ *     user: User;
+ *     activeTab: string;
+ *     cartCount: number;
+ *     navigate: NavigateFunction;
+ * };
  */
 export type BarProps = {
-    handleProfileClick: (event: React.MouseEvent<HTMLElement>) => void;
+    handleProfileClick: (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => void;
     user: User;
     activeTab: string;
     cartCount: number;
@@ -16,11 +24,18 @@ export type BarProps = {
 
 /**
  * Represents the properties required by the navigation Menu components.
+ * @type {
+ *  isMenuOpen: boolean;
+ *  anchorEl: null | HTMLElement;
+ *  user: User;
+ *  handleMenuClose: () => void;
+ *  dispatch: AppDispatch;
+ * }
  */
 export type ProfileMenuProps = {
     isMenuOpen: boolean;
     anchorEl: null | HTMLElement;
     user: User;
     handleMenuClose: () => void;
-    dispatch: AppDispatch;
+    handleLogOut: () => void;
 };

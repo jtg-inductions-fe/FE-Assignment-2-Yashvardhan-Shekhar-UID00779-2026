@@ -3,6 +3,8 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge, BottomNavigation, BottomNavigationAction } from '@mui/material';
 
+import { PATH } from '@constant';
+
 import { StyledAvatar, StyledPaper } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
@@ -13,10 +15,10 @@ export const BottomBar = (props: BarProps) => {
         <StyledPaper elevation={10}>
             <BottomNavigation showLabels value={activeTab}>
                 <BottomNavigationAction
-                    label="Home"
+                    label="Restaurants"
                     value="home"
                     icon={<HomeOutlinedIcon />}
-                    onClick={() => void navigate('/home')}
+                    onClick={() => void navigate(PATH.HOME)}
                 />
                 {user?.role === 'customer' && (
                     <BottomNavigationAction
@@ -27,11 +29,11 @@ export const BottomBar = (props: BarProps) => {
                                 <ShoppingCartOutlinedIcon />
                             </Badge>
                         }
-                        onClick={() => void navigate('/cart')}
+                        onClick={() => void navigate(PATH.CART)}
                     />
                 )}
                 <BottomNavigationAction
-                    onClick={() => void navigate('/orders')}
+                    onClick={() => void navigate(PATH.ORDERS)}
                     label="Orders"
                     value="orders"
                     icon={<HistoryIcon />}

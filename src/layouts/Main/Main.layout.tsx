@@ -1,5 +1,7 @@
+import { RouterProvider } from 'react-router';
+
 import { Alert } from '@components';
-import { Router } from '@router';
+import { router } from '@router';
 import { useAppSelector } from '@store';
 
 export const Main = () => {
@@ -8,7 +10,7 @@ export const Main = () => {
     return (
         <>
             <Alert {...alert} />
-            <Router />
+            <RouterProvider router={router} />;
         </>
     );
 };
