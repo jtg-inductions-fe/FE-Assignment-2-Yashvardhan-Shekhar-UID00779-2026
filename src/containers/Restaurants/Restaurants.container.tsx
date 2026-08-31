@@ -54,11 +54,6 @@ export const Restaurants = () => {
         (state: RootState) => state.restaurant.restaurants,
     );
 
-    // update Redux store with loader data on load
-    useEffect(() => {
-        void getRestaurantsService(dispatch);
-    }, [navigate, dispatch]);
-
     const [searchQuery, setSearchQuery] = useState('');
     const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'non-veg'>(
         'all',
@@ -81,14 +76,27 @@ export const Restaurants = () => {
         owner: '',
     };
 
+    /**
+     * resets the target restaurants of form dialog
+     * @return nothing
+     */
     const handleCloseFormDialog = () => {
         if (!isProcessing) setTargetEditRestaurant(null);
     };
 
+    /**
+     * resets the target restaurants of delete dialog
+     * @return nothing
+     */
     const handleCloseDeleteDialog = () => {
         if (!isProcessing) setTargetDeleteRestaurant(null);
     };
 
+    /**
+     * creates new restaurant
+     * @param {Restaurant} data data of a restaurant
+     * @return nothing
+     */
     const handleCreateRestaurant = async (data: Restaurant) => {
         setIsProcessing(true);
         await createRestaurantService(data, dispatch);
@@ -96,6 +104,11 @@ export const Restaurants = () => {
         setTargetEditRestaurant(null);
     };
 
+    /**
+     * edits restaurant
+     * @param {Restaurant} data data of a restaurant
+     * @return nothing
+     */
     const handleEditRestaurant = async (data: Restaurant) => {
         if (targetEditRestaurant) {
             setIsProcessing(true);
@@ -105,6 +118,10 @@ export const Restaurants = () => {
         }
     };
 
+    /**
+     * deletes a restaurant
+     * @return nothing
+     */
     const handleDeleteRestaurant = async () => {
         if (targetDeleteRestaurant) {
             setIsProcessing(true);
@@ -132,6 +149,11 @@ export const Restaurants = () => {
             }),
         [restaurants, searchQuery, vegFilter],
     );
+
+    // update Redux store with loader data on load
+    useEffect(() => {
+        void getRestaurantsService(dispatch);
+    }, [navigate, dispatch]);
 
     return (
         <StyledContainer maxWidth="xl">

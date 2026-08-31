@@ -5,7 +5,6 @@ import { Login, PageNotFound, Signup } from '@containers';
 import { Restaurants } from '@containers';
 import { Home } from '@layouts';
 import { OnBoarding } from '@pages';
-import { getRestaurants } from '@utils';
 
 export const router = createBrowserRouter([
     {
@@ -32,7 +31,6 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'restaurants',
-                loader: getRestaurants,
                 Component: Restaurants,
             },
             {

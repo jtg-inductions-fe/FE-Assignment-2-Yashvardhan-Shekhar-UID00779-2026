@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Restaurant } from '@types';
 
-type RestaurantState = {
-    restaurants: Restaurant[];
-};
+import { RestaurantState } from './store.type';
 
 const initialState: RestaurantState = {
     restaurants: [],
 };
-
+/**
+ * slice of restaurant containing reducer
+ */
 export const restaurantSlice = createSlice({
     name: 'restaurant',
     initialState,

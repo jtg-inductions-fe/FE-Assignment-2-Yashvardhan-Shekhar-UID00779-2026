@@ -4,8 +4,7 @@ import { Restaurant } from '@types';
 import { alert, delay, handleErrorFeedback } from '@utils';
 
 /**
- * Fetches the restaurant list from the local data source
- * and stores the restaurants in the Redux state.
+ * Fetches the restaurant list from the local data source and stores the restaurants in the Redux state.
  *
  * @param {AppDispatch} dispatch - Redux dispatch function used to update the restaurant state.
  * @returns {Promise<void>} A promise that resolves when the restaurant data has been processed.
@@ -15,7 +14,7 @@ export const getRestaurantsService = async (
 ): Promise<void> => {
     try {
         // will be replaced with actual api call
-        const res = await fetch('src/data/Restaurants.json');
+        const res = await fetch('data/Restaurants.json');
         const restaurants = (await res.json()) as Restaurant[];
         dispatch(setRestaurants(restaurants));
     } catch (e) {
@@ -24,8 +23,7 @@ export const getRestaurantsService = async (
 };
 
 /**
- * Creates a new restaurant with a unique ID, adds it to the Redux state,
- * and displays a success alert.
+ * Creates a new restaurant with a unique ID, adds it to the Redux state, and displays a success alert.
  *
  * @param {Restaurant} data - Restaurant details used to create the new restaurant.
  * @param {AppDispatch} dispatch - Redux dispatch function used to update the restaurant state.
@@ -57,8 +55,7 @@ export const createRestaurantService = async (
 };
 
 /**
- * Updates an existing restaurant in the Redux state
- * and displays a success alert.
+ * Updates an existing restaurant in the Redux state and displays a success alert.
  *
  * @param {Restaurant} data - Updated restaurant details.
  * @param {AppDispatch} dispatch - Redux dispatch function used to update the restaurant state.
@@ -81,12 +78,11 @@ export const editRestaurantService = async (
 };
 
 /**
- * Deletes a restaurant from the Redux state
- * and displays a success alert.
+ * Deletes a restaurant from the Redux state and displays a success alert.
  *
  * @param {Restaurant} data - Restaurant to be removed.
- * @param {AppDispatch} dispatch - Redux dispatch function used to update the restaurant state.
- * @returns {Promise<void>} A promise that resolves when the restaurant has been deleted.
+ * @param {AppDispatch} dispatch - Redux dispatch
+ * @returns {Promise<void>} A void promise
  */
 export const deleteRestaurantService = async (
     data: Restaurant,

@@ -2,12 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { CartItem } from '@types';
 
-/**
- * Represents the state of the shopping cart.
- */
-type CartState = {
-    cartItems: CartItem[];
-};
+import { CartState } from './store.type';
 
 /**
  * Defines the initial state for the cart slice.

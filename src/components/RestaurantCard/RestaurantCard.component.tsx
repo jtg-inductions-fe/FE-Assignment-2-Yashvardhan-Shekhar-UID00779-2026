@@ -24,6 +24,9 @@ import { RestaurantCardProps } from './RestaurantCard.types';
 export const RestaurantCard = (props: RestaurantCardProps) => {
     const { restaurant, isOwnerView, navigate, onEdit, onDelete } = props;
 
+    /**
+     * on click navigate to /rid of restaurant
+     */
     const handleCardClick = () => {
         void navigate(`/restaurant/${restaurant.id}`);
     };

@@ -27,6 +27,10 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
 
     const isEditMode = restaurant?.id !== '';
 
+    /**
+     *
+     * @param {Restaurant} data - handles submit based on the edit mode
+     */
     const handleFormSubmit = async (data: Restaurant) => {
         if (isEditMode) {
             await handleEditRestaurant(data);
