@@ -14,3 +14,8 @@ export const placeOrder = async (dispatch: AppDispatch) => {
         handleErrorFeedback(e, dispatch);
     }
 };
+
+export const getOrders = async () => {
+    const data = await fetch('src/data/orders.json');
+    return data;
+};

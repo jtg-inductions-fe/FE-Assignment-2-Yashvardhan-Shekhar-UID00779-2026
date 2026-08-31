@@ -4,6 +4,7 @@ import { PATH } from '@constant';
 import {
     Cart,
     Login,
+    Orders,
     PageNotFound,
     RestaurantDetails,
     Restaurants,
@@ -45,7 +46,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'orders',
-                element: <>orders</>,
+                loader: getOrders,
+                Component: Orders,
             },
             {
                 path: 'cart',

@@ -6,3 +6,4 @@ export { RestaurantFormDialog } from './RestaurantFormDialog';
 export { RestaurantDetails } from './RestaurantDetails';
 export { MenuFormDialog } from './MenuFormDialog';
 export { Cart } from './Cart';
+export { Orders } from './Orders';
