@@ -28,13 +28,11 @@ export const Home = () => {
 
     /**
      *  Opens the profile menu by setting the clicked element as its anchor.
-     * @param {React.MouseEvent<HTMLElement, MouseEvent> } event - event of the click
+     * @param {HTMLButtonElement} event - event of the click
      * @returns {void} return nothing
      */
-    const handleProfileClick = (
-        event: React.MouseEvent<HTMLElement, MouseEvent>,
-    ): void => {
-        setAnchorEl(event.currentTarget);
+    const handleProfileClick = (target: HTMLButtonElement): void => {
+        setAnchorEl(target);
     };
 
     /**

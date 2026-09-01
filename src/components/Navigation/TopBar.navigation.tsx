@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router';
 
-import HistoryIcon from '@mui/icons-material/History';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import {
+    History,
+    HomeOutlined,
+    ShoppingCartOutlined,
+} from '@mui/icons-material';
 import { Badge, Container, IconButton, Link, Toolbar } from '@mui/material';
 
 import { Avatar } from '@components';
@@ -44,7 +46,7 @@ export const Navbar = (props: BarProps) => {
                             }
                             onClick={() => void navigate(PATH.HOME)}
                         >
-                            <HomeOutlinedIcon sx={{ mr: 1 }} /> Restaurants
+                            <HomeOutlined sx={{ mr: 1 }} /> Restaurants
                         </StyledNavButton>
 
                         {user?.role === 'customer' && (
@@ -61,7 +63,7 @@ export const Navbar = (props: BarProps) => {
                                     color="primary"
                                     sx={{ mr: 1 }}
                                 >
-                                    <ShoppingCartOutlinedIcon />
+                                    <ShoppingCartOutlined />
                                 </Badge>
                                 Cart
                             </StyledNavButton>
@@ -75,12 +77,14 @@ export const Navbar = (props: BarProps) => {
                             }
                             onClick={() => void navigate(PATH.ORDERS)}
                         >
-                            <HistoryIcon sx={{ mr: 1 }} /> Orders
+                            <History sx={{ mr: 1 }} /> Orders
                         </StyledNavButton>
 
                         <IconButton
                             color="inherit"
-                            onClick={handleProfileClick}
+                            onClick={(event) => {
+                                handleProfileClick(event.currentTarget);
+                            }}
                             size="small"
                             aria-label="opening the profile menu"
                         >

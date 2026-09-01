@@ -5,11 +5,9 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: theme.zIndex.appBar,
 
     [theme.breakpoints.up('md')]: {
         display: 'none',
-        pb: '2rem',
     },
 }));
 

@@ -3,7 +3,7 @@ import { User } from '@types';
 /**
  * Represents the properties required by the navigation bar components.
  * @type {
- *     handleProfileClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+ *     handleProfileClick: (event: HTMLButtonElement) => void;
  *     user: User;
  *     activeTab: string;
  *     cartCount: number;
@@ -11,9 +11,7 @@ import { User } from '@types';
  * };
  */
 export type BarProps = {
-    handleProfileClick: (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => void;
+    handleProfileClick: (event: HTMLButtonElement) => void;
     user: User;
     activeTab: string;
     cartCount: number;

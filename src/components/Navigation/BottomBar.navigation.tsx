@@ -47,7 +47,9 @@ export const BottomBar = (props: BarProps) => {
                     label="Profile"
                     value="profile"
                     icon={<Avatar name={user?.name} />}
-                    onClick={handleProfileClick}
+                    onClick={(event) => {
+                        handleProfileClick(event.currentTarget);
+                    }}
                 />
             </BottomNavigation>
         </StyledPaper>
