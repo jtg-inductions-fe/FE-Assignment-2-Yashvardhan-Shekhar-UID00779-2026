@@ -18,6 +18,17 @@ export type Restaurant = {
     owner: string;
 };
 
+/**
+ * fields in the menuItem
+ * @type {
+ *     id: string;
+ *     name: string;
+ *     description: string;
+ *     price: number;
+ *     stock: number;
+ *     image: string;
+ * };
+ */
 export type MenuItem = {
     id: string;
     name: string;
@@ -27,6 +38,12 @@ export type MenuItem = {
     image: string;
 };
 
+/**
+ * all details of the restaurant
+ * @type Restaurant & {
+ *     menu: MenuItem[];
+ * };
+ */
 export type RestaurantDetails = Restaurant & {
     menu: MenuItem[];
 };

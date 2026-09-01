@@ -3,7 +3,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
-import { Container, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+    Container,
+    Stack,
+    Typography,
+    useMediaQuery,
+    useTheme,
+} from '@mui/material';
 
 import { DeleteDialog, MenuCard } from '@components';
 import { MenuFormDialog } from '@containers';
@@ -18,10 +24,8 @@ import { MenuItem } from '@types';
 
 import {
     EmptyStateBox,
-    HeaderStack,
     MenuGrid,
     StyledAddButton,
-    StyledStack,
 } from './RestaurantDetails.styles';
 
 export const RestaurantDetails = () => {
@@ -111,20 +115,21 @@ export const RestaurantDetails = () => {
 
     return (
         <Container maxWidth="xl">
-            <HeaderStack
+            <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems={{ xs: 'stretch', md: 'center' }}
                 spacing={2}
+                pb={4}
             >
-                <StyledStack>
+                <Stack py={3}>
                     <Typography variant="h2" component="h1" fontWeight="bold">
                         {restaurantDetails?.name}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                         {restaurantDetails?.description}
                     </Typography>
-                </StyledStack>
+                </Stack>
 
                 {isOwnerView && (
                     <StyledAddButton
@@ -137,7 +142,7 @@ export const RestaurantDetails = () => {
                         {canShow && 'Add New Menu Item'}
                     </StyledAddButton>
                 )}
-            </HeaderStack>
+            </Stack>
 
             <MenuGrid>
                 {restaurantDetails?.menu.map((menuItem) => (

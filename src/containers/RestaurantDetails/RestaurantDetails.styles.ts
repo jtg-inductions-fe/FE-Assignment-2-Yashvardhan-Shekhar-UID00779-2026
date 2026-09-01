@@ -1,15 +1,4 @@
-import { Box, Button, Stack, styled } from '@mui/material';
-
-import { BORDER_RADIUS } from '@constant';
-
-export const HeaderStack = styled(Stack)(({ theme }) => ({
-    marginBottom: theme.spacing(4),
-}));
-
-export const StyledStack = styled(Stack)(({ theme }) => ({
-    paddingTop: theme.typography.pxToRem(10),
-    paddingBottom: theme.typography.pxToRem(10),
-}));
+import { Box, Button, styled } from '@mui/material';
 
 export const MenuGrid = styled(Box)(({ theme }) => ({
     display: 'grid',
@@ -28,24 +17,16 @@ export const MenuGrid = styled(Box)(({ theme }) => ({
 }));
 
 export const EmptyStateBox = styled(Box)(({ theme }) => ({
-    gridColumn: '1 / -1',
     textAlign: 'center',
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingBlock: theme.spacing(8),
 }));
 
 export const StyledAddButton = styled(Button)(({ theme }) => ({
-    borderRadius: theme.typography.pxToRem(BORDER_RADIUS),
-
     [theme.breakpoints.down('sm')]: {
         borderRadius: '50%',
         minWidth: 40,
         width: 40,
         height: 40,
         padding: 0,
-
-        '& .MuiButton-startIcon': {
-            margin: 0,
-        },
     },
 }));

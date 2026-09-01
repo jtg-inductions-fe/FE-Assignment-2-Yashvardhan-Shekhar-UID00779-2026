@@ -28,6 +28,10 @@ export const MenuFormDialog = ({
     });
     const { register, handleSubmit, reset } = methods;
 
+    /**
+     * add/edit the menu with the data of menuItem
+     * @param data menuItem data
+     */
     const handleFormSubmit = async (data: MenuItem) => {
         if (isEditMode) {
             await handleEditMenuItem(data);

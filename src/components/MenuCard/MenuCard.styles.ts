@@ -47,6 +47,7 @@ export const QuantityControlStack = styled(Stack)(({ theme }) => ({
 }));
 
 export const StyledCard = styled(Card)(({ theme }) => ({
+    borderRadius: theme.typography.pxToRem(16),
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
