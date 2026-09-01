@@ -1,14 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { RootState } from 'store/store.type';
-
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
+import { Add, Search } from '@mui/icons-material';
 import {
     Box,
     InputAdornment,
+    Stack,
+    TextField,
     ToggleButtonGroup,
     Typography,
     useMediaQuery,
@@ -28,18 +25,14 @@ import { Restaurant } from '@types';
 
 import {
     EmptyStateBox,
-    FilterStack,
-    HeaderStack,
     RestaurantGrid,
     SearchFieldContainer,
     StyledAddButton,
     StyledContainer,
-    StyledField,
     StyledToggleButton,
 } from './Restaurants.styles';
 
 export const Restaurants = () => {
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
@@ -47,9 +40,7 @@ export const Restaurants = () => {
 
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
-    const restaurants = useSelector(
-        (state: RootState) => state.restaurant.restaurants,
-    );
+    const restaurants = useAppSelector((state) => state.restaurant.restaurants);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'non-veg'>(
@@ -130,17 +121,19 @@ export const Restaurants = () => {
 
     const filteredRestaurants = useMemo(
         () =>
-            restaurants.filter((r) => {
+            restaurants.filter((restaurant) => {
                 const matchesSearch =
-                    r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    r.description
+                    restaurant.name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()) ||
+                    restaurant.description
                         .toLowerCase()
                         .includes(searchQuery.toLowerCase());
 
                 const matchesVeg =
                     vegFilter === 'all' ||
-                    (vegFilter === 'veg' && r.isVeg) ||
-                    (vegFilter === 'non-veg' && !r.isVeg);
+                    (vegFilter === 'veg' && restaurant.isVeg) ||
+                    (vegFilter === 'non-veg' && !restaurant.isVeg);
 
                 return matchesSearch && matchesVeg;
             }),
@@ -150,15 +143,16 @@ export const Restaurants = () => {
     // update Redux store with loader data on load
     useEffect(() => {
         void getRestaurantsService(dispatch);
-    }, [navigate, dispatch]);
+    }, [dispatch]);
 
     return (
         <StyledContainer maxWidth="xl">
-            <HeaderStack
+            <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems={{ xs: 'stretch', md: 'center' }}
                 spacing={2}
+                sx={{ mb: 4 }}
             >
                 <Box>
                     <Typography variant="h2" component="h1" fontWeight="bold">
@@ -175,7 +169,7 @@ export const Restaurants = () => {
                     <StyledAddButton
                         variant="outlined"
                         size={canShow ? 'large' : 'small'}
-                        startIcon={<AddIcon />}
+                        startIcon={<Add />}
                         onClick={() =>
                             setTargetEditRestaurant(initialRestaurantState)
                         }
@@ -183,16 +177,17 @@ export const Restaurants = () => {
                         {canShow && 'Add New Restaurant'}
                     </StyledAddButton>
                 )}
-            </HeaderStack>
+            </Stack>
 
-            <FilterStack
+            <Stack
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={2}
                 justifyContent="space-between"
                 alignItems="center"
+                marginBottom={theme.spacing(4)}
             >
                 <SearchFieldContainer>
-                    <StyledField
+                    <TextField
                         fullWidth
                         placeholder="Search restaurants by name or description"
                         variant="outlined"
@@ -203,7 +198,7 @@ export const Restaurants = () => {
                             input: {
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <SearchIcon color="action" />
+                                        <Search color="action" />
                                     </InputAdornment>
                                 ),
                             },
@@ -235,27 +230,26 @@ export const Restaurants = () => {
                         Non-Veg
                     </StyledToggleButton>
                 </ToggleButtonGroup>
-            </FilterStack>
+            </Stack>
+
+            {filteredRestaurants.length === 0 && (
+                <EmptyStateBox>
+                    <Typography variant="h6" color="text.secondary">
+                        No matching restaurants found.
+                    </Typography>
+                </EmptyStateBox>
+            )}
 
             <RestaurantGrid>
                 {filteredRestaurants.map((restaurant) => (
                     <RestaurantCard
                         key={restaurant.id}
                         restaurant={restaurant}
-                        navigate={navigate}
                         isOwnerView={isOwnerView}
                         onEdit={() => setTargetEditRestaurant(restaurant)}
                         onDelete={() => setTargetDeleteRestaurant(restaurant)}
                     />
                 ))}
-
-                {filteredRestaurants.length === 0 && (
-                    <EmptyStateBox>
-                        <Typography variant="h6" color="text.secondary">
-                            No matching restaurants found.
-                        </Typography>
-                    </EmptyStateBox>
-                )}
             </RestaurantGrid>
 
             <RestaurantFormDialog
@@ -271,7 +265,7 @@ export const Restaurants = () => {
                 name={targetDeleteRestaurant?.name}
                 isProcessing={isProcessing}
                 handleClose={handleCloseDeleteDialog}
-                onConfirm={handleDeleteRestaurant}
+                handleConfirm={handleDeleteRestaurant}
             />
         </StyledContainer>
     );

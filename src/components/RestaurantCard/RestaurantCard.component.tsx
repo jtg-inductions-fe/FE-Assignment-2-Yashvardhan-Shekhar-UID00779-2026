@@ -1,6 +1,6 @@
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router';
+
+import { AccessTime, Delete, Edit } from '@mui/icons-material';
 import {
     Box,
     CardActionArea,
@@ -22,7 +22,8 @@ import {
 import { RestaurantCardProps } from './RestaurantCard.types';
 
 export const RestaurantCard = (props: RestaurantCardProps) => {
-    const { restaurant, isOwnerView, navigate, onEdit, onDelete } = props;
+    const { restaurant, isOwnerView, onEdit, onDelete } = props;
+    const navigate = useNavigate();
 
     /**
      * on click navigate to /rid of restaurant
@@ -73,7 +74,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                     spacing={1}
                     color="text.secondary"
                 >
-                    <AccessTimeIcon fontSize="small" />
+                    <AccessTime fontSize="small" />
                     <Typography variant="caption">
                         {formatTime(restaurant.openingTime)} -{' '}
                         {formatTime(restaurant.closingTime)}
@@ -90,7 +91,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                             }}
                             aria-label="edit restaurant"
                         >
-                            <EditIcon />
+                            <Edit />
                         </IconButton>
                         <IconButton
                             size="small"
@@ -101,7 +102,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                             }}
                             aria-label="delete restaurant"
                         >
-                            <DeleteIcon />
+                            <Delete />
                         </IconButton>
                     </Stack>
                 )}

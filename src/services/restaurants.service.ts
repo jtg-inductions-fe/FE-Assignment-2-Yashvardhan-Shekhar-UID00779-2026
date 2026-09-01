@@ -1,5 +1,10 @@
-import { AppDispatch, setRestaurants } from '@store';
-import { addRestaurant, removeRestaurant, updateRestaurant } from '@store';
+import {
+    addRestaurant,
+    AppDispatch,
+    removeRestaurant,
+    setRestaurants,
+    updateRestaurant,
+} from '@store';
 import { Restaurant } from '@types';
 import { alert, delay, handleErrorFeedback } from '@utils';
 
@@ -36,7 +41,7 @@ export const createRestaurantService = async (
     try {
         // delay will be replaced with actual api call
         await delay();
-
+        // to create unique id to manage in store for now
         const newRestaurant: Restaurant = {
             ...data,
             id: crypto.randomUUID(),

@@ -11,7 +11,7 @@ import { theme } from '@theme';
 import { DeleteDialogProps } from './DeleteDialog.types';
 
 export const DeleteDialog = (props: DeleteDialogProps) => {
-    const { name, isProcessing, handleClose, onConfirm } = props;
+    const { name, isProcessing, handleClose, handleConfirm } = props;
 
     return (
         <Dialog open={!!name} onClose={handleClose}>
@@ -38,7 +38,7 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
                     Cancel
                 </Button>
                 <Button
-                    onClick={() => void onConfirm()}
+                    onClick={() => void handleConfirm()}
                     variant="contained"
                     color="error"
                     loading={isProcessing}

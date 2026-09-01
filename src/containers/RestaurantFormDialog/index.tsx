@@ -1,1 +1,1 @@
-export { RestaurantFormDialog } from './RestaurantFormDialog.component';
+export { RestaurantFormDialog } from './RestaurantFormDialog.container';
