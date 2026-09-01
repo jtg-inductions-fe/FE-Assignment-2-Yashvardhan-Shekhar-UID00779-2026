@@ -1,73 +1,59 @@
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveIcon from '@mui/icons-material/Remove';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { CardMedia, IconButton, Stack, Typography } from '@mui/material';
-
-import { IMAGE } from '@constant';
+import { Add, Delete, Edit, Remove, ShoppingBag } from '@mui/icons-material';
 import {
-    addItemToCart,
-    AppDispatch,
-    removeItemFromCart,
-    useAppSelector,
-} from '@store';
-import { MenuItem } from '@types';
+    Box,
+    CardContent,
+    CardMedia,
+    IconButton,
+    Stack,
+    Typography,
+} from '@mui/material';
+
+import { addItemToCart, removeItemFromCart, useAppSelector } from '@store';
 
 import {
-    ActionBox,
     AddToCartButton,
     DescriptionText,
-    HeaderStack,
-    ImageContainer,
     QuantityControlStack,
     QuantityIconButton,
     StyledCard,
     StyledCardActions,
-    StyledCardContent,
     StyledChip,
 } from './MenuCard.styles';
+import { MenuCardProps } from './MenuCard.types';
 
-type MenuCardProps = {
-    item: MenuItem;
-    isOwnerView?: boolean;
-    dispatch: AppDispatch;
-    onEdit?: (id: string) => void;
-    onDelete?: (id: string) => void;
-};
+export const MenuCard = (props: MenuCardProps) => {
+    const { item, isOwnerView = false, dispatch, onEdit, onDelete } = props;
 
-export const MenuCard = ({
-    item,
-    isOwnerView = false,
-    dispatch,
-    onEdit,
-    onDelete,
-}: MenuCardProps) => {
     const quantity = useAppSelector((state): number => {
         const res = state.cart.cartItems.find((it) => it.id === item.id);
         return res ? res.quantity : 0;
     });
 
+    const isOutOfStock = item.stock <= 0;
+    const isInCart = quantity > 0;
+
+    /**
+     * adds item in the cart
+     */
     const handleAddToCart = () => {
         dispatch(addItemToCart(item));
     };
 
+    /**
+     * removes item from the card
+     */
     const handleRemoveFromCart = () => {
         dispatch(removeItemFromCart(item));
     };
 
-    const isOutOfStock = item.stock <= 0;
-    const isInCart = quantity > 0;
-
     return (
         <StyledCard elevation={2}>
-            <ImageContainer>
+            <Box>
                 <CardMedia
                     component="img"
                     height="180"
-                    image={item.image || IMAGE}
+                    image={item.image}
                     alt={item.name}
-                    onError={(e) => (e.currentTarget.src = IMAGE)}
                     loading="lazy"
                     sx={{
                         filter: isOutOfStock ? 'grayscale(70%)' : 'none',
@@ -82,10 +68,10 @@ export const MenuCard = ({
                         size="small"
                     />
                 )}
-            </ImageContainer>
+            </Box>
 
-            <StyledCardContent>
-                <HeaderStack
+            <CardContent>
+                <Stack
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
@@ -101,7 +87,7 @@ export const MenuCard = ({
                     >
                         ₹{item.price}
                     </Typography>
-                </HeaderStack>
+                </Stack>
 
                 <DescriptionText variant="body2" color="text.secondary">
                     {item.description ||
@@ -109,19 +95,21 @@ export const MenuCard = ({
                             item.stock > 1
                                 ? `Get a pack of ${item.stock} for`
                                 : 'Available for'
-                        } only ₹${item.price * (item.stock || 1)}.`}
+                        } only ₹${item.price * Math.min(item.stock, 3)}.`}
                 </DescriptionText>
-            </StyledCardContent>
+            </CardContent>
 
-            <StyledCardActions isOwnerView={isOwnerView}>
+            <StyledCardActions
+                sx={{ justifyContent: isOwnerView ? 'flex-end' : 'stretch' }}
+            >
                 {/* Customer View Controls */}
                 {!isOwnerView && (
-                    <ActionBox>
+                    <Box width="100%">
                         {!isInCart ? (
                             <AddToCartButton
                                 fullWidth
                                 variant="contained"
-                                startIcon={<ShoppingBagIcon />}
+                                startIcon={<ShoppingBag />}
                                 disabled={isOutOfStock}
                                 onClick={handleAddToCart}
                             >
@@ -139,7 +127,7 @@ export const MenuCard = ({
                                     onClick={handleRemoveFromCart}
                                     aria-label="remove item from cart"
                                 >
-                                    <RemoveIcon fontSize="small" />
+                                    <Remove fontSize="small" />
                                 </QuantityIconButton>
 
                                 <Typography
@@ -157,11 +145,11 @@ export const MenuCard = ({
                                     onClick={handleAddToCart}
                                     aria-label="add item to cart"
                                 >
-                                    <AddIcon fontSize="small" />
+                                    <Add fontSize="small" />
                                 </QuantityIconButton>
                             </QuantityControlStack>
                         )}
-                    </ActionBox>
+                    </Box>
                 )}
 
                 {/* Owner View Controls */}
@@ -173,7 +161,7 @@ export const MenuCard = ({
                             onClick={() => onEdit?.(item.id)}
                             aria-label="edit menu item"
                         >
-                            <EditIcon />
+                            <Edit />
                         </IconButton>
                         <IconButton
                             size="small"
@@ -181,7 +169,7 @@ export const MenuCard = ({
                             onClick={() => onDelete?.(item.id)}
                             aria-label="delete menu item"
                         >
-                            <DeleteIcon />
+                            <Delete />
                         </IconButton>
                     </Stack>
                 )}

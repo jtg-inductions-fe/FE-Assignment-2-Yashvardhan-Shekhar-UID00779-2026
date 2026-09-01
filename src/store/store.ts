@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import alertReducer from './alert.slice';
 import cartReducer from './cart.slice';
-import menuReducer from './menu.slice';
+import restaurantDetailsReducer from './restaurantDetails.slice';
 import restaurantReducer from './restaurants.slice';
 import { AppDispatch, AppStore, RootState } from './store.type';
 import userReducer from './user.slice';
@@ -18,7 +18,7 @@ export const store = configureStore({
         alert: alertReducer,
         restaurant: restaurantReducer,
         cart: cartReducer,
-        menu: menuReducer,
+        restaurantDetails: restaurantDetailsReducer,
     },
 });
 

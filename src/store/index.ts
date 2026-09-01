@@ -9,9 +9,9 @@ export {
     setRestaurants,
 } from './restaurants.slice';
 export {
-    setMenuItems,
+    setRestaurant,
     addMenuItem,
     removeMenuItem,
     updateMenuItem,
-} from './menu.slice';
+} from './restaurantDetails.slice';
 export { removeItemFromCart, addItemToCart } from './cart.slice';

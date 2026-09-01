@@ -1,8 +1,13 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 
 import { PATH } from '@constant';
-import { Login, PageNotFound, Signup } from '@containers';
-import { Menu, Restaurants } from '@containers';
+import {
+    Login,
+    PageNotFound,
+    RestaurantDetails,
+    Restaurants,
+    Signup,
+} from '@containers';
 import { Home } from '@layouts';
 import { OnBoarding } from '@pages';
 
@@ -35,11 +40,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'restaurant/:restaurantId',
-                loader: () => {
-                    const res = getRestaurantDetails();
-                    return res ? res : redirect(`/home`);
-                },
-                Component: Menu,
+                Component: RestaurantDetails,
             },
             {
                 path: 'orders',

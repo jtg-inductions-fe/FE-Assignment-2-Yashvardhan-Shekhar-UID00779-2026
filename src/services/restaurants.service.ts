@@ -1,11 +1,15 @@
 import {
+    addMenuItem,
     addRestaurant,
     AppDispatch,
+    removeMenuItem,
     removeRestaurant,
+    setRestaurant,
     setRestaurants,
+    updateMenuItem,
     updateRestaurant,
 } from '@store';
-import { Restaurant } from '@types';
+import { MenuItem, Restaurant, RestaurantDetails } from '@types';
 import { alert, delay, handleErrorFeedback } from '@utils';
 
 /**
@@ -97,11 +101,38 @@ export const deleteRestaurantService = async (
     }
 };
 
-// Generates a unique ID, adds the menu item to Redux state, and shows a success alert
-export const handleCreateMenuItem = (
+/**
+ * get Restaurants and set them in store
+ * @param rid restaurant id
+ * @param dispatch store dispatch
+ */
+export const getRestaurantDetailsService = async (
+    rid: string | undefined,
+    dispatch: AppDispatch,
+): Promise<void> => {
+    try {
+        // will be replaced with actual api call
+        rid = '';
+        const res = await fetch('/data/RestaurantDetails.json');
+        const data = (await res.json()) as RestaurantDetails;
+        dispatch(setRestaurant(data));
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+    }
+};
+
+/**
+ * Generates a unique ID, adds the menu item to Redux state, and shows a success alert
+ * @param data new menu item
+ * @param dispatch store dispatch
+ */
+export const handleCreateMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
-): void => {
+): Promise<void> => {
+    // delay will be replaced with actual api call
+    await delay();
+
     const newMenuItem: MenuItem = {
         ...data,
         id: crypto.randomUUID(),
@@ -114,20 +145,34 @@ export const handleCreateMenuItem = (
     );
 };
 
-// Updates existing menu item details in Redux state and shows a success alert
-export const handleEditMenuItem = (
+/**
+ * Updates existing menu item details in Redux state and shows a success alert
+ * @param data updated data of the menu item
+ * @param dispatch store dispatch
+ */
+export const handleEditMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
-): void => {
+): Promise<void> => {
+    // delay will be replaced with actual api call
+    await delay();
+
     dispatch(updateMenuItem(data));
     alert('success', `Menu item ${data.name} has been updated.`, dispatch);
 };
 
-// Removes the specified menu item from Redux state and shows a success alert
-export const handleDeleteMenuItem = (
+/**
+ * Removes the specified menu item from Redux state and shows a success alert
+ * @param data menu item
+ * @param dispatch app dispatch
+ */
+export const handleDeleteMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
-): void => {
+): Promise<void> => {
+    // delay will be replaced with actual api call
+    await delay();
+
     dispatch(removeMenuItem(data.id));
     alert('success', `Menu item ${data.name} has been deleted.`, dispatch);
 };

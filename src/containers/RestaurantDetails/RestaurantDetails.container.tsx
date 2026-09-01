@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import { useLoaderData } from 'react-router';
+import { useParams } from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
-import { Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Container, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-import { DeleteDialog, MenuCard, MenuFormDialog } from '@components';
+import { DeleteDialog, MenuCard } from '@components';
+import { MenuFormDialog } from '@containers';
 import {
-    handleCreateMenuItem as handleCreateMenuItemService,
-    handleDeleteMenuItem as handleDeleteMenuItemService,
-    handleEditMenuItem as handleEditMenuItemService,
+    getRestaurantDetailsService,
+    handleCreateMenuItem as createMenuItemService,
+    handleDeleteMenuItem as deleteMenuItemService,
+    handleEditMenuItem as editMenuItemService,
 } from '@services';
-import { setMenuItems, useAppDispatch, useAppSelector } from '@store';
-import { MenuItem, RestaurantDetails } from '@types';
+import { useAppDispatch, useAppSelector } from '@store';
+import { MenuItem } from '@types';
 
 import {
     EmptyStateBox,
@@ -20,9 +22,11 @@ import {
     MenuGrid,
     StyledAddButton,
     StyledStack,
-} from './Menu.styles';
+} from './RestaurantDetails.styles';
 
-export const Menu = () => {
+export const RestaurantDetails = () => {
+    const rid = useParams().restaurantId;
+
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
@@ -31,10 +35,9 @@ export const Menu = () => {
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
     // Get initial data from loader
-    const restaurantDetails: RestaurantDetails = useLoaderData();
-
-    // Read menu items directly from Redux store
-    const menuItems = useAppSelector((state) => state.menu.menuItems);
+    const restaurantDetails = useAppSelector(
+        (state) => state.restaurantDetails.restaurant,
+    );
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [targetDeleteMenuItem, setTargetDeleteMenuItem] =
@@ -51,34 +54,51 @@ export const Menu = () => {
         image: '',
     };
 
+    /**
+     * setTarget menu to null removes restaurant
+     */
     const handleCloseFormDialog = () => {
         if (!isProcessing) setTargetEditMenuItem(null);
     };
 
+    /**
+     * closes dialog and removes restaurant
+     */
     const handleCloseDeleteDialog = () => {
         if (!isProcessing) setTargetDeleteMenuItem(null);
     };
 
-    const handleCreateMenuItem = (data: MenuItem) => {
+    /**
+     * updates menu for the new item
+     * @param data menuItem to add in the menu
+     */
+    const handleCreateMenuItem = async (data: MenuItem) => {
         setIsProcessing(true);
-        handleCreateMenuItemService(data, dispatch);
+        await createMenuItemService(data, dispatch);
         setIsProcessing(false);
         setTargetEditMenuItem(null);
     };
 
-    const handleEditMenuItem = (data: MenuItem) => {
+    /**
+     * updates menu in the menu item
+     * @param data data of edited menuItem
+     */
+    const handleEditMenuItem = async (data: MenuItem) => {
         if (targetEditMenuItem) {
             setIsProcessing(true);
-            handleEditMenuItemService(data, dispatch);
+            await editMenuItemService(data, dispatch);
             setIsProcessing(false);
             setTargetEditMenuItem(null);
         }
     };
 
-    const handleDeleteMenuItem = () => {
+    /**
+     * deletes the target set menu from the store
+     */
+    const handleDeleteMenuItem = async () => {
         if (targetDeleteMenuItem) {
             setIsProcessing(true);
-            handleDeleteMenuItemService(targetDeleteMenuItem, dispatch);
+            await deleteMenuItemService(targetDeleteMenuItem, dispatch);
             setIsProcessing(false);
             setTargetDeleteMenuItem(null);
         }
@@ -86,13 +106,11 @@ export const Menu = () => {
 
     // Update Redux store on initial load
     useEffect(() => {
-        if (restaurantDetails?.menu) {
-            dispatch(setMenuItems(restaurantDetails.menu));
-        }
-    }, [restaurantDetails, dispatch]);
+        void getRestaurantDetailsService(rid, dispatch);
+    }, [dispatch, rid]);
 
     return (
-        <>
+        <Container maxWidth="xl">
             <HeaderStack
                 direction="row"
                 justifyContent="space-between"
@@ -100,11 +118,11 @@ export const Menu = () => {
                 spacing={2}
             >
                 <StyledStack>
-                    <Typography variant="h1" component="h1">
-                        {restaurantDetails.name}
+                    <Typography variant="h2" component="h1" fontWeight="bold">
+                        {restaurantDetails?.name}
                     </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        {restaurantDetails.description}
+                    <Typography variant="subtitle1" color="text.secondary">
+                        {restaurantDetails?.description}
                     </Typography>
                 </StyledStack>
 
@@ -122,7 +140,7 @@ export const Menu = () => {
             </HeaderStack>
 
             <MenuGrid>
-                {menuItems.map((menuItem) => (
+                {restaurantDetails?.menu.map((menuItem) => (
                     <MenuCard
                         key={menuItem.id}
                         item={menuItem}
@@ -133,7 +151,7 @@ export const Menu = () => {
                     />
                 ))}
 
-                {menuItems.length === 0 && (
+                {restaurantDetails?.menu.length === 0 && (
                     <EmptyStateBox>
                         <Typography variant="h6" color="text.secondary">
                             No matching restaurants found.
@@ -155,8 +173,8 @@ export const Menu = () => {
                 name={targetDeleteMenuItem?.name}
                 isProcessing={isProcessing}
                 handleClose={handleCloseDeleteDialog}
-                onConfirm={() => void handleDeleteMenuItem()}
+                handleConfirm={handleDeleteMenuItem}
             />
-        </>
+        </Container>
     );
 };
