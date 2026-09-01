@@ -32,3 +32,11 @@ export const getStatusColor = (status: OrderStatus) => {
  */
 export const getActiveStep = (status: OrderStatus) =>
     STAGES.findIndex((s) => s.value === status);
+
+/**
+ * returns status
+ * @param status gets order status
+ * @returns string removed _ from the status
+ */
+export const getStatus = (status: OrderStatus) =>
+    status === 'out_for_delivery' ? 'out for delivery' : status;

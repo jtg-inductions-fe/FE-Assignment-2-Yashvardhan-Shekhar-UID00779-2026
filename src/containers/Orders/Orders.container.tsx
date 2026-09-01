@@ -3,20 +3,16 @@ import { useState } from 'react';
 import { useLoaderData } from 'react-router';
 
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 
 import { OrderItemDetails } from '@components';
 import { useAppSelector } from '@store';
 import { Order, OrderStatus } from '@types';
 
-import {
-    EmptyStateBox,
-    HeaderStack,
-    OrdersPaper,
-    StyledOrdersContainer,
-} from './Orders.styles';
+import { OrdersPaper, StyledOrdersContainer } from './Orders.styles';
 
 export const Orders = () => {
+    const theme = useTheme();
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
     const [orders, setOrders] = useState<Order[]>(useLoaderData());
 
@@ -30,16 +26,16 @@ export const Orders = () => {
 
     return (
         <StyledOrdersContainer maxWidth="xl">
-            <HeaderStack spacing={1}>
-                <Typography variant="h4" component="h1" fontWeight={800}>
+            <Stack pb={theme.typography.pxToRem(20)}>
+                <Typography variant="h1" component="h1">
                     {isOwnerView ? 'Customer Orders' : 'Your Orders'}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                     {isOwnerView
                         ? 'Manage order stages and keep customers updated.'
                         : 'Track current order stages and review order history.'}
                 </Typography>
-            </HeaderStack>
+            </Stack>
 
             {orders.length > 0 ? (
                 <OrdersPaper>
@@ -53,14 +49,12 @@ export const Orders = () => {
                     ))}
                 </OrdersPaper>
             ) : (
-                <EmptyStateBox>
+                <Box textAlign="center" color="text.secondary">
                     <ReceiptLongOutlinedIcon
-                        sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }}
+                        sx={{ fontSize: theme.typography.pxToRem(60) }}
                     />
-                    <Typography variant="h6" color="text.secondary">
-                        No orders found.
-                    </Typography>
-                </EmptyStateBox>
+                    <Typography variant="h6">No orders found.</Typography>
+                </Box>
             )}
         </StyledOrdersContainer>
     );

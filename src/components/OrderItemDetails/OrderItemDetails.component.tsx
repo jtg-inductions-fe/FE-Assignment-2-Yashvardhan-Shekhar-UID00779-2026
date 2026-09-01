@@ -1,22 +1,24 @@
-import { Fragment } from 'react';
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
+import {
+    Accordion,
+    AccordionSummary,
+    Stack,
+    Step,
+    StepLabel,
+    Stepper,
+    Typography,
+} from '@mui/material';
 
 import { Button } from '@components';
 
 import { STAGES } from './OrderItemDetails.config';
-import {
-    ActionControlsStack,
-    ItemRow,
-    ItemRowFull,
-    StatusChip,
-    StyledAccordionDetails,
-    StyledAccordionSummary,
-    StyledDivider,
-} from './OrderItemDetails.styles';
+import { StatusChip, StyledAccordionDetails } from './OrderItemDetails.styles';
 import { OrderItemDetailsProps } from './OrderItemDetails.types';
-import { getActiveStep, getStatusColor } from './OrderItemDetails.util';
+import {
+    getActiveStep,
+    getStatus,
+    getStatusColor,
+} from './OrderItemDetails.util';
 
 export const OrderItemDetails = ({
     order,
@@ -26,28 +28,30 @@ export const OrderItemDetails = ({
     const activeStep =
         order.status === 'rejected' ? 0 : getActiveStep(order.status);
     const rejected = order.status === 'rejected' ? 1 : -1;
+    const date = new Date(order.date).toDateString();
 
     return (
-        <Accordion>
-            <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <ItemRowFull
+        <Accordion sx={{ boxShadow: 'none' }}>
+            <AccordionSummary expandIcon={<ExpandMore />} sx={{ p: 3 }}>
+                <Stack
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
                     spacing={2}
+                    sx={{ width: '100%' }}
                 >
                     <div>
                         <Typography variant="subtitle1" fontWeight="bold">
                             Order #{order.id}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                            {order.date}
+                            {date}
                         </Typography>
                     </div>
 
-                    <ItemRow direction="row" alignItems="center" spacing={2}>
+                    <Stack direction="row" alignItems="center" spacing={2}>
                         <StatusChip
-                            label={order.status}
+                            label={getStatus(order.status)}
                             color={getStatusColor(order.status)}
                             size="small"
                             variant="outlined"
@@ -59,66 +63,51 @@ export const OrderItemDetails = ({
                         >
                             ₹{order.totalAmount.toFixed(2)}
                         </Typography>
-                    </ItemRow>
-                </ItemRowFull>
-            </StyledAccordionSummary>
+                    </Stack>
+                </Stack>
+            </AccordionSummary>
 
             <StyledAccordionDetails>
-                <Typography variant="subtitle2" fontWeight="bold">
-                    Order Items
-                </Typography>
-
                 {order.items.map((item) => (
-                    <Fragment key={item.id}>
-                        <ItemRow
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                        >
-                            <Typography variant="body2">
-                                {item.name} <strong>x {item.quantity}</strong>
-                            </Typography>
-                            <Typography variant="body2" fontWeight="500">
-                                ₹{(item.price * item.quantity).toFixed(2)}
-                            </Typography>
-                        </ItemRow>
-                    </Fragment>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        key={item.id}
+                    >
+                        <Typography variant="body2">
+                            {item.name} x {item.quantity}
+                        </Typography>
+                        <Typography variant="body2" fontWeight="500">
+                            ₹{(item.price * item.quantity).toFixed(2)}
+                        </Typography>
+                    </Stack>
                 ))}
 
-                <StyledDivider />
-
                 {!isOwnerView && (
-                    <>
-                        <Typography
-                            variant="subtitle2"
-                            fontWeight="bold"
-                            sx={{ mb: 2 }}
-                        >
-                            Order Tracking
-                        </Typography>
-                        {
-                            <Stepper activeStep={activeStep} alternativeLabel>
-                                {STAGES.map((stage, index) => (
-                                    <Step key={stage.value}>
-                                        {rejected == index ? (
-                                            <StepLabel error>
-                                                Rejected
-                                            </StepLabel>
-                                        ) : (
-                                            <StepLabel>{stage.label}</StepLabel>
-                                        )}
-                                    </Step>
-                                ))}
-                            </Stepper>
-                        }
-                    </>
+                    <Stepper
+                        activeStep={activeStep}
+                        alternativeLabel
+                        sx={{ pt: 6 }}
+                    >
+                        {STAGES.map((stage, index) => (
+                            <Step key={stage.value}>
+                                {rejected == index ? (
+                                    <StepLabel error>Rejected</StepLabel>
+                                ) : (
+                                    <StepLabel>{stage.label}</StepLabel>
+                                )}
+                            </Step>
+                        ))}
+                    </Stepper>
                 )}
 
                 {isOwnerView && (
-                    <ActionControlsStack
+                    <Stack
                         direction="row"
                         spacing={2}
                         justifyContent="flex-end"
+                        mt={6}
                     >
                         {order.status === 'pending' && (
                             <>
@@ -132,7 +121,7 @@ export const OrderItemDetails = ({
                                     Reject Order
                                 </Button>
                                 <Button
-                                    variant="contained"
+                                    variant="outlined"
                                     color="primary"
                                     onClick={() =>
                                         onStatusChange(order.id, 'accepted')
@@ -145,7 +134,7 @@ export const OrderItemDetails = ({
 
                         {order.status === 'accepted' && (
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="primary"
                                 onClick={() =>
                                     onStatusChange(order.id, 'preparing')
@@ -157,7 +146,7 @@ export const OrderItemDetails = ({
 
                         {order.status === 'preparing' && (
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="primary"
                                 onClick={() =>
                                     onStatusChange(order.id, 'out_for_delivery')
@@ -169,7 +158,7 @@ export const OrderItemDetails = ({
 
                         {order.status === 'out_for_delivery' && (
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="success"
                                 onClick={() =>
                                     onStatusChange(order.id, 'delivered')
@@ -185,7 +174,7 @@ export const OrderItemDetails = ({
                                 No further actions available.
                             </Typography>
                         )}
-                    </ActionControlsStack>
+                    </Stack>
                 )}
             </StyledAccordionDetails>
         </Accordion>
