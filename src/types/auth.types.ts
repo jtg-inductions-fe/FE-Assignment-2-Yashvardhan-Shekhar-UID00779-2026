@@ -1,5 +1,12 @@
 /**
  * Represents the basic information of an authenticated user.
+ * @type {
+ *     id?: string;
+ *     email: string;
+ *     name: string;
+ *     role: 'owner' | 'customer';
+ * };
+ *
  */
 export type User = {
     /** id of the user */

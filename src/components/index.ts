@@ -7,6 +7,4 @@ export { Dialog } from './Dialog';
 export { RestaurantCard } from './RestaurantCard';
 export { Navbar, ProfileMenu, BottomBar } from './Navigation';
 export { Avatar } from './Avatar';
-export { DeleteRestaurantDialog } from './RestaurantDeleteDialog';
 export { DeleteDialog } from './DeleteDialog';
-export { RestaurantFormDialog } from './RestaurantFormDialog';

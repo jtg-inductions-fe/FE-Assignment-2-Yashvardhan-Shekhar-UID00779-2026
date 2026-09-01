@@ -15,11 +15,8 @@ import {
     useTheme,
 } from '@mui/material';
 
-import {
-    DeleteDialog,
-    RestaurantCard,
-    RestaurantFormDialog,
-} from '@components';
+import { DeleteDialog, RestaurantCard } from '@components';
+import { RestaurantFormDialog } from '@containers';
 import {
     createRestaurantService,
     deleteRestaurantService,
