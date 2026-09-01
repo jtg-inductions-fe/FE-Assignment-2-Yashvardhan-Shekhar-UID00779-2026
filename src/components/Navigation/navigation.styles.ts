@@ -1,21 +1,4 @@
-import {
-    AppBar,
-    Avatar,
-    Box,
-    Button,
-    ListItemIcon,
-    Menu,
-    MenuItem,
-    Paper,
-    styled,
-    Toolbar,
-} from '@mui/material';
-
-export const StyledAvatar = styled(Avatar)(({ theme }) => ({
-    width: theme.typography.pxToRem(32),
-    height: theme.typography.pxToRem(32),
-    backgroundColor: theme.palette.primary.main,
-}));
+import { AppBar, Box, Button, Menu, Paper, styled } from '@mui/material';
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
     position: 'fixed',
@@ -23,6 +6,7 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
     left: 0,
     right: 0,
     zIndex: theme.zIndex.appBar,
+
     [theme.breakpoints.up('md')]: {
         display: 'none',
         pb: '2rem',
@@ -41,26 +25,15 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
     color: theme.palette.text.primary,
 }));
 
-export const StyledToolbar = styled(Toolbar)({
-    justifyContent: 'space-between',
-});
-
 export const DesktopNavBox = styled(Box)(({ theme }) => ({
     display: 'none',
     gap: theme.spacing(1),
     alignItems: 'center',
     color: theme.palette.text.secondary,
+
     [theme.breakpoints.up('md')]: {
         display: 'flex',
     },
-}));
-
-export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-    color: theme.palette.error.main,
-}));
-
-export const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
-    color: theme.palette.error.main,
 }));
 
 export const StyledNavButton = styled(Button)({});

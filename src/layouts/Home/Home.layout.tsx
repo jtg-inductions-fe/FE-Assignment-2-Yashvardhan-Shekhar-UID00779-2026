@@ -22,6 +22,7 @@ export const Home = () => {
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
 
+    // const {pathname} = ;
     const activeTab = useLocation().pathname.substring(1) || 'home';
     const isMenuOpen = Boolean(anchorEl);
 
@@ -63,7 +64,6 @@ export const Home = () => {
                 user={user}
                 activeTab={activeTab}
                 cartCount={cartCount}
-                navigate={navigate}
             />
 
             <ProfileMenu
@@ -83,7 +83,6 @@ export const Home = () => {
                 user={user}
                 activeTab={activeTab}
                 cartCount={cartCount}
-                navigate={navigate}
             />
         </Box>
     );

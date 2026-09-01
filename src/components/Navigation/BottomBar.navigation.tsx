@@ -1,22 +1,27 @@
+import { useNavigate } from 'react-router';
+
 import HistoryIcon from '@mui/icons-material/History';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge, BottomNavigation, BottomNavigationAction } from '@mui/material';
 
+import { Avatar } from '@components';
 import { PATH } from '@constant';
 
-import { StyledAvatar, StyledPaper } from './navigation.styles';
+import { StyledPaper } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
 export const BottomBar = (props: BarProps) => {
-    const { handleProfileClick, user, activeTab, cartCount, navigate } = props;
+    const { handleProfileClick, user, activeTab, cartCount } = props;
+
+    const navigate = useNavigate();
 
     return (
         <StyledPaper elevation={10}>
             <BottomNavigation showLabels value={activeTab}>
                 <BottomNavigationAction
                     label="Restaurants"
-                    value="home"
+                    value="restaurants"
                     icon={<HomeOutlinedIcon />}
                     onClick={() => void navigate(PATH.HOME)}
                 />
@@ -41,11 +46,7 @@ export const BottomBar = (props: BarProps) => {
                 <BottomNavigationAction
                     label="Profile"
                     value="profile"
-                    icon={
-                        <StyledAvatar>
-                            {user?.name?.[0]?.toUpperCase()}
-                        </StyledAvatar>
-                    }
+                    icon={<Avatar name={user?.name} />}
                     onClick={handleProfileClick}
                 />
             </BottomNavigation>

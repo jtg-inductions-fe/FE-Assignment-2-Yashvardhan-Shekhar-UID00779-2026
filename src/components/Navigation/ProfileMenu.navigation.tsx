@@ -1,15 +1,12 @@
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ListSubheader } from '@mui/material';
+import { ListItemIcon, ListSubheader, MenuItem, useTheme } from '@mui/material';
 
-import {
-    StyledListItemIcon,
-    StyledMenu,
-    StyledMenuItem,
-} from './navigation.styles';
+import { StyledMenu } from './navigation.styles';
 import { ProfileMenuProps } from './navigation.types';
 
 export const ProfileMenu = (props: ProfileMenuProps) => {
     const { isMenuOpen, anchorEl, user, handleMenuClose, handleLogOut } = props;
+    const theme = useTheme();
 
     return (
         <StyledMenu
@@ -19,12 +16,15 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
             onClick={handleMenuClose}
         >
             <ListSubheader>Hi, {user?.name}</ListSubheader>
-            <StyledMenuItem onClick={handleLogOut}>
-                <StyledListItemIcon>
+            <MenuItem
+                onClick={handleLogOut}
+                sx={{ color: theme.palette.error.main }}
+            >
+                <ListItemIcon sx={{ color: theme.palette.error.main }}>
                     <LogoutIcon fontSize="small" />
-                </StyledListItemIcon>
+                </ListItemIcon>
                 Logout
-            </StyledMenuItem>
+            </MenuItem>
         </StyledMenu>
     );
 };

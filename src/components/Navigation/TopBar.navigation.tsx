@@ -1,26 +1,30 @@
+import { useNavigate } from 'react-router';
+
 import HistoryIcon from '@mui/icons-material/History';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Badge, Container, IconButton, Link } from '@mui/material';
+import { Badge, Container, IconButton, Link, Toolbar } from '@mui/material';
 
+import { Avatar } from '@components';
 import { PATH } from '@constant';
 
 import {
     DesktopNavBox,
     StyledAppBar,
-    StyledAvatar,
     StyledNavButton,
-    StyledToolbar,
 } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
 export const Navbar = (props: BarProps) => {
-    const { handleProfileClick, user, activeTab, cartCount, navigate } = props;
+    const { handleProfileClick, user, activeTab, cartCount } = props;
+    const activeTabPath = '/' + activeTab;
+
+    const navigate = useNavigate();
 
     return (
         <StyledAppBar position="sticky" elevation={1}>
             <Container maxWidth="xl">
-                <StyledToolbar disableGutters>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Link
                         variant="h6"
                         component="button"
@@ -33,7 +37,11 @@ export const Navbar = (props: BarProps) => {
 
                     <DesktopNavBox>
                         <StyledNavButton
-                            color={activeTab === 'home' ? 'primary' : 'inherit'}
+                            color={
+                                activeTabPath === PATH.HOME
+                                    ? 'primary'
+                                    : 'inherit'
+                            }
                             onClick={() => void navigate(PATH.HOME)}
                         >
                             <HomeOutlinedIcon sx={{ mr: 1 }} /> Restaurants
@@ -42,7 +50,9 @@ export const Navbar = (props: BarProps) => {
                         {user?.role === 'customer' && (
                             <StyledNavButton
                                 color={
-                                    activeTab === 'cart' ? 'primary' : 'inherit'
+                                    activeTabPath === PATH.CART
+                                        ? 'primary'
+                                        : 'inherit'
                                 }
                                 onClick={() => void navigate(PATH.CART)}
                             >
@@ -59,7 +69,9 @@ export const Navbar = (props: BarProps) => {
 
                         <StyledNavButton
                             color={
-                                activeTab === 'orders' ? 'primary' : 'inherit'
+                                activeTabPath === PATH.ORDERS
+                                    ? 'primary'
+                                    : 'inherit'
                             }
                             onClick={() => void navigate(PATH.ORDERS)}
                         >
@@ -72,12 +84,10 @@ export const Navbar = (props: BarProps) => {
                             size="small"
                             aria-label="opening the profile menu"
                         >
-                            <StyledAvatar>
-                                {user?.name?.[0]?.toUpperCase()}
-                            </StyledAvatar>
+                            <Avatar name={user?.name} />
                         </IconButton>
                     </DesktopNavBox>
-                </StyledToolbar>
+                </Toolbar>
             </Container>
         </StyledAppBar>
     );

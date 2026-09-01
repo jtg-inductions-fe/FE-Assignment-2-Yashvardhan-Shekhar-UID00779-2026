@@ -1,5 +1,3 @@
-import { NavigateFunction } from 'react-router';
-
 import { User } from '@types';
 
 /**
@@ -19,7 +17,6 @@ export type BarProps = {
     user: User;
     activeTab: string;
     cartCount: number;
-    navigate: NavigateFunction;
 };
 
 /**
