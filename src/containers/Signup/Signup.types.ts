@@ -6,7 +6,11 @@ export type SignupInput = User & {
     confirmPassword: string;
     password: string;
 };
-
+/**
+ * @type {
+ *     onSwitchToLogin: () => void;
+ * };
+ */
 export type SignupProp = {
     onSwitchToLogin: () => void;
 };
