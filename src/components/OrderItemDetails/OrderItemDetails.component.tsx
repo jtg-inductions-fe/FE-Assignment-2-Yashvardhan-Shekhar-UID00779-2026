@@ -1,72 +1,40 @@
 import { Fragment } from 'react';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { Accordion, Step, StepLabel, Stepper, Typography } from '@mui/material';
 
 import { Button } from '@components';
-import { Order, OrderStatus } from '@types';
 
+import { STAGES } from './OrderItemDetails.config';
 import {
     ActionControlsStack,
     ItemRow,
+    ItemRowFull,
     StatusChip,
-    StyledAccordion,
     StyledAccordionDetails,
     StyledAccordionSummary,
     StyledDivider,
 } from './OrderItemDetails.styles';
-
-type OrderItemDetailsProps = {
-    order: Order;
-    isOwnerView: boolean;
-    onStatusChange: (orderId: string, nextStatus: OrderStatus) => void;
-};
-
-const STAGES: { label: string; value: OrderStatus }[] = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Accepted', value: 'accepted' },
-    { label: 'Preparing', value: 'preparing' },
-    { label: 'Out for Delivery', value: 'out_for_delivery' },
-    { label: 'Delivered', value: 'delivered' },
-];
-
-const getStatusColor = (status: OrderStatus) => {
-    switch (status) {
-        case 'pending':
-            return 'warning';
-        case 'accepted':
-        case 'preparing':
-            return 'info';
-        case 'out_for_delivery':
-            return 'secondary';
-        case 'delivered':
-            return 'success';
-        case 'rejected':
-            return 'error';
-        default:
-            return 'default';
-    }
-};
-
-const getActiveStep = (status: OrderStatus) =>
-    STAGES.findIndex((s) => s.value === status);
+import { OrderItemDetailsProps } from './OrderItemDetails.types';
+import { getActiveStep, getStatusColor } from './OrderItemDetails.util';
 
 export const OrderItemDetails = ({
     order,
     isOwnerView,
     onStatusChange,
 }: OrderItemDetailsProps) => {
-    const activeStep = getActiveStep(order.status);
+    const activeStep =
+        order.status === 'rejected' ? 0 : getActiveStep(order.status);
+    const rejected = order.status === 'rejected' ? 1 : -1;
 
     return (
-        <StyledAccordion>
+        <Accordion>
             <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <ItemRow
+                <ItemRowFull
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
                     spacing={2}
-                    sx={{ width: '100%' }}
                 >
                     <div>
                         <Typography variant="subtitle1" fontWeight="bold">
@@ -92,7 +60,7 @@ export const OrderItemDetails = ({
                             ₹{order.totalAmount.toFixed(2)}
                         </Typography>
                     </ItemRow>
-                </ItemRow>
+                </ItemRowFull>
             </StyledAccordionSummary>
 
             <StyledAccordionDetails>
@@ -100,7 +68,7 @@ export const OrderItemDetails = ({
                     Order Items
                 </Typography>
 
-                {order.items.map((item, idx) => (
+                {order.items.map((item) => (
                     <Fragment key={item.id}>
                         <ItemRow
                             direction="row"
@@ -114,9 +82,6 @@ export const OrderItemDetails = ({
                                 ₹{(item.price * item.quantity).toFixed(2)}
                             </Typography>
                         </ItemRow>
-                        {idx < order.items.length - 1 && (
-                            <StyledDivider sx={{ my: 0.5 }} />
-                        )}
                     </Fragment>
                 ))}
 
@@ -131,20 +96,21 @@ export const OrderItemDetails = ({
                         >
                             Order Tracking
                         </Typography>
-                        {order.status === 'rejected' ? (
-                            <StatusChip
-                                label="This order was rejected"
-                                color="error"
-                            />
-                        ) : (
+                        {
                             <Stepper activeStep={activeStep} alternativeLabel>
-                                {STAGES.map((stage) => (
+                                {STAGES.map((stage, index) => (
                                     <Step key={stage.value}>
-                                        <StepLabel>{stage.label}</StepLabel>
+                                        {rejected == index ? (
+                                            <StepLabel error>
+                                                Rejected
+                                            </StepLabel>
+                                        ) : (
+                                            <StepLabel>{stage.label}</StepLabel>
+                                        )}
                                     </Step>
                                 ))}
                             </Stepper>
-                        )}
+                        }
                     </>
                 )}
 
@@ -222,6 +188,6 @@ export const OrderItemDetails = ({
                     </ActionControlsStack>
                 )}
             </StyledAccordionDetails>
-        </StyledAccordion>
+        </Accordion>
     );
 };

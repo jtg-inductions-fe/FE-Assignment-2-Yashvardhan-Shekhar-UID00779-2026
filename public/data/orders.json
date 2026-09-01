@@ -1,7 +1,7 @@
 [
     {
         "id": "ORD-8492",
-        "date": "2026-08-27 • 08:30 PM",
+        "date": "2026-08-27",
         "totalAmount": 648.0,
         "status": "pending",
         "items": [
@@ -21,7 +21,7 @@
     },
     {
         "id": "ORD-7310",
-        "date": "2026-08-27 • 07:15 PM",
+        "date": "2026-08-27",
         "totalAmount": 430.0,
         "status": "accepted",
         "items": [
@@ -41,7 +41,7 @@
     },
     {
         "id": "ORD-6204",
-        "date": "2026-08-27 • 06:45 PM",
+        "date": "2026-08-27",
         "totalAmount": 290.0,
         "status": "preparing",
         "items": [
@@ -61,7 +61,7 @@
     },
     {
         "id": "ORD-5198",
-        "date": "2026-08-27 • 05:20 PM",
+        "date": "2026-08-27",
         "totalAmount": 520.0,
         "status": "out_for_delivery",
         "items": [
@@ -81,7 +81,7 @@
     },
     {
         "id": "ORD-4012",
-        "date": "2026-08-26 • 09:10 PM",
+        "date": "2026-08-26",
         "totalAmount": 180.0,
         "status": "delivered",
         "items": [
@@ -95,7 +95,7 @@
     },
     {
         "id": "ORD-3981",
-        "date": "2026-08-26 • 08:00 PM",
+        "date": "2026-08-26",
         "totalAmount": 310.0,
         "status": "rejected",
         "items": [
@@ -109,7 +109,7 @@
     },
     {
         "id": "ORD-2847",
-        "date": "2026-08-26 • 07:25 PM",
+        "date": "2026-08-26",
         "totalAmount": 765.0,
         "status": "delivered",
         "items": [
@@ -141,7 +141,7 @@
     },
     {
         "id": "ORD-1736",
-        "date": "2026-08-26 • 06:40 PM",
+        "date": "2026-08-26",
         "totalAmount": 355.0,
         "status": "preparing",
         "items": [
@@ -167,7 +167,7 @@
     },
     {
         "id": "ORD-9521",
-        "date": "2026-08-25 • 09:05 PM",
+        "date": "2026-08-25",
         "totalAmount": 590.0,
         "status": "delivered",
         "items": [
@@ -193,7 +193,7 @@
     },
     {
         "id": "ORD-8473",
-        "date": "2026-08-25 • 08:15 PM",
+        "date": "2026-08-25",
         "totalAmount": 425.0,
         "status": "accepted",
         "items": [
@@ -219,7 +219,7 @@
     },
     {
         "id": "ORD-6349",
-        "date": "2026-08-24 • 07:50 PM",
+        "date": "2026-08-24",
         "totalAmount": 870.0,
         "status": "out_for_delivery",
         "items": [
@@ -239,7 +239,7 @@
     },
     {
         "id": "ORD-5126",
-        "date": "2026-08-24 • 06:30 PM",
+        "date": "2026-08-24",
         "totalAmount": 340.0,
         "status": "pending",
         "items": [
