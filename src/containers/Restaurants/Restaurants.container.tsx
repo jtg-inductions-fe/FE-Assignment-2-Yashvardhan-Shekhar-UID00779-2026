@@ -13,7 +13,7 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { DeleteDialog, RestaurantCard } from '@components';
+import { AddButton, DeleteDialog, Grid, RestaurantCard } from '@components';
 import { RestaurantFormDialog } from '@containers';
 import {
     createRestaurantService,
@@ -25,8 +25,6 @@ import { useAppDispatch, useAppSelector } from '@store';
 import { Restaurant } from '@types';
 
 import {
-    RestaurantGrid,
-    StyledAddButton,
     StyledToggleButton,
 } from './Restaurants.styles';
 import { Category } from './Restaurants.types';
@@ -163,7 +161,7 @@ export const Restaurants = () => {
                     </Typography>
                 </Box>
                 {isOwnerView && (
-                    <StyledAddButton
+                    <AddButton
                         variant="outlined"
                         size={canShow ? 'large' : 'small'}
                         startIcon={<Add />}
@@ -172,7 +170,7 @@ export const Restaurants = () => {
                         }
                     >
                         {canShow && 'Add New Restaurant'}
-                    </StyledAddButton>
+                    </AddButton>
                 )}
             </Stack>
             <Stack
@@ -224,7 +222,8 @@ export const Restaurants = () => {
                     </Typography>
                 </Box>
             )}
-            <RestaurantGrid>
+
+            <Grid>
                 {filteredRestaurants.map((restaurant) => (
                     <RestaurantCard
                         key={restaurant.id}
@@ -234,7 +233,8 @@ export const Restaurants = () => {
                         onDelete={() => setTargetDeleteRestaurant(restaurant)}
                     />
                 ))}
-            </RestaurantGrid>
+            </Grid>
+
             <RestaurantFormDialog
                 restaurant={targetEditRestaurant || initialRestaurantState}
                 isProcessing={isProcessing}

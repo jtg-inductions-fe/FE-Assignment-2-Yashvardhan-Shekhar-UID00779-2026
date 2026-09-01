@@ -8,6 +8,7 @@ import {
     Typography,
 } from '@mui/material';
 
+import { Card } from '@components';
 import { addItemToCart, removeItemFromCart, useAppSelector } from '@store';
 
 import {
@@ -15,7 +16,6 @@ import {
     DescriptionText,
     QuantityControlStack,
     QuantityIconButton,
-    StyledCard,
     StyledCardActions,
     StyledChip,
 } from './MenuCard.styles';
@@ -47,7 +47,7 @@ export const MenuCard = (props: MenuCardProps) => {
     };
 
     return (
-        <StyledCard elevation={2}>
+        <Card elevation={2}>
             <Box>
                 <CardMedia
                     component="img"
@@ -174,6 +174,6 @@ export const MenuCard = (props: MenuCardProps) => {
                     </Stack>
                 )}
             </StyledCardActions>
-        </StyledCard>
+        </Card>
     );
 };

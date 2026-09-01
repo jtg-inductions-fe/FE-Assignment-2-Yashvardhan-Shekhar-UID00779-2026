@@ -11,7 +11,7 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { DeleteDialog, MenuCard } from '@components';
+import { AddButton, DeleteDialog, Grid, MenuCard } from '@components';
 import { MenuFormDialog } from '@containers';
 import {
     getRestaurantDetailsService,
@@ -22,11 +22,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@store';
 import { MenuItem } from '@types';
 
-import {
-    EmptyStateBox,
-    MenuGrid,
-    StyledAddButton,
-} from './RestaurantDetails.styles';
+import { EmptyStateBox } from './RestaurantDetails.styles';
 
 export const RestaurantDetails = () => {
     const rid = useParams().restaurantId;
@@ -132,7 +128,7 @@ export const RestaurantDetails = () => {
                 </Stack>
 
                 {isOwnerView && (
-                    <StyledAddButton
+                    <AddButton
                         variant="outlined"
                         size={canShow ? 'large' : 'small'}
                         startIcon={<AddIcon />}
@@ -140,11 +136,11 @@ export const RestaurantDetails = () => {
                         onClick={() => setTargetEditMenuItem(initialMenuState)}
                     >
                         {canShow && 'Add New Menu Item'}
-                    </StyledAddButton>
+                    </AddButton>
                 )}
             </Stack>
 
-            <MenuGrid>
+            <Grid>
                 {restaurantDetails?.menu.map((menuItem) => (
                     <MenuCard
                         key={menuItem.id}
@@ -155,15 +151,15 @@ export const RestaurantDetails = () => {
                         onDelete={() => setTargetDeleteMenuItem(menuItem)}
                     />
                 ))}
+            </Grid>
 
-                {restaurantDetails?.menu.length === 0 && (
-                    <EmptyStateBox>
-                        <Typography variant="h6" color="text.secondary">
-                            No matching restaurants found.
-                        </Typography>
-                    </EmptyStateBox>
-                )}
-            </MenuGrid>
+            {restaurantDetails?.menu.length === 0 && (
+                <EmptyStateBox>
+                    <Typography variant="h6" color="text.secondary">
+                        No matching restaurants found.
+                    </Typography>
+                </EmptyStateBox>
+            )}
 
             <MenuFormDialog
                 menuItem={targetEditMenuItem || initialMenuState}

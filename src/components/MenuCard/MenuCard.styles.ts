@@ -1,6 +1,5 @@
 import {
     Button,
-    Card,
     CardActions,
     Chip,
     IconButton,
@@ -44,15 +43,4 @@ export const QuantityControlStack = styled(Stack)(({ theme }) => ({
     borderColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
-}));
-
-export const StyledCard = styled(Card)(({ theme }) => ({
-    borderRadius: theme.typography.pxToRem(16),
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    '&:hover': {
-        transform: 'translateY(-2px)',
-        boxShadow: theme.shadows[6],
-    },
 }));
