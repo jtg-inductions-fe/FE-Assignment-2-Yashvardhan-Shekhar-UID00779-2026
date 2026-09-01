@@ -12,9 +12,8 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export const StyledMenu = styled(Menu)(({ theme }) => ({
-    root: {
+    '.MuiMenu-list': {
         minWidth: theme.typography.pxToRem(180),
-        borderRadius: theme.typography.pxToRem(10),
     },
 }));
 
