@@ -1,33 +1,26 @@
-import { useState } from 'react';
-
-import { useLoaderData } from 'react-router';
+import { useEffect } from 'react';
 
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Container, Stack, Typography, useTheme } from '@mui/material';
 
 import { OrderItemDetails } from '@components';
-import { useAppSelector } from '@store';
-import { Order, OrderStatus } from '@types';
-
-import { OrdersPaper, StyledOrdersContainer } from './Orders.styles';
+import { getOrders } from '@services';
+import { useAppDispatch, useAppSelector } from '@store';
 
 export const Orders = () => {
     const theme = useTheme();
+    const dispatch = useAppDispatch();
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
-    const [orders, setOrders] = useState<Order[]>(useLoaderData());
+    const orders = useAppSelector((state) => state.orders.orders);
 
-    const handleStatusChange = (orderId: string, nextStatus: OrderStatus) => {
-        setOrders((prev) =>
-            prev.map((ord) =>
-                ord.id === orderId ? { ...ord, status: nextStatus } : ord,
-            ),
-        );
-    };
+    useEffect(() => {
+        void getOrders(dispatch);
+    }, [dispatch]);
 
     return (
-        <StyledOrdersContainer maxWidth="xl">
+        <Container maxWidth="xl" sx={{ py: 4 }}>
             <Stack pb={theme.typography.pxToRem(20)}>
-                <Typography variant="h1" component="h1">
+                <Typography variant="h2" component="h1">
                     {isOwnerView ? 'Customer Orders' : 'Your Orders'}
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
@@ -37,17 +30,16 @@ export const Orders = () => {
                 </Typography>
             </Stack>
 
-            {orders.length > 0 ? (
-                <OrdersPaper>
+            {orders && orders.length > 0 ? (
+                <Box overflow="hidden">
                     {orders.map((order) => (
                         <OrderItemDetails
                             key={order.id}
                             order={order}
                             isOwnerView={isOwnerView}
-                            onStatusChange={handleStatusChange}
                         />
                     ))}
-                </OrdersPaper>
+                </Box>
             ) : (
                 <Box textAlign="center" color="text.secondary">
                     <ReceiptLongOutlinedIcon
@@ -56,6 +48,6 @@ export const Orders = () => {
                     <Typography variant="h6">No orders found.</Typography>
                 </Box>
             )}
-        </StyledOrdersContainer>
+        </Container>
     );
 };

@@ -46,7 +46,6 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'orders',
-                loader: getOrders,
                 Component: Orders,
             },
             {

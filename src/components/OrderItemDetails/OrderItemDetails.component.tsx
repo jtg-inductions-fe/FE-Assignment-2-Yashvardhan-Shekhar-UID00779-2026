@@ -1,18 +1,24 @@
+import { updateOrder } from 'services/order.service';
+
 import { ExpandMore } from '@mui/icons-material';
 import {
     Accordion,
+    AccordionDetails,
     AccordionSummary,
+    Chip,
     Stack,
     Step,
     StepLabel,
     Stepper,
     Typography,
+    useTheme,
 } from '@mui/material';
 
 import { Button } from '@components';
+import { useAppDispatch } from '@store';
+import { OrderStatus } from '@types';
 
 import { STAGES } from './OrderItemDetails.config';
-import { StatusChip, StyledAccordionDetails } from './OrderItemDetails.styles';
 import { OrderItemDetailsProps } from './OrderItemDetails.types';
 import {
     getActiveStep,
@@ -23,12 +29,26 @@ import {
 export const OrderItemDetails = ({
     order,
     isOwnerView,
-    onStatusChange,
 }: OrderItemDetailsProps) => {
+    const dispatch = useAppDispatch();
+    const theme = useTheme();
+
     const activeStep =
         order.status === 'rejected' ? 0 : getActiveStep(order.status);
     const rejected = order.status === 'rejected' ? 1 : -1;
     const date = new Date(order.date).toDateString();
+
+    /**
+     * status change of the order
+     * @param orderId id of the order
+     * @param nextStatus next status
+     */
+    const handleStatusChange = async (
+        orderId: string,
+        nextStatus: OrderStatus,
+    ) => {
+        await updateOrder(orderId, nextStatus, dispatch);
+    };
 
     return (
         <Accordion sx={{ boxShadow: 'none' }}>
@@ -50,11 +70,15 @@ export const OrderItemDetails = ({
                     </div>
 
                     <Stack direction="row" alignItems="center" spacing={2}>
-                        <StatusChip
+                        <Chip
                             label={getStatus(order.status)}
                             color={getStatusColor(order.status)}
                             size="small"
                             variant="outlined"
+                            sx={{
+                                fontWeight: 'bold',
+                                textTransform: 'capitalize',
+                            }}
                         />
                         <Typography
                             variant="subtitle1"
@@ -67,7 +91,12 @@ export const OrderItemDetails = ({
                 </Stack>
             </AccordionSummary>
 
-            <StyledAccordionDetails>
+            <AccordionDetails
+                sx={{
+                    padding: theme.spacing(3),
+                    backgroundColor: theme.palette.action.hover,
+                }}
+            >
                 {order.items.map((item) => (
                     <Stack
                         direction="row"
@@ -115,7 +144,10 @@ export const OrderItemDetails = ({
                                     variant="outlined"
                                     color="error"
                                     onClick={() =>
-                                        onStatusChange(order.id, 'rejected')
+                                        void handleStatusChange(
+                                            order.id,
+                                            'rejected',
+                                        )
                                     }
                                 >
                                     Reject Order
@@ -124,7 +156,10 @@ export const OrderItemDetails = ({
                                     variant="outlined"
                                     color="primary"
                                     onClick={() =>
-                                        onStatusChange(order.id, 'accepted')
+                                        void handleStatusChange(
+                                            order.id,
+                                            'accepted',
+                                        )
                                     }
                                 >
                                     Accept Order
@@ -137,7 +172,10 @@ export const OrderItemDetails = ({
                                 variant="outlined"
                                 color="primary"
                                 onClick={() =>
-                                    onStatusChange(order.id, 'preparing')
+                                    void handleStatusChange(
+                                        order.id,
+                                        'preparing',
+                                    )
                                 }
                             >
                                 Start Preparing
@@ -149,7 +187,10 @@ export const OrderItemDetails = ({
                                 variant="outlined"
                                 color="primary"
                                 onClick={() =>
-                                    onStatusChange(order.id, 'out_for_delivery')
+                                    void handleStatusChange(
+                                        order.id,
+                                        'out_for_delivery',
+                                    )
                                 }
                             >
                                 Mark Out for Delivery
@@ -161,7 +202,10 @@ export const OrderItemDetails = ({
                                 variant="outlined"
                                 color="success"
                                 onClick={() =>
-                                    onStatusChange(order.id, 'delivered')
+                                    void handleStatusChange(
+                                        order.id,
+                                        'delivered',
+                                    )
                                 }
                             >
                                 Mark Delivered
@@ -176,7 +220,7 @@ export const OrderItemDetails = ({
                         )}
                     </Stack>
                 )}
-            </StyledAccordionDetails>
+            </AccordionDetails>
         </Accordion>
     );
 };
