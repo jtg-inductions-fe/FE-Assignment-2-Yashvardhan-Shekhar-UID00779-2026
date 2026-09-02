@@ -34,7 +34,7 @@ export const Cart = () => {
         (sum: number, item: CartItem) => sum + item.price * item.quantity,
         0,
     );
-    const bookingFee = Math.min(subtotal * 0.1, 100);
+    const bookingFee = Math.max(Math.min(subtotal * 0.1, 200), 40);
     const grandTotal = subtotal + bookingFee;
 
     return (
