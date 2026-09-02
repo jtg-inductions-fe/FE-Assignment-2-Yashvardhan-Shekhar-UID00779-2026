@@ -4,8 +4,8 @@ import { TextField as MuiTextField } from '@mui/material';
 
 import { TextFieldProps } from './TextField.types';
 
-export const TextField = (allProps: TextFieldProps) => {
-    const { field, ...props } = allProps;
+export const TextField = (props: TextFieldProps) => {
+    const { field, ...rest } = props;
 
     const {
         formState: { errors },
@@ -14,8 +14,8 @@ export const TextField = (allProps: TextFieldProps) => {
 
     return (
         <MuiTextField
-            {...props}
-            error={Boolean(errors[field])}
+            {...rest}
+            error={!!errors[field]}
             helperText={errors[field]?.message as string}
             {...register(field)}
         />

@@ -30,7 +30,6 @@ export const Signup = (props: SignupProp) => {
     /**
      *  handle toggle of the password visibility
      *  @param data - data of the form
-     *  @returns {Promise<void>} returns a void promise
      */
     const handleClick: SubmitHandler<SignupInput> = async (
         data,
@@ -55,26 +54,21 @@ export const Signup = (props: SignupProp) => {
             >
                 <Stack spacing={2}>
                     <TextField label="Your Name" field="name" />
-
                     <TextField
                         label="Email Address"
                         type="email"
                         field="email"
                     />
-
                     <PasswordField label="Password" field="password" />
-
                     <PasswordField
                         label="Confirm Password"
                         field="confirmPassword"
                     />
-
                     <RadioField
                         fieldName="role"
                         heading="Account Type"
                         options={['customer', 'owner']}
                     />
-
                     <Button
                         type="submit"
                         variant="contained"
@@ -84,7 +78,6 @@ export const Signup = (props: SignupProp) => {
                     >
                         Sign Up
                     </Button>
-
                     <Box textAlign="center">
                         <Typography variant="body2" color="text.secondary">
                             Already have an account?{' '}

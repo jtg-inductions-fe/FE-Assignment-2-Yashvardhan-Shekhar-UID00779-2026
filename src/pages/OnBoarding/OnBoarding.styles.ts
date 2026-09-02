@@ -1,6 +1,5 @@
 import { Box, BoxProps, styled } from '@mui/material';
 
-// Outer wrapper viewport container
 export const PageContainer = styled(Box)(({ theme }) => ({
     height: '100vh',
     minHeight: theme.typography.pxToRem(650),
@@ -18,12 +17,12 @@ export const PageContainer = styled(Box)(({ theme }) => ({
         padding: theme.spacing(6),
         justifyContent: 'center',
     },
+
     [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(4),
     },
 }));
 
-// Left column layout wrapper
 export const BrandingColumn = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -32,12 +31,6 @@ export const BrandingColumn = styled(Box)(({ theme }) => ({
     maxWidth: theme.typography.pxToRem(500),
 }));
 
-// Text alignment layout wrapper
-export const HeaderTextWrapper = styled(Box)({
-    textAlign: 'center',
-});
-
-// Structural illustration wrapper
 export const OnboardingImage = styled(Box)<BoxProps<'img'>>(({ theme }) => ({
     width: '100%',
     maxHeight: theme.typography.pxToRem(400),
@@ -45,7 +38,6 @@ export const OnboardingImage = styled(Box)<BoxProps<'img'>>(({ theme }) => ({
     aspectRatio: '1/1',
 }));
 
-// Right column form card layout
 export const FormCard = styled(Box)(({ theme }) => ({
     padding: theme.spacing(3),
     width: '100%',

@@ -2,9 +2,7 @@ import { z } from 'zod';
 
 /**
  * Zod validation schema for user signup form data.
- *
  * Validates the user's name, email, password, password confirmation,
- * and account role, including matching password confirmation.
  */
 export const SignupSchema = z
     .object({

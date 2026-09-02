@@ -1,15 +1,12 @@
 /**
- * @type { email: string; password: string; } Login Inputs.
+ * Login Inputs.
  */
 export type LoginInput = {
     email: string;
     password: string;
 };
 /**
- * to switch this method
- * @type {
- *     onSwitchToSignUp: () => void;
- * };
+ * props for a function to switch this method
  */
 export type LoginProp = {
     onSwitchToSignUp: () => void;

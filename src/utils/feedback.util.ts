@@ -4,11 +4,9 @@ import { AppDispatch, updateAlert } from '@store';
 
 /**
  * Creates and dispatches an alert with the specified severity and message.
- *
- * @param {AlertColor} severity - Severity level of the alert.
- * @param {string} message - Message to display in the alert.
- * @param {AppDispatch} dispatch - Redux dispatch function used to update the alert state.
- * @returns {void} No value is returned.
+ * @param severity - Severity level of the alert.
+ * @param message - Message to display in the alert.
+ * @param dispatch - Redux dispatch function used to update the alert state.
  */
 export const alert = (
     severity: AlertColor,
@@ -25,10 +23,8 @@ export const alert = (
 
 /**
  * Handles an error by displaying its message as an error alert.
- *
- * @param {unknown} error - Error value received from a failed operation.
- * @param {AppDispatch} dispatch - Redux dispatch function used to display the error alert.
- * @returns {void} No value is returned.
+ * @param error - Error value received from a failed operation.
+ * @param  dispatch - Redux dispatch function used to display the error alert.
  */
 export const handleErrorFeedback = (
     error: unknown,

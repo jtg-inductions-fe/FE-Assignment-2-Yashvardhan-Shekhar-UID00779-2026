@@ -1,5 +1,5 @@
 import { ButtonProps } from '@mui/material';
 
-import { StyledButton } from './Button.styles';
-
-export const Button = (props: ButtonProps) => <StyledButton {...props} />;
+export const Button = (props: ButtonProps) => (
+    <Button sx={{ p: 4 }} {...props} />
+);

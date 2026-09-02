@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import onboardingImg from '@assets/images/onboarding-bg.webp';
 import { Login, Signup } from '@containers';
@@ -8,7 +8,6 @@ import { Login, Signup } from '@containers';
 import {
     BrandingColumn,
     FormCard,
-    HeaderTextWrapper,
     OnboardingImage,
     PageContainer,
 } from './OnBoarding.styles';
@@ -19,7 +18,7 @@ export const OnBoarding = () => {
     return (
         <PageContainer>
             <BrandingColumn>
-                <HeaderTextWrapper>
+                <Box textAlign="center">
                     <Typography
                         variant="h3"
                         component="h2"
@@ -33,7 +32,7 @@ export const OnBoarding = () => {
                         tickets as an owner. A single, fast platform designed
                         for both sides of the table.
                     </Typography>
-                </HeaderTextWrapper>
+                </Box>
                 <OnboardingImage
                     component="img"
                     src={onboardingImg}

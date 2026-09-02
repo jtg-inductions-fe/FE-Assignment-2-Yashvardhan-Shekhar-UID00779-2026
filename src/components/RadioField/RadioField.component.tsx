@@ -23,7 +23,7 @@ export const RadioField = (allProps: TextFieldProps) => {
             name={fieldName}
             control={control}
             render={({ field }) => (
-                <FormControl component="fieldset" error={!!errors.role}>
+                <FormControl component="fieldset" error={!!errors[fieldName]}>
                     <FormLabel id="role-radio-group-label">{heading}</FormLabel>
                     <RadioGroup
                         {...field}

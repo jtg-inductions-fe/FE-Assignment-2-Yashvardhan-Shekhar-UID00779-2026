@@ -5,13 +5,11 @@ import { alert, handleErrorFeedback } from '@utils';
 import { LoginType, SignupType } from './auth.types';
 
 /**
- * Registers a new user, stores their information locally and updates the Redux user state
- *
- * @param {SignupType} user - User registration details
- * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback
- * @returns {Promise<void>} returns nothing
- * @throws Handles errors
+ * Registers a new user and stores their information
+ * @param user - User registration details
+ * @param dispatch - Redux dispatch
  */
+
 export const signUp = async (
     user: SignupType,
     dispatch: AppDispatch,
@@ -37,12 +35,9 @@ export const signUp = async (
 };
 
 /**
- * Authenticates a user using their email and password stores their information locally, and updates the Redux user state
- *
- * @param {LoginType} user - User login credentials.
- * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback.
- * @returns {Promise<void>} returns nothing
- * @throws Handles errors
+ * Authenticates a user using their email and password
+ * @param user - User login credentials.
+ * @param dispatch - Redux dispatch
  */
 export const login = async (
     user: LoginType,
@@ -72,10 +67,8 @@ export const login = async (
 };
 
 /**
- * Logs out the current user by clearing the Redux user state and removing stored user information from local storage
- *
- * @param {AppDispatch} dispatch - Redux dispatch function used to update the user state and display feedback.
- * @returns {void} No value is returned.
+ * Logs out the current user by clearing the user data
+ * @param dispatch - Redux dispatch f
  */
 export const logout = (dispatch: AppDispatch): void => {
     // Update the Redux user state.

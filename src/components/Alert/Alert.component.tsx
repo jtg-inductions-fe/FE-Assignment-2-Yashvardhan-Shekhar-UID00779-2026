@@ -13,8 +13,6 @@ export const Alert = (alertProp: AlertTypeProp) => {
 
     /**
      * closing alert Snackbar
-     *
-     * @returns {void} No value is returned.
      */
     const handleAlertClose = (): void => {
         setIsOpen(false);

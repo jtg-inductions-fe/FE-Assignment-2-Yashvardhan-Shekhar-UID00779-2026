@@ -20,10 +20,8 @@ export const alertSlice = createSlice({
     reducers: {
         /**
          * Updates the current alert state with the provided severity and message.
-         *
-         * @param {Alert} state - Current alert state.
-         * @param {PayloadAction<Alert>} action - Action containing the updated alert data.
-         * @returns {void} No value is returned.
+         * @param state - Current alert state.
+         * @param action - Action containing the updated alert data.
          */
         updateAlert: (state, action: PayloadAction<Alert>): void => {
             state.severity = action.payload?.severity;

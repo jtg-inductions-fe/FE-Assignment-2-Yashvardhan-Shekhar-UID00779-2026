@@ -20,10 +20,7 @@ export const PasswordField = (allProps: PasswordFieldProps) => {
 
     /**
      *  handle toggle of the password visibility
-     *
-     *  @returns {void} No value is returned
      */
-
     const handleClickShowPassword = (): void => {
         setShowPassword((show) => !show);
     };

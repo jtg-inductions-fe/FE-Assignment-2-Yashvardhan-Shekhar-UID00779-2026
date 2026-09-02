@@ -1,15 +1,13 @@
 import { User } from '@types';
 /**
- * @type { email: string; password: string; } Signup Inputs.
+ *  Signup Inputs.
  */
 export type SignupInput = User & {
     confirmPassword: string;
     password: string;
 };
 /**
- * @type {
- *     onSwitchToLogin: () => void;
- * };
+ * props for the component function to switch
  */
 export type SignupProp = {
     onSwitchToLogin: () => void;

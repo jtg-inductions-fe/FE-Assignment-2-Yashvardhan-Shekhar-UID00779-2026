@@ -23,12 +23,9 @@ export const userSlice = createSlice({
     reducers: {
         /**
          * Updates the current user state with the provided user information.
-         *
          * Resets the user state to default values when no user is provided.
-         *
-         * @param {User} state - Current user state.
-         * @param {PayloadAction<User | null>} action - Action containing the updated user data or null.
-         * @returns {void} No value is returned.
+         * @param state - Current user state.
+         * @param action - Action containing the updated user data or null.
          */
         updateUser: (state, action: PayloadAction<User | null>): void => {
             state.id = action.payload?.id || '';

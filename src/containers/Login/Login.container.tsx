@@ -54,10 +54,7 @@ export const Login = (props: LoginProp) => {
                         fullWidth
                         field="email"
                     />
-
-                    {/* Password field */}
                     <PasswordField label="Password" field="password" />
-
                     <Button
                         type="submit"
                         variant="contained"
@@ -67,7 +64,6 @@ export const Login = (props: LoginProp) => {
                     >
                         Log In
                     </Button>
-
                     <Box textAlign="center">
                         <Typography variant="body2" color="text.secondary">
                             {"Don't have an account? "}
