@@ -1,51 +1,55 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Typography } from '@mui/material';
+import { Box, CardMedia, Stack, Typography, useTheme } from '@mui/material';
 
-import { IMAGE } from '@constant';
-import { addItemToCart, AppDispatch, removeItemFromCart } from '@store';
-import { CartItem } from '@types';
+import { addItemToCart, removeItemFromCart, useAppDispatch } from '@store';
 
-import {
-    InfoContainer,
-    ItemMedia,
-    QuantityControlStack,
-    QuantityIconButton,
-    RowContainer,
-} from './CartItemRow.styles';
+import { QuantityControlStack, QuantityIconButton } from './CartItemRow.styles';
+import { CartItemRowProps } from './CartItemRow.types';
 
-type CartItemRowProps = {
-    item: CartItem;
-    dispatch: AppDispatch;
-};
+export const CartItemRow = (props: CartItemRowProps) => {
+    const { item } = props;
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
 
-export const CartItemRow = ({ item, dispatch }: CartItemRowProps) => {
+    /**
+     * adds Item in the cart
+     * @returns nothing void
+     */
     const handleAddToCart = () => {
         dispatch(addItemToCart(item));
     };
 
+    /**
+     * removes Item from the cart
+     * @returns nothing void
+     */
     const handleRemoveFromCart = () => {
         dispatch(removeItemFromCart(item));
     };
 
     return (
-        <RowContainer direction="row" alignItems="center" spacing={2}>
-            <ItemMedia
+        <Stack direction="row" alignItems="center" spacing={2} paddingBlock={2}>
+            <CardMedia
                 component="img"
-                image={item.image || IMAGE}
+                image={item.image}
                 alt={item.name}
-                onError={(e) => (e.currentTarget.src = IMAGE)}
                 loading="lazy"
+                sx={{
+                    height: theme.typography.pxToRem(64),
+                    width: theme.typography.pxToRem(64),
+                    borderRadius: theme.typography.pxToRem(10),
+                }}
             />
 
-            <InfoContainer>
+            <Box flexGrow={1} minWidth={10}>
                 <Typography variant="subtitle1" fontWeight="bold" noWrap>
                     {item.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     ₹{item.price} x {item.quantity}
                 </Typography>
-            </InfoContainer>
+            </Box>
 
             <QuantityControlStack
                 direction="row"
@@ -84,10 +88,11 @@ export const CartItemRow = ({ item, dispatch }: CartItemRowProps) => {
                 variant="subtitle1"
                 fontWeight="bold"
                 color="text.primary"
-                sx={{ minWidth: 70, textAlign: 'right' }}
+                minWidth="5%"
+                textAlign="right"
             >
                 ₹{item.price * item.quantity}
             </Typography>
-        </RowContainer>
+        </Stack>
     );
 };

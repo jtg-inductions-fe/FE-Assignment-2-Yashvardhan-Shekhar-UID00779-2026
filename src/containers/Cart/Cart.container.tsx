@@ -3,20 +3,15 @@ import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
+import { PATH } from '@constant';
 import { placeOrder } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
 import { CartItem } from '@types';
 
-import {
-    EmptyStateBox,
-    HeaderStack,
-    StyledDivider,
-    SummaryRow,
-    SummaryRowLast,
-} from './Cart.styles';
+import { StyledDivider, SummaryRow } from './Cart.styles';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -25,11 +20,14 @@ export const Cart = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    /**
+     * places order on clicked and resets the store cart
+     */
     const handelPlaceOrder = async () => {
         setIsLoading(true);
         await placeOrder(dispatch);
         setIsLoading(false);
-        await navigate('/home');
+        await navigate(PATH.HOME);
     };
 
     const subtotal = cart.reduce(
@@ -41,20 +39,20 @@ export const Cart = () => {
 
     return (
         <Container maxWidth="xl">
-            <HeaderStack spacing={1}>
+            <Stack spacing={1} mb={4}>
                 <Typography variant="h2" component="h1" fontWeight={800}>
                     Order Checkout
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
                     Review your items and complete your order.
                 </Typography>
-            </HeaderStack>
+            </Stack>
 
             {cart.length > 0 ? (
                 <Box>
                     {cart.map((item: CartItem) => (
                         <Fragment key={item.id}>
-                            <CartItemRow item={item} dispatch={dispatch} />
+                            <CartItemRow item={item} />
                             <StyledDivider />
                         </Fragment>
                     ))}
@@ -79,7 +77,7 @@ export const Cart = () => {
 
                     <StyledDivider />
 
-                    <SummaryRowLast>
+                    <SummaryRow mb={3}>
                         <Typography variant="h6" fontWeight="bold">
                             Total Payable
                         </Typography>
@@ -90,7 +88,7 @@ export const Cart = () => {
                         >
                             ₹{grandTotal.toFixed(2)}
                         </Typography>
-                    </SummaryRowLast>
+                    </SummaryRow>
 
                     <Button
                         fullWidth
@@ -105,7 +103,7 @@ export const Cart = () => {
                     </Button>
                 </Box>
             ) : (
-                <EmptyStateBox>
+                <Box textAlign="center">
                     <ShoppingBagOutlinedIcon
                         sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }}
                     />
@@ -115,7 +113,7 @@ export const Cart = () => {
                     <Typography variant="body2" color="text.secondary">
                         Add some delicious items from the menu to get started!
                     </Typography>
-                </EmptyStateBox>
+                </Box>
             )}
         </Container>
     );
