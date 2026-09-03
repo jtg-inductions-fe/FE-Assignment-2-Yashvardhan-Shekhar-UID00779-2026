@@ -89,7 +89,7 @@ export const Signup = () => {
                                 type="button"
                                 variant="body2"
                                 underline="hover"
-                                 onClick={() => void navigate(PATH.LOGIN)}
+                                onClick={() => void navigate(PATH.LOGIN)}
                                 fontWeight="bold"
                             >
                                 Log In
