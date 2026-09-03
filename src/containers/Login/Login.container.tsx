@@ -43,7 +43,8 @@ export const Login = (props: LoginProp) => {
 
     return (
         <FormProvider {...methods}>
-            <form
+            <Box
+                component="form"
                 onSubmit={(e) => {
                     void handleSubmit(handleClick)(e);
                 }}
@@ -84,7 +85,7 @@ export const Login = (props: LoginProp) => {
                         </Typography>
                     </Box>
                 </Stack>
-            </form>
+            </Box>
         </FormProvider>
     );
 };

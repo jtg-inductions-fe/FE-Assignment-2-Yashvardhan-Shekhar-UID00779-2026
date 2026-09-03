@@ -46,7 +46,8 @@ export const Signup = (props: SignupProp) => {
 
     return (
         <FormProvider {...methods}>
-            <form
+            <Box
+                component="form"
                 onSubmit={(e) => {
                     void methods.handleSubmit(handleClick)(e);
                 }}
@@ -94,7 +95,7 @@ export const Signup = (props: SignupProp) => {
                         </Typography>
                     </Box>
                 </Stack>
-            </form>
+            </Box>
         </FormProvider>
     );
 };
