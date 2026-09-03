@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-import { PasswordFieldProps } from 'components/PasswordField/PasswordField.types';
 import { useFormContext } from 'react-hook-form';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 
 import { StyledIconTextField } from './PasswordField.styles';
+import { PasswordFieldProps } from './PasswordField.types';
 
-export const PasswordField = (allProps: PasswordFieldProps) => {
-    const { field, ...props } = allProps;
+export const PasswordField = (props: PasswordFieldProps) => {
+    const { field, ...rest } = props;
 
     const {
         formState: { errors },
@@ -27,7 +27,7 @@ export const PasswordField = (allProps: PasswordFieldProps) => {
 
     return (
         <StyledIconTextField
-            {...props}
+            {...rest}
             type={showPassword ? 'text' : 'password'}
             error={!!errors[field]}
             helperText={errors[field]?.message as string}
