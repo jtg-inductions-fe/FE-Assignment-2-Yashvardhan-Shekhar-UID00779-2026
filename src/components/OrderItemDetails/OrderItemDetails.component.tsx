@@ -1,4 +1,4 @@
-import { updateOrder } from 'services/order.service';
+import { useState } from 'react';
 
 import { ExpandMore } from '@mui/icons-material';
 import {
@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 
 import { Button } from '@components';
+import { updateOrder } from '@services';
 import { useAppDispatch } from '@store';
 import { OrderStatus } from '@types';
 
@@ -24,19 +25,26 @@ import {
     getActiveStep,
     getStatus,
     getStatusColor,
+    getStatusIcon,
+    // getStatusIcon,
 } from './OrderItemDetails.util';
 
-export const OrderItemDetails = ({
-    order,
-    isOwnerView,
-}: OrderItemDetailsProps) => {
+/** returns the icon for the given order status */
+
+export const OrderItemDetails = (props: OrderItemDetailsProps) => {
+    const { order, isOwnerView } = props;
+
     const dispatch = useAppDispatch();
     const theme = useTheme();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRejecting, setIsRejecting] = useState(false);
 
     const activeStep =
         order.status === 'rejected' ? 0 : getActiveStep(order.status);
     const rejected = order.status === 'rejected' ? 1 : -1;
     const date = new Date(order.date).toDateString();
+    const StatusIcon = getStatusIcon(order.status);
 
     /**
      * status change of the order
@@ -47,7 +55,17 @@ export const OrderItemDetails = ({
         orderId: string,
         nextStatus: OrderStatus,
     ) => {
+        if (nextStatus === 'rejected') {
+            setIsRejecting(true);
+        } else {
+            setIsLoading(true);
+        }
         await updateOrder(orderId, nextStatus, dispatch);
+        if (nextStatus === 'rejected') {
+            setIsRejecting(false);
+        } else {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -68,16 +86,17 @@ export const OrderItemDetails = ({
                             {date}
                         </Typography>
                     </div>
-
                     <Stack direction="row" alignItems="center" spacing={2}>
                         <Chip
                             label={getStatus(order.status)}
                             color={getStatusColor(order.status)}
                             size="small"
                             variant="outlined"
+                            icon={<StatusIcon fontSize="small" />}
                             sx={{
                                 fontWeight: 'bold',
                                 textTransform: 'capitalize',
+                                pl: 1,
                             }}
                         />
                         <Typography
@@ -90,7 +109,6 @@ export const OrderItemDetails = ({
                     </Stack>
                 </Stack>
             </AccordionSummary>
-
             <AccordionDetails
                 sx={{
                     padding: theme.spacing(3),
@@ -112,7 +130,6 @@ export const OrderItemDetails = ({
                         </Typography>
                     </Stack>
                 ))}
-
                 {!isOwnerView && (
                     <Stepper
                         activeStep={activeStep}
@@ -130,7 +147,6 @@ export const OrderItemDetails = ({
                         ))}
                     </Stepper>
                 )}
-
                 {isOwnerView && (
                     <Stack
                         direction="row"
@@ -143,6 +159,9 @@ export const OrderItemDetails = ({
                                 <Button
                                     variant="outlined"
                                     color="error"
+                                    loading={isRejecting}
+                                    loadingPosition="end"
+                                    disabled={isLoading}
                                     onClick={() =>
                                         void handleStatusChange(
                                             order.id,
@@ -155,6 +174,9 @@ export const OrderItemDetails = ({
                                 <Button
                                     variant="outlined"
                                     color="primary"
+                                    loading={isLoading}
+                                    loadingPosition="end"
+                                    disabled={isRejecting}
                                     onClick={() =>
                                         void handleStatusChange(
                                             order.id,
@@ -166,11 +188,12 @@ export const OrderItemDetails = ({
                                 </Button>
                             </>
                         )}
-
                         {order.status === 'accepted' && (
                             <Button
                                 variant="outlined"
                                 color="primary"
+                                loading={isLoading}
+                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,
@@ -181,11 +204,12 @@ export const OrderItemDetails = ({
                                 Start Preparing
                             </Button>
                         )}
-
                         {order.status === 'preparing' && (
                             <Button
                                 variant="outlined"
                                 color="primary"
+                                loading={isLoading}
+                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,
@@ -196,11 +220,12 @@ export const OrderItemDetails = ({
                                 Mark Out for Delivery
                             </Button>
                         )}
-
                         {order.status === 'out_for_delivery' && (
                             <Button
                                 variant="outlined"
                                 color="success"
+                                loading={isLoading}
+                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,
@@ -211,7 +236,6 @@ export const OrderItemDetails = ({
                                 Mark Delivered
                             </Button>
                         )}
-
                         {(order.status === 'delivered' ||
                             order.status === 'rejected') && (
                             <Typography variant="body2" color="text.secondary">

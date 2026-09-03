@@ -20,9 +20,19 @@ export const orderSlice = createSlice({
     name: 'orders',
     initialState,
     reducers: {
+        /**
+         * sets the list of orders
+         * @param state current order state
+         * @param action contains the list of orders
+         */
         setOrders: (state, action: PayloadAction<Order[]>) => {
             state.orders = action.payload;
         },
+        /**
+         * updates the status of an order
+         * @param state current order state
+         * @param action contains the order id and next status
+         */
         updateOrderState: (
             state,
             action: PayloadAction<{ orderId: string; nextStatus: OrderStatus }>,
