@@ -22,8 +22,7 @@ export const Home = () => {
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
 
-    // const {pathname} = ;
-    const activeTab = useLocation().pathname.substring(1) || 'home';
+    const { pathname } = useLocation();
     const isMenuOpen = Boolean(anchorEl);
 
     /**
@@ -57,7 +56,7 @@ export const Home = () => {
             <Navbar
                 handleProfileClick={handleProfileClick}
                 user={user}
-                activeTab={activeTab}
+                activeTab={pathname}
                 cartCount={cartCount}
             />
             <ProfileMenu
@@ -73,7 +72,7 @@ export const Home = () => {
             <BottomBar
                 handleProfileClick={handleProfileClick}
                 user={user}
-                activeTab={activeTab}
+                activeTab={pathname}
                 cartCount={cartCount}
             />
         </Box>

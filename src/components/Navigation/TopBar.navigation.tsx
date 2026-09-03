@@ -22,7 +22,6 @@ import { BarProps } from './navigation.types';
 
 export const Navbar = (props: BarProps) => {
     const { handleProfileClick, user, activeTab, cartCount } = props;
-    const activeTabPath = '/' + activeTab;
 
     const navigate = useNavigate();
 
@@ -42,9 +41,7 @@ export const Navbar = (props: BarProps) => {
                     <DesktopNavBox>
                         <Button
                             color={
-                                activeTabPath === PATH.HOME
-                                    ? 'primary'
-                                    : 'inherit'
+                                activeTab === PATH.HOME ? 'primary' : 'inherit'
                             }
                             onClick={() => void navigate(PATH.HOME)}
                         >
@@ -53,7 +50,7 @@ export const Navbar = (props: BarProps) => {
                         {user?.role === 'customer' && (
                             <Button
                                 color={
-                                    activeTabPath === PATH.CART
+                                    activeTab === PATH.CART
                                         ? 'primary'
                                         : 'inherit'
                                 }
@@ -71,7 +68,7 @@ export const Navbar = (props: BarProps) => {
                         )}
                         <Button
                             color={
-                                activeTabPath === PATH.ORDERS
+                                activeTab === PATH.ORDERS
                                     ? 'primary'
                                     : 'inherit'
                             }

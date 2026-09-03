@@ -23,14 +23,14 @@ export const BottomBar = (props: BarProps) => {
             <BottomNavigation showLabels value={activeTab}>
                 <BottomNavigationAction
                     label="Restaurants"
-                    value="restaurants"
+                    value="/restaurants"
                     icon={<HomeOutlined />}
                     onClick={() => void navigate(PATH.HOME)}
                 />
                 {user?.role === 'customer' && (
                     <BottomNavigationAction
                         label="Cart"
-                        value="cart"
+                        value="/cart"
                         icon={
                             <Badge badgeContent={cartCount} color="primary">
                                 <ShoppingCartOutlined />
@@ -42,12 +42,12 @@ export const BottomBar = (props: BarProps) => {
                 <BottomNavigationAction
                     onClick={() => void navigate(PATH.ORDERS)}
                     label="Orders"
-                    value="orders"
+                    value="/orders"
                     icon={<History />}
                 />
                 <BottomNavigationAction
                     label="Profile"
-                    value="profile"
+                    value="/profile"
                     icon={<Avatar name={user?.name} />}
                     onClick={(event) => {
                         handleProfileClick(event.currentTarget);
