@@ -8,9 +8,11 @@ export const StyledGrid = styled(Box)(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, 1fr)',
     },
+
     [theme.breakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(3, 1fr)',
     },
+
     [theme.breakpoints.up('lg')]: {
         gridTemplateColumns: 'repeat(4, 1fr)',
     },

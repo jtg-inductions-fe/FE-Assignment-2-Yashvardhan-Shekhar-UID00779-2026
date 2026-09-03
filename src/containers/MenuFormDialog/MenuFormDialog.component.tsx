@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { DialogTitle, Stack } from '@mui/material';
+import { Box, DialogTitle, Stack } from '@mui/material';
 
 import { Button, Dialog, TextField } from '@components';
 import { MenuItem } from '@types';
@@ -50,8 +50,10 @@ export const MenuFormDialog = ({
                 <DialogTitle variant="h3" component="h1">
                     {isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
                 </DialogTitle>
-
-                <form onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}>
+                <Box
+                    component="form"
+                    onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+                >
                     <StyledDialogContent dividers>
                         <Stack spacing={2.5}>
                             <TextField
@@ -61,14 +63,12 @@ export const MenuFormDialog = ({
                                 })}
                                 label="Item Name"
                             />
-
                             <TextField
                                 field="description"
                                 label="Description"
                                 multiline
                                 rows={3}
                             />
-
                             <Stack
                                 direction={{ xs: 'column', sm: 'row' }}
                                 spacing={2}
@@ -79,7 +79,6 @@ export const MenuFormDialog = ({
                                     type="number"
                                     fullWidth
                                 />
-
                                 <TextField
                                     field="stock"
                                     label="Stock Quantity"
@@ -87,7 +86,6 @@ export const MenuFormDialog = ({
                                     fullWidth
                                 />
                             </Stack>
-
                             <TextField
                                 field="image"
                                 label="Image URL"
@@ -95,7 +93,6 @@ export const MenuFormDialog = ({
                             />
                         </Stack>
                     </StyledDialogContent>
-
                     <StyledDialogActions>
                         <Button
                             onClick={onClose}
@@ -104,7 +101,6 @@ export const MenuFormDialog = ({
                         >
                             Cancel
                         </Button>
-
                         <Button
                             type="submit"
                             variant="contained"
@@ -115,7 +111,7 @@ export const MenuFormDialog = ({
                             {isEditMode ? 'Save Changes' : 'Add Item'}
                         </Button>
                     </StyledDialogActions>
-                </form>
+                </Box>
             </Dialog>
         </FormProvider>
     );

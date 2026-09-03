@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
 import {
+    Box,
     Container,
     Stack,
     Typography,
@@ -21,8 +22,6 @@ import {
 } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
 import { MenuItem } from '@types';
-
-import { EmptyStateBox } from './RestaurantDetails.styles';
 
 export const RestaurantDetails = () => {
     const rid = useParams().restaurantId;
@@ -126,7 +125,6 @@ export const RestaurantDetails = () => {
                         {restaurantDetails?.description}
                     </Typography>
                 </Stack>
-
                 {isOwnerView && (
                     <AddButton
                         variant="outlined"
@@ -139,7 +137,6 @@ export const RestaurantDetails = () => {
                     </AddButton>
                 )}
             </Stack>
-
             <Grid>
                 {restaurantDetails?.menu.map((menuItem) => (
                     <MenuCard
@@ -152,15 +149,13 @@ export const RestaurantDetails = () => {
                     />
                 ))}
             </Grid>
-
             {restaurantDetails?.menu.length === 0 && (
-                <EmptyStateBox>
+                <Box textAlign="center" py={8}>
                     <Typography variant="h6" color="text.secondary">
-                        No matching restaurants found.
+                        No menu items available.
                     </Typography>
-                </EmptyStateBox>
+                </Box>
             )}
-
             <MenuFormDialog
                 menuItem={targetEditMenuItem || initialMenuState}
                 isOpen={!!targetEditMenuItem}
@@ -169,7 +164,6 @@ export const RestaurantDetails = () => {
                 handleCreateMenuItem={handleCreateMenuItem}
                 handleEditMenuItem={handleEditMenuItem}
             />
-
             <DeleteDialog
                 name={targetDeleteMenuItem?.name}
                 isProcessing={isProcessing}

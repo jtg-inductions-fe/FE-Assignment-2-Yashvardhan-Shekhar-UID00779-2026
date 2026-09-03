@@ -25,16 +25,23 @@ export const cartSlice = createSlice({
          * @param action - Action containing the ID of the item to add.
          */
         addItemToCart: (state, action: PayloadAction<MenuItem>) => {
+            if (action.payload.stock <= 0) return;
+
             const index = state.cartItems.findIndex(
                 (item: CartItem) => item.id === action.payload.id,
             );
 
             if (index !== -1) {
-                state.cartItems[index].quantity += 1;
+                const cartItem = state.cartItems[index];
+
+                if (cartItem.quantity < action.payload.stock) {
+                    cartItem.quantity += 1;
+                }
             } else {
                 state.cartItems.push({ ...action.payload, quantity: 1 });
             }
         },
+
         /**
          * Removes one quantity of an item from the cart. Removes the item completely when its quantity reaches zero.
          * @param state - Current cart state.

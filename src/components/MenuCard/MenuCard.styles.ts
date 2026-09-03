@@ -1,12 +1,4 @@
-import {
-    Button,
-    CardActions,
-    Chip,
-    IconButton,
-    Stack,
-    styled,
-    Typography,
-} from '@mui/material';
+import { CardActions, Chip, IconButton, Stack, styled } from '@mui/material';
 
 export const StyledChip = styled(Chip)(({ theme }) => ({
     position: 'absolute',
@@ -15,13 +7,6 @@ export const StyledChip = styled(Chip)(({ theme }) => ({
     fontWeight: 'bold',
 }));
 
-export const DescriptionText = styled(Typography)({
-    display: '-webkit-box',
-    WebkitLineClamp: 3,
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden',
-});
-
 export const QuantityIconButton = styled(IconButton)({
     width: '30%',
 });
@@ -29,14 +14,9 @@ export const QuantityIconButton = styled(IconButton)({
 export const StyledCardActions = styled(CardActions)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    padding: theme.typography.pxToRem(16),
+    padding: theme.spacing(4),
     paddingTop: 0,
 }));
-
-export const AddToCartButton = styled(Button)({
-    fontWeight: 'bold',
-    textTransform: 'none',
-});
 
 export const QuantityControlStack = styled(Stack)(({ theme }) => ({
     border: '1px solid',

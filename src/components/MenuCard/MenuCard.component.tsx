@@ -6,14 +6,13 @@ import {
     IconButton,
     Stack,
     Typography,
+    useTheme,
 } from '@mui/material';
 
-import { Card } from '@components';
+import { Button, Card } from '@components';
 import { addItemToCart, removeItemFromCart, useAppSelector } from '@store';
 
 import {
-    AddToCartButton,
-    DescriptionText,
     QuantityControlStack,
     QuantityIconButton,
     StyledCardActions,
@@ -23,6 +22,7 @@ import { MenuCardProps } from './MenuCard.types';
 
 export const MenuCard = (props: MenuCardProps) => {
     const { item, isOwnerView = false, dispatch, onEdit, onDelete } = props;
+    const theme = useTheme();
 
     const quantity = useAppSelector((state): number => {
         const res = state.cart.cartItems.find((it) => it.id === item.id);
@@ -60,7 +60,6 @@ export const MenuCard = (props: MenuCardProps) => {
                         opacity: isOutOfStock ? 0.5 : 1,
                     }}
                 />
-
                 {isOutOfStock && (
                     <StyledChip
                         label="Out of Stock"
@@ -69,7 +68,6 @@ export const MenuCard = (props: MenuCardProps) => {
                     />
                 )}
             </Box>
-
             <CardContent>
                 <Stack
                     direction="row"
@@ -77,7 +75,7 @@ export const MenuCard = (props: MenuCardProps) => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <Typography variant="h6" component="h2" noWrap>
+                    <Typography gutterBottom variant="h6" component="h2" noWrap>
                         {item.name}
                     </Typography>
                     <Typography
@@ -88,33 +86,34 @@ export const MenuCard = (props: MenuCardProps) => {
                         ₹{item.price}
                     </Typography>
                 </Stack>
-
-                <DescriptionText variant="body2" color="text.secondary">
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ ...theme.mixins.lineClamp(3) }}
+                >
                     {item.description ||
-                        `Enjoy our ${item.name}! ${
-                            item.stock > 1
-                                ? `Get a pack of ${item.stock} for`
-                                : 'Available for'
-                        } only ₹${item.price * Math.min(item.stock, 3)}.`}
-                </DescriptionText>
+                        `Enjoy our ${item.name}, available for just ₹${item.price}.`}
+                </Typography>
             </CardContent>
-
             <StyledCardActions
                 sx={{ justifyContent: isOwnerView ? 'flex-end' : 'stretch' }}
             >
-                {/* Customer View Controls */}
                 {!isOwnerView && (
                     <Box width="100%">
                         {!isInCart ? (
-                            <AddToCartButton
+                            <Button
                                 fullWidth
                                 variant="contained"
                                 startIcon={<ShoppingBag />}
                                 disabled={isOutOfStock}
                                 onClick={handleAddToCart}
+                                sx={{
+                                    fontWeight: 'bold',
+                                    textTransform: 'none',
+                                }}
                             >
                                 {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
-                            </AddToCartButton>
+                            </Button>
                         ) : (
                             <QuantityControlStack
                                 direction="row"
@@ -129,7 +128,6 @@ export const MenuCard = (props: MenuCardProps) => {
                                 >
                                     <Remove fontSize="small" />
                                 </QuantityIconButton>
-
                                 <Typography
                                     variant="body1"
                                     fontWeight="bold"
@@ -137,7 +135,6 @@ export const MenuCard = (props: MenuCardProps) => {
                                 >
                                     {quantity}
                                 </Typography>
-
                                 <QuantityIconButton
                                     size="small"
                                     color="primary"
@@ -151,8 +148,6 @@ export const MenuCard = (props: MenuCardProps) => {
                         )}
                     </Box>
                 )}
-
-                {/* Owner View Controls */}
                 {isOwnerView && (
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <IconButton

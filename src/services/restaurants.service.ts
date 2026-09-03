@@ -107,12 +107,11 @@ export const deleteRestaurantService = async (
  * @param dispatch store dispatch
  */
 export const getRestaurantDetailsService = async (
-    rid: string | undefined,
+    _rid: string | undefined,
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
         // will be replaced with actual api call
-        rid = '';
         const res = await fetch('/data/RestaurantDetails.json');
         const data = (await res.json()) as RestaurantDetails;
         dispatch(setRestaurant(data));
@@ -130,19 +129,23 @@ export const handleCreateMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
 ): Promise<void> => {
-    // delay will be replaced with actual api call
-    await delay();
+    try {
+        // delay will be replaced with actual api call
+        await delay();
 
-    const newMenuItem: MenuItem = {
-        ...data,
-        id: crypto.randomUUID(),
-    };
-    dispatch(addMenuItem(newMenuItem));
-    alert(
-        'success',
-        `Menu item ${newMenuItem.name} has been created.`,
-        dispatch,
-    );
+        const newMenuItem: MenuItem = {
+            ...data,
+            id: crypto.randomUUID(),
+        };
+        dispatch(addMenuItem(newMenuItem));
+        alert(
+            'success',
+            `Menu item ${newMenuItem.name} has been created.`,
+            dispatch,
+        );
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+    }
 };
 
 /**
@@ -154,11 +157,15 @@ export const handleEditMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
 ): Promise<void> => {
-    // delay will be replaced with actual api call
-    await delay();
+    try {
+        // delay will be replaced with actual api call
+        await delay();
 
-    dispatch(updateMenuItem(data));
-    alert('success', `Menu item ${data.name} has been updated.`, dispatch);
+        dispatch(updateMenuItem(data));
+        alert('success', `Menu item ${data.name} has been updated.`, dispatch);
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+    }
 };
 
 /**
@@ -170,9 +177,13 @@ export const handleDeleteMenuItem = async (
     data: MenuItem,
     dispatch: AppDispatch,
 ): Promise<void> => {
-    // delay will be replaced with actual api call
-    await delay();
+    try {
+        // delay will be replaced with actual api call
+        await delay();
 
-    dispatch(removeMenuItem(data.id));
-    alert('success', `Menu item ${data.name} has been deleted.`, dispatch);
+        dispatch(removeMenuItem(data.id));
+        alert('success', `Menu item ${data.name} has been deleted.`, dispatch);
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+    }
 };

@@ -5,6 +5,8 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
 
     '&:hover': {
         transform: 'translateY(-2px)',

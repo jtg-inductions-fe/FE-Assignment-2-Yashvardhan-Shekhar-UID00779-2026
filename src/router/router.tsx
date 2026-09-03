@@ -39,8 +39,8 @@ export const router = createBrowserRouter([
                 element: <Restaurants />,
             },
             {
-                path: 'restaurant/:restaurantId',
-                Component: RestaurantDetails,
+                path: 'restaurants/:restaurantId',
+                element: <RestaurantDetails />,
             },
             {
                 path: 'orders',
