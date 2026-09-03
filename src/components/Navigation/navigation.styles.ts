@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Menu, Paper, styled } from '@mui/material';
+import { AppBar, Box, Menu, MenuList, Paper, styled } from '@mui/material';
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
     position: 'fixed',
@@ -17,6 +17,10 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
     },
 }));
 
+export const StyledMenuList = styled(MenuList)(({ theme }) => ({
+    minWidth: theme.typography.pxToRem(180),
+}));
+
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
@@ -32,5 +36,3 @@ export const DesktopNavBox = styled(Box)(({ theme }) => ({
         display: 'flex',
     },
 }));
-
-export const StyledNavButton = styled(Button)({});

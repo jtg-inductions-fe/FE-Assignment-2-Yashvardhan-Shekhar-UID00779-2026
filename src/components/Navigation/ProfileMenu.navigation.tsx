@@ -1,4 +1,4 @@
-import LogoutIcon from '@mui/icons-material/Logout';
+import { Logout } from '@mui/icons-material';
 import { ListItemIcon, ListSubheader, MenuItem, useTheme } from '@mui/material';
 
 import { StyledMenu } from './navigation.styles';
@@ -21,7 +21,7 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
                 sx={{ color: theme.palette.error.main }}
             >
                 <ListItemIcon sx={{ color: theme.palette.error.main }}>
-                    <LogoutIcon fontSize="small" />
+                    <Logout fontSize="small" />
                 </ListItemIcon>
                 Logout
             </MenuItem>

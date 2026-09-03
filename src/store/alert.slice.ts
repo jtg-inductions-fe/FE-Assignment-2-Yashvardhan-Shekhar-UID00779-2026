@@ -20,7 +20,7 @@ export const alertSlice = createSlice({
         /**
          * Updates the current alert state with the provided severity and message.
          * @param state - Current alert state.
-         * @param action - Action containing the updated alert data.
+         * @param action - new alert you want to display
          */
         updateAlert: (state, action: PayloadAction<Alert>): void => {
             state.severity = action.payload?.severity;

@@ -18,7 +18,6 @@ const initialState: CartState = {
 
 /**
  * Redux slice responsible for managing shopping cart items.
- *
  * Provides actions to add items to the cart and remove items from the cart.
  */
 export const cartSlice = createSlice({
@@ -27,10 +26,8 @@ export const cartSlice = createSlice({
     reducers: {
         /**
          * Adds an item to the cart or increases its quantity if it already exists.
-         *
-         * @param {CartState} state - Current cart state.
-         * @param {PayloadAction<string>} action - Action containing the ID of the item to add.
-         * @returns {void} No value is returned.
+         * @param state - Current cart state.
+         * @param action - Action containing the ID of the item to add.
          */
         addItemToCart: (state, action: PayloadAction<string>): void => {
             const index = state.cartItems.findIndex(
@@ -48,13 +45,9 @@ export const cartSlice = createSlice({
         },
 
         /**
-         * Removes one quantity of an item from the cart.
-         *
-         * Removes the item completely when its quantity reaches zero.
-         *
-         * @param {CartState} state - Current cart state.
-         * @param {PayloadAction<string>} action - Action containing the ID of the item to remove.
-         * @returns {void} No value is returned.
+         * Removes one quantity of an item from the cart. Removes the item completely when its quantity reaches zero.
+         * @param state - Current cart state.
+         * @param action - Action containing the ID of the item to remove.
          */
         removeItemFromCart: (state, action: PayloadAction<string>): void => {
             const index = state.cartItems.findIndex(

@@ -1,11 +1,9 @@
 /**
  * Represents an item stored in the shopping cart.
- * @type {
- *     id: string;
- *     quantity: number;
- * };
  */
 export type CartItem = {
+    /** unique id of the item */
     id: string;
+    /** quantity of the item */
     quantity: number;
 };

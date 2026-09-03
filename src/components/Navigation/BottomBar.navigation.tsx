@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router';
 
-import HistoryIcon from '@mui/icons-material/History';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import {
+    History,
+    HomeOutlined,
+    ShoppingCartOutlined,
+} from '@mui/icons-material';
 import { Badge, BottomNavigation, BottomNavigationAction } from '@mui/material';
 
 import { Avatar } from '@components';
@@ -22,7 +24,7 @@ export const BottomBar = (props: BarProps) => {
                 <BottomNavigationAction
                     label="Restaurants"
                     value="restaurants"
-                    icon={<HomeOutlinedIcon />}
+                    icon={<HomeOutlined />}
                     onClick={() => void navigate(PATH.HOME)}
                 />
                 {user?.role === 'customer' && (
@@ -31,7 +33,7 @@ export const BottomBar = (props: BarProps) => {
                         value="cart"
                         icon={
                             <Badge badgeContent={cartCount} color="primary">
-                                <ShoppingCartOutlinedIcon />
+                                <ShoppingCartOutlined />
                             </Badge>
                         }
                         onClick={() => void navigate(PATH.CART)}
@@ -41,7 +43,7 @@ export const BottomBar = (props: BarProps) => {
                     onClick={() => void navigate(PATH.ORDERS)}
                     label="Orders"
                     value="orders"
-                    icon={<HistoryIcon />}
+                    icon={<History />}
                 />
                 <BottomNavigationAction
                     label="Profile"

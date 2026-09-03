@@ -4,6 +4,11 @@ import { AppDispatch, updateUser } from '@store';
 import { User } from '@types';
 import { alert, handleErrorFeedback } from '@utils';
 
+/**
+ * handle user state for route protection
+ * @param dispatch store dispatch
+ * @param navigate navigate to redirect in case used does not exists
+ */
 export const handleUser = (
     dispatch: AppDispatch,
     navigate: NavigateFunction,

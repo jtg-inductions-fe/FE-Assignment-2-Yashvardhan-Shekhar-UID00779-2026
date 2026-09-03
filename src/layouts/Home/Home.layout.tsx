@@ -28,8 +28,7 @@ export const Home = () => {
 
     /**
      *  Opens the profile menu by setting the clicked element as its anchor.
-     * @param {HTMLButtonElement} event - event of the click
-     * @returns {void} return nothing
+     * @param event event of the click
      */
     const handleProfileClick = (target: HTMLButtonElement): void => {
         setAnchorEl(target);
@@ -37,7 +36,6 @@ export const Home = () => {
 
     /**
      *  Closes the profile menu.
-     *  @returns {void}
      */
     const handleMenuClose = (): void => {
         setAnchorEl(null);
@@ -45,7 +43,6 @@ export const Home = () => {
 
     /**
      *  logout functionality
-     *  @returns {void}
      */
     const handleLogOut = (): void => {
         logout(dispatch);
@@ -63,7 +60,6 @@ export const Home = () => {
                 activeTab={activeTab}
                 cartCount={cartCount}
             />
-
             <ProfileMenu
                 isMenuOpen={isMenuOpen}
                 anchorEl={anchorEl}
@@ -71,11 +67,9 @@ export const Home = () => {
                 handleMenuClose={handleMenuClose}
                 handleLogOut={handleLogOut}
             />
-
             <StyledContainer maxWidth="xl">
                 <Outlet />
             </StyledContainer>
-
             <BottomBar
                 handleProfileClick={handleProfileClick}
                 user={user}

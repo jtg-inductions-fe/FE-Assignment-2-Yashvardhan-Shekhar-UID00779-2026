@@ -5,16 +5,19 @@ import {
     HomeOutlined,
     ShoppingCartOutlined,
 } from '@mui/icons-material';
-import { Badge, Container, IconButton, Link, Toolbar } from '@mui/material';
+import {
+    Badge,
+    Button,
+    Container,
+    IconButton,
+    Link,
+    Toolbar,
+} from '@mui/material';
 
 import { Avatar } from '@components';
 import { PATH } from '@constant';
 
-import {
-    DesktopNavBox,
-    StyledAppBar,
-    StyledNavButton,
-} from './navigation.styles';
+import { DesktopNavBox, StyledAppBar } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
 export const Navbar = (props: BarProps) => {
@@ -36,9 +39,8 @@ export const Navbar = (props: BarProps) => {
                     >
                         Apna Restaurant
                     </Link>
-
                     <DesktopNavBox>
-                        <StyledNavButton
+                        <Button
                             color={
                                 activeTabPath === PATH.HOME
                                     ? 'primary'
@@ -47,10 +49,9 @@ export const Navbar = (props: BarProps) => {
                             onClick={() => void navigate(PATH.HOME)}
                         >
                             <HomeOutlined sx={{ mr: 1 }} /> Restaurants
-                        </StyledNavButton>
-
+                        </Button>
                         {user?.role === 'customer' && (
-                            <StyledNavButton
+                            <Button
                                 color={
                                     activeTabPath === PATH.CART
                                         ? 'primary'
@@ -66,10 +67,9 @@ export const Navbar = (props: BarProps) => {
                                     <ShoppingCartOutlined />
                                 </Badge>
                                 Cart
-                            </StyledNavButton>
+                            </Button>
                         )}
-
-                        <StyledNavButton
+                        <Button
                             color={
                                 activeTabPath === PATH.ORDERS
                                     ? 'primary'
@@ -78,8 +78,7 @@ export const Navbar = (props: BarProps) => {
                             onClick={() => void navigate(PATH.ORDERS)}
                         >
                             <History sx={{ mr: 1 }} /> Orders
-                        </StyledNavButton>
-
+                        </Button>
                         <IconButton
                             color="inherit"
                             onClick={(event) => {

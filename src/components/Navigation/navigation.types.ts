@@ -1,36 +1,29 @@
 import { User } from '@types';
 
-/**
- * Represents the properties required by the navigation bar components.
- * @type {
- *     handleProfileClick: (event: HTMLButtonElement) => void;
- *     user: User;
- *     activeTab: string;
- *     cartCount: number;
- *     navigate: NavigateFunction;
- * };
- */
+/** Represents the properties required by the navigation bar components. */
 export type BarProps = {
+    /** function to trigger Profile menu */
     handleProfileClick: (event: HTMLButtonElement) => void;
+    /** user object */
     user: User;
+    /** active tab */
     activeTab: string;
+    /** cart items count */
     cartCount: number;
 };
 
 /**
  * Represents the properties required by the navigation Menu components.
- * @type {
- *  isMenuOpen: boolean;
- *  anchorEl: null | HTMLElement;
- *  user: User;
- *  handleMenuClose: () => void;
- *  dispatch: AppDispatch;
- * }
  */
 export type ProfileMenuProps = {
+    /** state of menu */
     isMenuOpen: boolean;
+    /** anchorEl Element which triggers */
     anchorEl: null | HTMLElement;
+    /** user object */
     user: User;
+    /** toggle menu close */
     handleMenuClose: () => void;
+    /** logout function */
     handleLogOut: () => void;
 };
