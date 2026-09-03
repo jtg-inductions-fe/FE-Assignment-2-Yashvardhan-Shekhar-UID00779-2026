@@ -3,8 +3,10 @@ import { User } from '@types';
  *  Signup Inputs.
  */
 export type SignupInput = User & {
-    confirmPassword: string;
+    /** password */
     password: string;
+    /** confirm password */
+    confirmPassword: string;
 };
 /**
  * props for the component function to switch

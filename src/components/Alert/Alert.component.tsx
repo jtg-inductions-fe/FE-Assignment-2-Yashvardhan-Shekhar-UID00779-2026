@@ -1,26 +1,21 @@
 import { useEffect, useState } from 'react';
 
-import { Snackbar } from '@mui/material';
+import { Alert as MuiAlert, Snackbar, useTheme } from '@mui/material';
 
 import { Alert as AlertTypeProp } from '@types';
-
-import { StyledAlert } from './Alert.styles';
 
 export const Alert = (alertProp: AlertTypeProp) => {
     const { severity, message } = alertProp;
 
+    const theme = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
-    /**
-     * closing alert Snackbar
-     */
+    /** closing alert Snackbar */
     const handleAlertClose = (): void => {
         setIsOpen(false);
     };
 
-    /**
-     * based on changing the message and if exist then showing alert
-     */
+    /** based on changing the message and if exist then showing alert */
     useEffect(() => {
         if (message) {
             setIsOpen(true);
@@ -34,9 +29,13 @@ export const Alert = (alertProp: AlertTypeProp) => {
             onClose={handleAlertClose}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
-            <StyledAlert severity={severity} onClose={handleAlertClose}>
+            <MuiAlert
+                sx={{ boxShadow: theme.shadows[5] }}
+                severity={severity}
+                onClose={handleAlertClose}
+            >
                 {message}
-            </StyledAlert>
+            </MuiAlert>
         </Snackbar>
     );
 };

@@ -9,7 +9,6 @@ import { LoginType, SignupType } from './auth.types';
  * @param user - User registration details
  * @param dispatch - Redux dispatch
  */
-
 export const signUp = async (
     user: SignupType,
     dispatch: AppDispatch,

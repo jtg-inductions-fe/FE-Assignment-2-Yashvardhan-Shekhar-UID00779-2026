@@ -29,7 +29,7 @@ export const Signup = (props: SignupProp) => {
 
     /**
      *  handle toggle of the password visibility
-     *  @param data - data of the form
+     *  @param data data of the form
      */
     const handleClick: SubmitHandler<SignupInput> = async (
         data,

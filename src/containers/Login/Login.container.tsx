@@ -26,6 +26,10 @@ export const Login = (props: LoginProp) => {
 
     const { handleSubmit } = methods;
 
+    /**
+     * handle password validation state
+     * @param data data of userid and password for login
+     */
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
             setIsLoading(true);
