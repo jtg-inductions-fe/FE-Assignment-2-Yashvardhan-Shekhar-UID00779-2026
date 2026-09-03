@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Add, Search } from '@mui/icons-material';
 import {
     Box,
+    Container,
     InputAdornment,
     Stack,
     TextField,
@@ -24,28 +25,24 @@ import { useAppDispatch, useAppSelector } from '@store';
 import { Restaurant } from '@types';
 
 import {
-    EmptyStateBox,
     RestaurantGrid,
-    SearchFieldContainer,
     StyledAddButton,
-    StyledContainer,
     StyledToggleButton,
 } from './Restaurants.styles';
+import { Category } from './Restaurants.types';
 
 export const Restaurants = () => {
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
-    const canShow = useMediaQuery(theme.breakpoints.up('sm'));
+    const canShow = useMediaQuery((th) => th.breakpoints.up('sm'));
 
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
     const restaurants = useAppSelector((state) => state.restaurant.restaurants);
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [vegFilter, setVegFilter] = useState<'all' | 'veg' | 'non-veg'>(
-        'all',
-    );
+    const [vegFilter, setVegFilter] = useState<Category>('all');
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [targetDeleteRestaurant, setTargetDeleteRestaurant] =
@@ -65,25 +62,30 @@ export const Restaurants = () => {
     };
 
     /**
-     * resets the target restaurants of form dialog
-     * @return nothing
+     * handle category change
+     * @param _event element that triggers it
+     * @param filter new category will be
      */
+    const handleCategoryChange = (
+        _event: React.MouseEvent<HTMLElement>,
+        filter: Category,
+    ) => {
+        setVegFilter(filter);
+    };
+
+    /**resets the target restaurants of form dialog */
     const handleCloseFormDialog = () => {
         if (!isProcessing) setTargetEditRestaurant(null);
     };
 
-    /**
-     * resets the target restaurants of delete dialog
-     * @return nothing
-     */
+    /** resets the target restaurants of delete dialog */
     const handleCloseDeleteDialog = () => {
         if (!isProcessing) setTargetDeleteRestaurant(null);
     };
 
     /**
      * creates new restaurant
-     * @param {Restaurant} data data of a restaurant
-     * @return nothing
+     * @param data data of a restaurant
      */
     const handleCreateRestaurant = async (data: Restaurant) => {
         setIsProcessing(true);
@@ -94,8 +96,7 @@ export const Restaurants = () => {
 
     /**
      * edits restaurant
-     * @param {Restaurant} data data of a restaurant
-     * @return nothing
+     * @param data data of a restaurant
      */
     const handleEditRestaurant = async (data: Restaurant) => {
         if (targetEditRestaurant) {
@@ -106,10 +107,7 @@ export const Restaurants = () => {
         }
     };
 
-    /**
-     * deletes a restaurant
-     * @return nothing
-     */
+    /** deletes a restaurant  */
     const handleDeleteRestaurant = async () => {
         if (targetDeleteRestaurant) {
             setIsProcessing(true);
@@ -146,7 +144,7 @@ export const Restaurants = () => {
     }, [dispatch]);
 
     return (
-        <StyledContainer maxWidth="xl">
+        <Container maxWidth="xl" sx={{ paddingBlock: 4 }}>
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -178,15 +176,14 @@ export const Restaurants = () => {
                     </StyledAddButton>
                 )}
             </Stack>
-
             <Stack
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={2}
                 justifyContent="space-between"
                 alignItems="center"
-                marginBottom={theme.spacing(4)}
+                mb={4}
             >
-                <SearchFieldContainer>
+                <Box width={canShow ? theme.typography.pxToRem(390) : '100%'}>
                     <TextField
                         fullWidth
                         placeholder="Search restaurants by name or description"
@@ -204,42 +201,30 @@ export const Restaurants = () => {
                             },
                         }}
                     />
-                </SearchFieldContainer>
-
+                </Box>
                 <ToggleButtonGroup
                     value={vegFilter}
                     size="small"
+                    exclusive
                     aria-label="filter"
+                    onChange={handleCategoryChange}
                 >
-                    <StyledToggleButton
-                        onClick={() => setVegFilter('all')}
-                        value="all"
-                    >
-                        All
-                    </StyledToggleButton>
-                    <StyledToggleButton
-                        onClick={() => setVegFilter('veg')}
-                        value="veg"
-                    >
+                    <StyledToggleButton value="all">All</StyledToggleButton>
+                    <StyledToggleButton value="veg">
                         Pure Veg
                     </StyledToggleButton>
-                    <StyledToggleButton
-                        onClick={() => setVegFilter('non-veg')}
-                        value="non-veg"
-                    >
+                    <StyledToggleButton value="non-veg">
                         Non-Veg
                     </StyledToggleButton>
                 </ToggleButtonGroup>
             </Stack>
-
             {filteredRestaurants.length === 0 && (
-                <EmptyStateBox>
+                <Box textAlign="center" py={8}>
                     <Typography variant="h6" color="text.secondary">
                         No matching restaurants found.
                     </Typography>
-                </EmptyStateBox>
+                </Box>
             )}
-
             <RestaurantGrid>
                 {filteredRestaurants.map((restaurant) => (
                     <RestaurantCard
@@ -251,7 +236,6 @@ export const Restaurants = () => {
                     />
                 ))}
             </RestaurantGrid>
-
             <RestaurantFormDialog
                 restaurant={targetEditRestaurant || initialRestaurantState}
                 isProcessing={isProcessing}
@@ -260,13 +244,12 @@ export const Restaurants = () => {
                 handleCreateRestaurant={handleCreateRestaurant}
                 handleEditRestaurant={handleEditRestaurant}
             />
-
             <DeleteDialog
                 name={targetDeleteRestaurant?.name}
                 isProcessing={isProcessing}
                 handleClose={handleCloseDeleteDialog}
                 handleConfirm={handleDeleteRestaurant}
             />
-        </StyledContainer>
+        </Container>
     );
 };

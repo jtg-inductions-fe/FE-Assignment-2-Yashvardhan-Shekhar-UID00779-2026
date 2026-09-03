@@ -4,32 +4,40 @@ import { AccessTime, Delete, Edit } from '@mui/icons-material';
 import {
     Box,
     CardActionArea,
+    CardActions,
     CardContent,
     CardMedia,
     IconButton,
     Stack,
     Typography,
+    useTheme,
 } from '@mui/material';
 
+import { PATH } from '@constant';
 import { formatTime } from '@utils';
 
-import {
-    DescriptionText,
-    StyledCardActions,
-    StyledChip,
-    StyledRestaurantCard,
-} from './RestaurantCard.styles';
+import { StyledChip, StyledRestaurantCard } from './RestaurantCard.styles';
 import { RestaurantCardProps } from './RestaurantCard.types';
 
 export const RestaurantCard = (props: RestaurantCardProps) => {
     const { restaurant, isOwnerView, onEdit, onDelete } = props;
     const navigate = useNavigate();
+    const theme = useTheme();
 
-    /**
-     * on click navigate to /rid of restaurant
-     */
+    /** on click navigate to /rid of restaurant */
+    const id = restaurant.id;
     const handleCardClick = () => {
-        void navigate(`/restaurant/${restaurant.id}`);
+        void navigate(PATH.HOME + '/' + id);
+    };
+
+    /** triggers delete dialog */
+    const handleDeleteClick = () => {
+        onDelete(id);
+    };
+
+    /** triggers delete dialog */
+    const handleEditClick = () => {
+        onEdit(id);
     };
 
     return (
@@ -48,21 +56,25 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                         size="small"
                     />
                 </Box>
-
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2" noWrap>
                         {restaurant.name}
                     </Typography>
-
-                    <DescriptionText variant="body2" color="text.secondary">
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ ...theme.mixins.lineClamp(3) }}
+                    >
                         {restaurant.description ||
                             `Welcome to ${restaurant.name}! We are open and ready to serve you from ${restaurant.openingTime} until ${restaurant.closingTime}. Stop by to experience our excellent service and friendly team.`}
-                    </DescriptionText>
+                    </Typography>
                 </CardContent>
             </CardActionArea>
-
-            <StyledCardActions
+            <CardActions
                 sx={{
+                    display: 'flex',
+                    padding: theme.typography.pxToRem(16),
+                    paddingTop: 0,
                     justifyContent: isOwnerView
                         ? 'space-between'
                         : 'flex-start',
@@ -85,10 +97,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                         <IconButton
                             size="small"
                             color="primary"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onEdit?.(restaurant.id);
-                            }}
+                            onClick={handleEditClick}
                             aria-label="edit restaurant"
                         >
                             <Edit />
@@ -96,17 +105,14 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                         <IconButton
                             size="small"
                             color="error"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onDelete?.(restaurant.id);
-                            }}
+                            onClick={handleDeleteClick}
                             aria-label="delete restaurant"
                         >
                             <Delete />
                         </IconButton>
                     </Stack>
                 )}
-            </StyledCardActions>
+            </CardActions>
         </StyledRestaurantCard>
     );
 };

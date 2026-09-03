@@ -6,6 +6,9 @@
  */
 
 export const formatTime = (time: string) => {
+    // console.log(time)
+    // let date = Date.now();
+
     const [hours, minutes] = time.split(':');
     const date = new Date();
     date.setHours(Number(hours), Number(minutes));

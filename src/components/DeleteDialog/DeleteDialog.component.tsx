@@ -1,4 +1,5 @@
 import {
+    Box,
     DialogActions,
     DialogContent,
     DialogContentText,
@@ -6,7 +7,6 @@ import {
 } from '@mui/material';
 
 import { Button, Dialog } from '@components';
-import { theme } from '@theme';
 
 import { DeleteDialogProps } from './DeleteDialog.types';
 
@@ -18,17 +18,15 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
             <DialogTitle variant="h5" sx={{ fontWeight: 'bold' }}>
                 Delete Restaurant?
             </DialogTitle>
-
             <DialogContent>
                 <DialogContentText>
                     Are you sure you want to delete{' '}
-                    <strong style={{ color: theme.palette.primary.main }}>
+                    <Box component="strong" sx={{ color: 'primary.main' }}>
                         {name}
-                    </strong>
+                    </Box>
                     ? This action cannot be undone.
                 </DialogContentText>
             </DialogContent>
-
             <DialogActions>
                 <Button
                     onClick={handleClose}
@@ -43,8 +41,9 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
                     color="error"
                     loading={isProcessing}
                     loadingPosition="end"
+                    // sx={{paddingLeft:6}}
                 >
-                    {'\u00A0 Delete \u00A0'}
+                    Delete
                 </Button>
             </DialogActions>
         </Dialog>

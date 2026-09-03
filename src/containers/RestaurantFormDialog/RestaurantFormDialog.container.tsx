@@ -2,14 +2,17 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { DialogTitle, Stack } from '@mui/material';
+import {
+    Box,
+    DialogActions,
+    DialogTitle,
+    Stack,
+    useTheme,
+} from '@mui/material';
 
 import { Button, Dialog, RadioField, TextField } from '@components';
 
-import {
-    StyledDialogActions,
-    StyledDialogContent,
-} from './RestaurantFormDialog.styles';
+import { StyledDialogContent } from './RestaurantFormDialog.styles';
 import {
     RestaurantFormDialogProps,
     RestaurantInput,
@@ -25,11 +28,17 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
         handleEditRestaurant,
     } = props;
 
+    const theme = useTheme();
+
+    const methods = useForm<RestaurantInput>();
+
+    const { register, handleSubmit, reset } = methods;
+
     const isEditMode = restaurant?.id !== '';
 
     /**
      * handles submit based on the edit mode
-     * @param {RestaurantInput} data - restaurant details
+     * @param data - restaurant details
      */
     const handleFormSubmit = async (data: RestaurantInput) => {
         const newRestaurant = {
@@ -43,10 +52,6 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
         }
     };
 
-    const methods = useForm<RestaurantInput>();
-
-    const { register, handleSubmit, reset } = methods;
-
     useEffect(() => {
         reset({ ...restaurant, isVeg: restaurant.isVeg ? 'veg' : 'non-veg' });
     }, [isOpen, reset, restaurant]);
@@ -57,8 +62,10 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                 <DialogTitle variant="h3" component="h1">
                     {isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'}
                 </DialogTitle>
-
-                <form onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}>
+                <Box
+                    component="form"
+                    onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+                >
                     <StyledDialogContent dividers>
                         <Stack spacing={2.5}>
                             <TextField
@@ -68,14 +75,12 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                     required: 'Restaurant name is required',
                                 })}
                             />
-
                             <TextField
                                 field="description"
                                 label="Description"
                                 multiline
                                 rows={3}
                             />
-
                             <Stack
                                 direction={{ xs: 'column', sm: 'row' }}
                                 spacing={2}
@@ -86,7 +91,6 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                     type="time"
                                     fullWidth
                                 />
-
                                 <TextField
                                     field="closingTime"
                                     label="Closing Time"
@@ -94,13 +98,11 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                     fullWidth
                                 />
                             </Stack>
-
                             <TextField
                                 field="image"
                                 label="Image URL"
                                 placeholder="https://example.com/image.jpg"
                             />
-
                             <RadioField
                                 fieldName="isVeg"
                                 heading="Select Category"
@@ -108,8 +110,12 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                             />
                         </Stack>
                     </StyledDialogContent>
-
-                    <StyledDialogActions>
+                    <DialogActions
+                        sx={{
+                            padding: theme.typography.pxToRem(16),
+                            gap: theme.spacing(1),
+                        }}
+                    >
                         <Button
                             onClick={handleClose}
                             color="inherit"
@@ -117,7 +123,6 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                         >
                             Cancel
                         </Button>
-
                         <Button
                             type="submit"
                             variant="contained"
@@ -127,8 +132,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                         >
                             {isEditMode ? 'Save Changes' : 'Add Restaurant'}
                         </Button>
-                    </StyledDialogActions>
-                </form>
+                    </DialogActions>
+                </Box>
             </Dialog>
         </FormProvider>
     );
