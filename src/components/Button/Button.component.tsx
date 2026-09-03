@@ -1,5 +1,5 @@
-import { ButtonProps } from '@mui/material';
+import { Button as MuiButton, ButtonProps } from '@mui/material';
 
 export const Button = (props: ButtonProps) => (
-    <Button sx={{ p: 4 }} {...props} />
+    <MuiButton sx={{ p: 4 }} {...props} />
 );

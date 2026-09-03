@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url';
-import { includeIgnoreFile } from '@eslint/config-helpers';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -11,12 +9,16 @@ import react from 'eslint-plugin-react';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
-const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
-
 export default tseslint.config(
-    includeIgnoreFile(gitignorePath, 'Imported .gitignore patterns'),
     {
-        ignores: ['.yarn/**'],
+        ignores: [
+            '.yarn/**/*',
+            'dist/**/*',
+            'node_modules/**/*',
+            '.vscode/**/*',
+            '.git/**/*',
+            '*.tsbuildinfo',
+        ],
     },
     {
         /*
