@@ -10,8 +10,8 @@ import {
 
 import { TextFieldProps } from './RadioField.types';
 
-export const RadioField = (allProps: TextFieldProps) => {
-    const { fieldName, heading, options } = allProps;
+export const RadioField = (props: TextFieldProps) => {
+    const { fieldName, heading, options } = props;
 
     const {
         formState: { errors },
