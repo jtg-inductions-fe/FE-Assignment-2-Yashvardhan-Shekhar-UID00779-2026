@@ -1,11 +1,9 @@
 import { CartItem } from '@types';
 
 /**
- * props of cardItem
- * @type {
- *     item: CartItem;
- * };
+ * Represents the props for a cart item row.
  */
 export type CartItemRowProps = {
+    /** cart item details */
     item: CartItem;
 };

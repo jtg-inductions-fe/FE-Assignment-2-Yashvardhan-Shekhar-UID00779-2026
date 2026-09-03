@@ -1,6 +1,12 @@
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { Box, CardMedia, Stack, Typography, useTheme } from '@mui/material';
+import { Add, Remove } from '@mui/icons-material';
+import {
+    Box,
+    CardMedia,
+    Stack,
+    Tooltip,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
 import { addItemToCart, removeItemFromCart, useAppDispatch } from '@store';
 
@@ -14,7 +20,6 @@ export const CartItemRow = (props: CartItemRowProps) => {
 
     /**
      * adds Item in the cart
-     * @returns nothing void
      */
     const handleAddToCart = () => {
         dispatch(addItemToCart(item));
@@ -22,7 +27,6 @@ export const CartItemRow = (props: CartItemRowProps) => {
 
     /**
      * removes Item from the cart
-     * @returns nothing void
      */
     const handleRemoveFromCart = () => {
         dispatch(removeItemFromCart(item));
@@ -41,7 +45,6 @@ export const CartItemRow = (props: CartItemRowProps) => {
                     borderRadius: theme.typography.pxToRem(10),
                 }}
             />
-
             <Box flexGrow={1} minWidth={10}>
                 <Typography variant="subtitle1" fontWeight="bold" noWrap>
                     {item.name}
@@ -50,21 +53,21 @@ export const CartItemRow = (props: CartItemRowProps) => {
                     ₹{item.price} x {item.quantity}
                 </Typography>
             </Box>
-
             <QuantityControlStack
                 direction="row"
                 alignItems="center"
                 spacing={1}
             >
-                <QuantityIconButton
-                    size="small"
-                    color="primary"
-                    onClick={handleRemoveFromCart}
-                    aria-label="decrease quantity"
-                >
-                    <RemoveIcon fontSize="small" />
-                </QuantityIconButton>
-
+                <Tooltip title="decrease quantity">
+                    <QuantityIconButton
+                        size="small"
+                        color="primary"
+                        onClick={handleRemoveFromCart}
+                        aria-label="decrease quantity"
+                    >
+                        <Remove fontSize="small" />
+                    </QuantityIconButton>
+                </Tooltip>
                 <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -72,18 +75,18 @@ export const CartItemRow = (props: CartItemRowProps) => {
                 >
                     {item.quantity}
                 </Typography>
-
-                <QuantityIconButton
-                    size="small"
-                    color="primary"
-                    disabled={item.quantity >= item.stock}
-                    onClick={handleAddToCart}
-                    aria-label="increase quantity"
-                >
-                    <AddIcon fontSize="small" />
-                </QuantityIconButton>
+                <Tooltip title="increase quantity">
+                    <QuantityIconButton
+                        size="small"
+                        color="primary"
+                        disabled={item.quantity >= item.stock}
+                        onClick={handleAddToCart}
+                        aria-label="increase quantity"
+                    >
+                        <Add fontSize="small" />
+                    </QuantityIconButton>
+                </Tooltip>
             </QuantityControlStack>
-
             <Typography
                 variant="subtitle1"
                 fontWeight="bold"

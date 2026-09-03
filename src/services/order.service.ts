@@ -1,8 +1,16 @@
 import { AppDispatch, clearCart } from '@store';
-import { alert, delay } from '@utils';
+import { alert, delay, handleErrorFeedback } from '@utils';
 
+/**
+ * places order and resets cart on success
+ * @param dispatch store dispatch
+ */
 export const placeOrder = async (dispatch: AppDispatch) => {
-    await delay();
-    alert('success', 'Order has been places successfully', dispatch);
-    dispatch(clearCart());
+    try {
+        await delay();
+        alert('success', 'Order has been placed successfully', dispatch);
+        dispatch(clearCart());
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+    }
 };

@@ -60,6 +60,10 @@ export const cartSlice = createSlice({
                 }
             }
         },
+        /**
+         * resets the cart
+         * @param state Current cart state.
+         */
         clearCart: (state) => {
             state.cartItems.length = 0;
         },

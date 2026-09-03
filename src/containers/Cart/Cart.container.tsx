@@ -1,8 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { ShoppingBagOutlined } from '@mui/icons-material';
 import { Box, Container, Stack, Typography } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
@@ -30,16 +30,21 @@ export const Cart = () => {
         await navigate(PATH.HOME);
     };
 
-    const subtotal = cart.reduce(
-        (sum: number, item: CartItem) => sum + item.price * item.quantity,
-        0,
+    const subtotal = useMemo(
+        () =>
+            cart.reduce(
+                (sum: number, item: CartItem) =>
+                    sum + item.price * item.quantity,
+                0,
+            ),
+        [cart],
     );
     const bookingFee = Math.max(Math.min(subtotal * 0.1, 200), 40);
     const grandTotal = subtotal + bookingFee;
 
     return (
         <Container maxWidth="xl">
-            <Stack spacing={1} mb={4}>
+            <Stack component="section" spacing={1} mb={4}>
                 <Typography variant="h2" component="h1" fontWeight={800}>
                     Order Checkout
                 </Typography>
@@ -47,7 +52,6 @@ export const Cart = () => {
                     Review your items and complete your order.
                 </Typography>
             </Stack>
-
             {cart.length > 0 ? (
                 <Box>
                     {cart.map((item: CartItem) => (
@@ -56,7 +60,6 @@ export const Cart = () => {
                             <StyledDivider />
                         </Fragment>
                     ))}
-
                     <SummaryRow>
                         <Typography variant="body1" color="text.secondary">
                             Subtotal
@@ -65,7 +68,6 @@ export const Cart = () => {
                             ₹{subtotal.toFixed(2)}
                         </Typography>
                     </SummaryRow>
-
                     <SummaryRow>
                         <Typography variant="body1" color="text.secondary">
                             Booking Fee
@@ -74,9 +76,7 @@ export const Cart = () => {
                             ₹{bookingFee.toFixed(2)}
                         </Typography>
                     </SummaryRow>
-
                     <StyledDivider />
-
                     <SummaryRow mb={3}>
                         <Typography variant="h6" fontWeight="bold">
                             Total Payable
@@ -89,7 +89,6 @@ export const Cart = () => {
                             ₹{grandTotal.toFixed(2)}
                         </Typography>
                     </SummaryRow>
-
                     <Button
                         fullWidth
                         variant="contained"
@@ -104,7 +103,7 @@ export const Cart = () => {
                 </Box>
             ) : (
                 <Box textAlign="center">
-                    <ShoppingBagOutlinedIcon
+                    <ShoppingBagOutlined
                         sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }}
                     />
                     <Typography variant="h6" color="text.secondary">
