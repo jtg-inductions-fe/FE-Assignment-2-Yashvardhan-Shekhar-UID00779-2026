@@ -52,11 +52,11 @@ export const Login = () => {
                 gutterBottom
                 align="center"
                 fontWeight="medium"
-                >
+            >
                 Log in
             </Typography>
-                <Box
-                    component="form"
+            <Box
+                component="form"
                 onSubmit={(e) => {
                     void handleSubmit(handleClick)(e);
                 }}
