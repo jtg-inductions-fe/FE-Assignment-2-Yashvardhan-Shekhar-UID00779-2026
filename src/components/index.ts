@@ -12,3 +12,5 @@ export { DeleteDialog } from './DeleteDialog';
 export { Grid } from './Grid';
 export { AddButton } from './AddButton';
 export { Card } from './Card';
+export { CartItemRow } from './CartItemCard';
+export { OrderItemDetails } from './OrderItemDetails';

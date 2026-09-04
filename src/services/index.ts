@@ -9,3 +9,4 @@ export {
     handleCreateMenuItem,
     handleDeleteMenuItem,
 } from './restaurants.service';
+export { placeOrder, getOrders, updateOrder } from './order.service';

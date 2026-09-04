@@ -14,4 +14,5 @@ export {
     removeMenuItem,
     updateMenuItem,
 } from './restaurantDetails.slice';
-export { removeItemFromCart, addItemToCart } from './cart.slice';
+export { removeItemFromCart, addItemToCart, clearCart } from './cart.slice';
+export { setOrders, updateOrderState } from './orders.slice';

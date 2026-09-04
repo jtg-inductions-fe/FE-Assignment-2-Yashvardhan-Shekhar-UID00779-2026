@@ -2,7 +2,9 @@ import { createBrowserRouter, Navigate } from 'react-router';
 
 import { PATH } from '@constant';
 import {
+    Cart,
     Login,
+    Orders,
     PageNotFound,
     RestaurantDetails,
     Restaurants,
@@ -44,11 +46,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'orders',
-                element: <>orders</>,
+                Component: Orders,
             },
             {
                 path: 'cart',
-                element: <>cart</>,
+                Component: Cart,
             },
         ],
     },
