@@ -1,7 +1,6 @@
-import { Alert } from 'types';
-
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { Alert } from '@types';
 
 /**
  * Defines the initial state for the alert slice.
