@@ -24,11 +24,8 @@ export type CartState = {
     cartItems: CartItem[];
 };
 
-/**
- * @type {
- *     restaurant: RestaurantDetails | null;
- * }
- */
+/** details of the restaurant */
 export type RestaurantDetailsState = {
+    /**object of complete restaurant */
     restaurant: RestaurantDetails | null;
 };

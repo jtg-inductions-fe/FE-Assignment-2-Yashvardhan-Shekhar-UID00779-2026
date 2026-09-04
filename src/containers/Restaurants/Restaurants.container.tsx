@@ -24,9 +24,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@store';
 import { Restaurant } from '@types';
 
-import {
-    StyledToggleButton,
-} from './Restaurants.styles';
+import { StyledToggleButton } from './Restaurants.styles';
 import { Category } from './Restaurants.types';
 
 export const Restaurants = () => {
@@ -222,7 +220,6 @@ export const Restaurants = () => {
                     </Typography>
                 </Box>
             )}
-
             <Grid>
                 {filteredRestaurants.map((restaurant) => (
                     <RestaurantCard
@@ -234,7 +231,6 @@ export const Restaurants = () => {
                     />
                 ))}
             </Grid>
-
             <RestaurantFormDialog
                 restaurant={targetEditRestaurant || initialRestaurantState}
                 isProcessing={isProcessing}
