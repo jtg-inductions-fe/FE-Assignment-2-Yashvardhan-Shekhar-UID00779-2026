@@ -41,7 +41,6 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
                     color="error"
                     loading={isProcessing}
                     loadingPosition="end"
-                    // sx={{paddingLeft:6}}
                 >
                     Delete
                 </Button>

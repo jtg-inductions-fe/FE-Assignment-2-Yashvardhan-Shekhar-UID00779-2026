@@ -150,7 +150,7 @@ export const Restaurants = () => {
                 justifyContent="space-between"
                 alignItems={{ xs: 'stretch', md: 'center' }}
                 spacing={2}
-                sx={{ mb: 4 }}
+                mb={4}
             >
                 <Box>
                     <Typography variant="h2" component="h1" fontWeight="bold">
