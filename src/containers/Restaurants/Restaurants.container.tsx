@@ -162,7 +162,6 @@ export const Restaurants = () => {
                             : 'Discover top-rated spots and treat your appetite.'}
                     </Typography>
                 </Box>
-
                 {isOwnerView && (
                     <StyledAddButton
                         variant="outlined"
