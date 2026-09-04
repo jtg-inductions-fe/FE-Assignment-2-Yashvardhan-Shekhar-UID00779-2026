@@ -13,10 +13,11 @@ import {
     useTheme,
 } from '@mui/material';
 
+import { Card } from '@components';
 import { PATH } from '@constant';
 import { formatTime } from '@utils';
 
-import { StyledChip, StyledRestaurantCard } from './RestaurantCard.styles';
+import { StyledChip } from './RestaurantCard.styles';
 import { RestaurantCardProps } from './RestaurantCard.types';
 
 export const RestaurantCard = (props: RestaurantCardProps) => {
@@ -41,7 +42,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
     };
 
     return (
-        <StyledRestaurantCard elevation={2}>
+        <Card elevation={2}>
             <CardActionArea onClick={handleCardClick}>
                 <Box>
                     <CardMedia
@@ -113,6 +114,6 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                     </Stack>
                 )}
             </CardActions>
-        </StyledRestaurantCard>
+        </Card>
     );
 };

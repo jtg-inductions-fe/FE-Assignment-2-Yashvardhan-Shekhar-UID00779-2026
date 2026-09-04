@@ -1,5 +1,5 @@
 import { store } from '@store';
-import { CartItem, Restaurant } from '@types';
+import { CartItem, Order, Restaurant, RestaurantDetails } from '@types';
 
 /** Represents the complete Redux store state. */
 export type RootState = ReturnType<typeof store.getState>;
@@ -22,4 +22,20 @@ export type RestaurantState = {
  */
 export type CartState = {
     cartItems: CartItem[];
+};
+
+/** details of the restaurant */
+export type RestaurantDetailsState = {
+    /**object of complete restaurant */
+    restaurant: RestaurantDetails | null;
+};
+
+/**
+ * order state for the store
+ * @type {
+ *     orders: Order[];
+ * };
+ */
+export type OrderState = {
+    orders: Order[];
 };

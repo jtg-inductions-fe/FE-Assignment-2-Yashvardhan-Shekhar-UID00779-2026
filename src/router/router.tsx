@@ -1,8 +1,15 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 
 import { PATH } from '@constant';
-import { Login, PageNotFound, Signup } from '@containers';
-import { Restaurants } from '@containers';
+import {
+    Cart,
+    Login,
+    Orders,
+    PageNotFound,
+    RestaurantDetails,
+    Restaurants,
+    Signup,
+} from '@containers';
 import { Home } from '@layouts';
 import { OnBoarding } from '@pages';
 
@@ -35,15 +42,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'restaurants/:restaurantId',
-                element: <>restaurant page</>,
+                element: <RestaurantDetails />,
             },
             {
                 path: 'orders',
-                element: <>orders</>,
+                Component: Orders,
             },
             {
                 path: 'cart',
-                element: <>cart</>,
+                Component: Cart,
             },
         ],
     },
