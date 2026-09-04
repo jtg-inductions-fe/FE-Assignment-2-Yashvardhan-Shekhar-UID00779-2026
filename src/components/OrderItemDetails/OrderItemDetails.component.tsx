@@ -125,7 +125,7 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                         <Typography variant="body2">
                             {item.name} x {item.quantity}
                         </Typography>
-                        <Typography variant="body2" fontWeight="500">
+                        <Typography variant="body2" fontWeight="medium">
                             ₹{(item.price * item.quantity).toFixed(2)}
                         </Typography>
                     </Stack>
@@ -158,9 +158,9 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                             <>
                                 <Button
                                     variant="outlined"
+                                    size="small"
                                     color="error"
                                     loading={isRejecting}
-                                    loadingPosition="end"
                                     disabled={isLoading}
                                     onClick={() =>
                                         void handleStatusChange(
@@ -169,13 +169,12 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                                         )
                                     }
                                 >
-                                    Reject Order
+                                    Reject
                                 </Button>
                                 <Button
-                                    variant="outlined"
-                                    color="primary"
+                                    variant="contained"
+                                    size="small"
                                     loading={isLoading}
-                                    loadingPosition="end"
                                     disabled={isRejecting}
                                     onClick={() =>
                                         void handleStatusChange(
@@ -184,16 +183,15 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                                         )
                                     }
                                 >
-                                    Accept Order
+                                    Accept
                                 </Button>
                             </>
                         )}
                         {order.status === 'accepted' && (
                             <Button
-                                variant="outlined"
-                                color="primary"
+                                variant="contained"
+                                size="small"
                                 loading={isLoading}
-                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,
@@ -206,10 +204,9 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                         )}
                         {order.status === 'preparing' && (
                             <Button
-                                variant="outlined"
-                                color="primary"
+                                variant="contained"
+                                size="small"
                                 loading={isLoading}
-                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,
@@ -222,10 +219,9 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                         )}
                         {order.status === 'out_for_delivery' && (
                             <Button
-                                variant="outlined"
-                                color="success"
+                                variant="contained"
+                                size="small"
                                 loading={isLoading}
-                                loadingPosition="end"
                                 onClick={() =>
                                     void handleStatusChange(
                                         order.id,

@@ -9,7 +9,7 @@ const initialState: User = {
     id: '',
     name: '',
     email: '',
-    role: 'customer',
+    role: 'owner',
 };
 
 /**

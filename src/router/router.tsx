@@ -46,16 +46,16 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'orders',
-                Component: Orders,
+                element: <Orders />,
             },
             {
                 path: 'cart',
-                Component: Cart,
+                element: <Cart />,
             },
         ],
     },
     {
         path: '*',
-        Component: PageNotFound,
+        element: <PageNotFound />,
     },
 ]);

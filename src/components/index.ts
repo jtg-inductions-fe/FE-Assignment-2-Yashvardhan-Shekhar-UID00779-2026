@@ -14,3 +14,4 @@ export { AddButton } from './AddButton';
 export { Card } from './Card';
 export { CartItemRow } from './CartItemCard';
 export { OrderItemDetails } from './OrderItemDetails';
+export { Tooltip } from './Tooltip';

@@ -48,6 +48,16 @@ export const Signup = () => {
 
     return (
         <FormProvider {...methods}>
+            <Typography
+                variant="h4"
+                component="h1"
+                gutterBottom
+                align="center"
+                fontWeight="medium"
+            >
+                Sign up
+            </Typography>
+
             <Box
                 component="form"
                 onSubmit={(e) => {

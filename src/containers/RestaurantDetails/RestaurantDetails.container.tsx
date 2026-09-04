@@ -3,14 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import AddIcon from '@mui/icons-material/Add';
-import {
-    Box,
-    Container,
-    Stack,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from '@mui/material';
+import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { AddButton, DeleteDialog, Grid, MenuCard } from '@components';
 import { MenuFormDialog } from '@containers';
@@ -109,7 +102,7 @@ export const RestaurantDetails = () => {
     }, [dispatch, rid]);
 
     return (
-        <Container maxWidth="xl">
+        <>
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -118,7 +111,7 @@ export const RestaurantDetails = () => {
                 pb={4}
             >
                 <Stack py={3}>
-                    <Typography variant="h2" component="h1" fontWeight="bold">
+                    <Typography variant="h2" component="h1">
                         {restaurantDetails?.name}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
@@ -170,6 +163,6 @@ export const RestaurantDetails = () => {
                 handleClose={handleCloseDeleteDialog}
                 handleConfirm={handleDeleteMenuItem}
             />
-        </Container>
+        </>
     );
 };

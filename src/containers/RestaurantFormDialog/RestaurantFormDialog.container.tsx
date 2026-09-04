@@ -67,10 +67,10 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                     onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
                 >
                     <StyledDialogContent dividers>
-                        <Stack spacing={2.5}>
+                        <Stack spacing={2}>
                             <TextField
                                 field="name"
-                                label="Restaurant Name"
+                                label="Restaurant Name *"
                                 {...register('name', {
                                     required: 'Restaurant name is required',
                                 })}
@@ -118,7 +118,7 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                     >
                         <Button
                             onClick={handleClose}
-                            color="inherit"
+                            variant="outlined"
                             disabled={isProcessing}
                         >
                             Cancel
@@ -126,9 +126,7 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
                             loading={isProcessing}
-                            loadingPosition="end"
                         >
                             {isEditMode ? 'Save Changes' : 'Add Restaurant'}
                         </Button>

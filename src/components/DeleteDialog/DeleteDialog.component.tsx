@@ -15,8 +15,8 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
 
     return (
         <Dialog open={!!name} onClose={handleClose}>
-            <DialogTitle variant="h5" sx={{ fontWeight: 'bold' }}>
-                Delete Restaurant?
+            <DialogTitle variant="h4" fontWeight="bold">
+                Delete Confirmation ?
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -30,7 +30,8 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
             <DialogActions>
                 <Button
                     onClick={handleClose}
-                    color="inherit"
+                    color="error"
+                    variant="outlined"
                     disabled={isProcessing}
                 >
                     Cancel
@@ -40,7 +41,6 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
                     variant="contained"
                     color="error"
                     loading={isProcessing}
-                    loadingPosition="end"
                 >
                     Delete
                 </Button>

@@ -13,7 +13,8 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { Card } from '@components';
+import foodIllustration from '@assets/images/food-illustration.webp';
+import { Card, Tooltip } from '@components';
 import { PATH } from '@constant';
 import { formatTime } from '@utils';
 
@@ -24,6 +25,10 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
     const { restaurant, isOwnerView, onEdit, onDelete } = props;
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const description =
+        restaurant.description ||
+        `Welcome to ${restaurant.name}! We are open and ready to serve you from ${restaurant.openingTime} until ${restaurant.closingTime}. Stop by to experience our excellent service and friendly team.`;
 
     /** on click navigate to /rid of restaurant */
     const id = restaurant.id;
@@ -42,13 +47,16 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
     };
 
     return (
-        <Card elevation={2}>
-            <CardActionArea onClick={handleCardClick}>
+        <CardActionArea onClick={handleCardClick}>
+            <Card elevation={2}>
                 <Box>
                     <CardMedia
                         component="img"
                         height="180"
-                        image={restaurant.image}
+                        image={restaurant.image || foodIllustration}
+                        onError={(e) => {
+                            e.currentTarget.src = foodIllustration;
+                        }}
                         alt={restaurant.name}
                     />
                     <StyledChip
@@ -61,59 +69,76 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                     <Typography gutterBottom variant="h6" component="h2" noWrap>
                         {restaurant.name}
                     </Typography>
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ ...theme.mixins.lineClamp(3) }}
+                    <Tooltip
+                        title={description}
+                        enterDelay={1000}
+                        sx={{
+                            bgcolor: 'text.disabled',
+                            color: 'background.paper',
+                            p: 2,
+                        }}
                     >
-                        {restaurant.description ||
-                            `Welcome to ${restaurant.name}! We are open and ready to serve you from ${restaurant.openingTime} until ${restaurant.closingTime}. Stop by to experience our excellent service and friendly team.`}
-                    </Typography>
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ ...theme.mixins.lineClamp(3) }}
+                        >
+                            {description}
+                        </Typography>
+                    </Tooltip>
                 </CardContent>
-            </CardActionArea>
-            <CardActions
-                sx={{
-                    display: 'flex',
-                    padding: theme.typography.pxToRem(16),
-                    paddingTop: 0,
-                    justifyContent: isOwnerView
-                        ? 'space-between'
-                        : 'flex-start',
-                }}
-            >
-                <Stack
-                    direction="row"
-                    alignItems="center"
-                    spacing={1}
-                    color="text.secondary"
+                <CardActions
+                    sx={{
+                        display: 'flex',
+                        padding: theme.typography.pxToRem(16),
+                        paddingTop: 0,
+                        justifyContent: isOwnerView
+                            ? 'space-between'
+                            : 'flex-start',
+                    }}
                 >
-                    <AccessTime fontSize="small" />
-                    <Typography variant="caption">
-                        {formatTime(restaurant.openingTime)} -{' '}
-                        {formatTime(restaurant.closingTime)}
-                    </Typography>
-                </Stack>
-                {isOwnerView && (
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <IconButton
-                            size="small"
-                            color="primary"
-                            onClick={handleEditClick}
-                            aria-label="edit restaurant"
-                        >
-                            <Edit />
-                        </IconButton>
-                        <IconButton
-                            size="small"
-                            color="error"
-                            onClick={handleDeleteClick}
-                            aria-label="delete restaurant"
-                        >
-                            <Delete />
-                        </IconButton>
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        spacing={1}
+                        color="text.secondary"
+                    >
+                        <AccessTime fontSize="small" />
+                        <Typography variant="caption">
+                            {formatTime(restaurant.openingTime)} -{' '}
+                            {formatTime(restaurant.closingTime)}
+                        </Typography>
                     </Stack>
-                )}
-            </CardActions>
-        </Card>
+                    {isOwnerView && (
+                        <Stack direction="row" alignItems="center">
+                            <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEditClick();
+                                }}
+                                sx={{ px: 3 }}
+                                aria-label="edit restaurant"
+                            >
+                                <Edit />
+                            </IconButton>
+                            <IconButton
+                                size="small"
+                                color="error"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeleteClick();
+                                }}
+                                sx={{ px: 3 }}
+                                aria-label="delete restaurant"
+                            >
+                                <Delete />
+                            </IconButton>
+                        </Stack>
+                    )}
+                </CardActions>
+            </Card>
+        </CardActionArea>
     );
 };

@@ -18,16 +18,12 @@ export const CartItemRow = (props: CartItemRowProps) => {
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
-    /**
-     * adds Item in the cart
-     */
+    /** adds Item in the cart */
     const handleAddToCart = () => {
         dispatch(addItemToCart(item));
     };
 
-    /**
-     * removes Item from the cart
-     */
+    /** removes Item from the cart  */
     const handleRemoveFromCart = () => {
         dispatch(removeItemFromCart(item));
     };
@@ -40,8 +36,8 @@ export const CartItemRow = (props: CartItemRowProps) => {
                 alt={item.name}
                 loading="lazy"
                 sx={{
-                    height: theme.typography.pxToRem(64),
                     width: theme.typography.pxToRem(64),
+                    height: theme.typography.pxToRem(64),
                     borderRadius: theme.typography.pxToRem(10),
                 }}
             />
@@ -49,7 +45,7 @@ export const CartItemRow = (props: CartItemRowProps) => {
                 <Typography variant="subtitle1" fontWeight="bold" noWrap>
                     {item.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="subtitle1" color="text.secondary">
                     ₹{item.price} x {item.quantity}
                 </Typography>
             </Box>

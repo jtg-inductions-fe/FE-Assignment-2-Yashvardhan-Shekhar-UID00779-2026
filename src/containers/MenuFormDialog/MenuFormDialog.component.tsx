@@ -5,8 +5,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Box, DialogTitle, Stack } from '@mui/material';
 
 import { Button, Dialog, TextField } from '@components';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { MenuItem } from '@types';
 
+import { MenuItemSchema } from './MenuFormDialog.config';
 import {
     StyledDialogActions,
     StyledDialogContent,
@@ -24,9 +26,10 @@ export const MenuFormDialog = ({
     const isEditMode = menuItem.id !== '';
 
     const methods = useForm<MenuItem>({
+        resolver: zodResolver(MenuItemSchema),
         defaultValues: menuItem,
     });
-    const { register, handleSubmit, reset } = methods;
+    const { handleSubmit, reset } = methods;
 
     /**
      * add/edit the menu with the data of menuItem
@@ -47,22 +50,16 @@ export const MenuFormDialog = ({
     return (
         <FormProvider {...methods}>
             <Dialog open={isOpen} onClose={onClose} fullWidth>
-                <DialogTitle variant="h3" component="h1">
+                <DialogTitle variant="h4" component="h1">
                     {isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
                 </DialogTitle>
                 <Box
                     component="form"
                     onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
                 >
-                    <StyledDialogContent dividers>
+                    <StyledDialogContent>
                         <Stack spacing={2.5}>
-                            <TextField
-                                field="name"
-                                {...register('name', {
-                                    required: 'Item name is required',
-                                })}
-                                label="Item Name"
-                            />
+                            <TextField field="name" label="Item Name *" />
                             <TextField
                                 field="description"
                                 label="Description"
@@ -96,7 +93,7 @@ export const MenuFormDialog = ({
                     <StyledDialogActions>
                         <Button
                             onClick={onClose}
-                            color="inherit"
+                            variant="outlined"
                             disabled={isProcessing}
                         >
                             Cancel
@@ -104,9 +101,7 @@ export const MenuFormDialog = ({
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
                             loading={isProcessing}
-                            loadingPosition="end"
                         >
                             {isEditMode ? 'Save Changes' : 'Add Item'}
                         </Button>

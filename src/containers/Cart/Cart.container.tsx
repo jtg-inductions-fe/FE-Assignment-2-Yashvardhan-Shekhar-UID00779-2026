@@ -1,9 +1,9 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
 import { ShoppingBagOutlined } from '@mui/icons-material';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
 import { PATH } from '@constant';
@@ -17,12 +17,11 @@ export const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state) => state.cart.cartItems);
+    const role = useAppSelector((state) => state.user.role);
 
     const [isLoading, setIsLoading] = useState(false);
 
-    /**
-     * places order on clicked and resets the store cart
-     */
+    /** places order on clicked and resets the store cart */
     const handelPlaceOrder = async () => {
         setIsLoading(true);
         await placeOrder(dispatch);
@@ -42,10 +41,16 @@ export const Cart = () => {
     const bookingFee = Math.max(Math.min(subtotal * 0.1, 200), 40);
     const grandTotal = subtotal + bookingFee;
 
+    useEffect(() => {
+        if (role === 'owner') {
+            void navigate(PATH.HOME);
+        }
+    }, [role, navigate]);
+
     return (
-        <Container maxWidth="xl">
+        <>
             <Stack component="section" spacing={1} mb={4}>
-                <Typography variant="h2" component="h1" fontWeight={800}>
+                <Typography variant="h2" component="h1" fontWeight="bold">
                     Order Checkout
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
@@ -64,7 +69,7 @@ export const Cart = () => {
                         <Typography variant="body1" color="text.secondary">
                             Subtotal
                         </Typography>
-                        <Typography variant="body1" fontWeight="500">
+                        <Typography variant="body1" fontWeight="medium">
                             ₹{subtotal.toFixed(2)}
                         </Typography>
                     </SummaryRow>
@@ -72,7 +77,7 @@ export const Cart = () => {
                         <Typography variant="body1" color="text.secondary">
                             Booking Fee
                         </Typography>
-                        <Typography variant="body1" fontWeight="500">
+                        <Typography variant="body1" fontWeight="medium">
                             ₹{bookingFee.toFixed(2)}
                         </Typography>
                     </SummaryRow>
@@ -114,6 +119,6 @@ export const Cart = () => {
                     </Typography>
                 </Box>
             )}
-        </Container>
+        </>
     );
 };

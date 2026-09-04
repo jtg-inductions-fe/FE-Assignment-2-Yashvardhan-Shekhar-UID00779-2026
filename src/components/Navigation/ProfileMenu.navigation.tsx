@@ -1,12 +1,26 @@
+import { useNavigate } from 'react-router';
+
 import { Logout } from '@mui/icons-material';
 import { ListItemIcon, ListSubheader, MenuItem, useTheme } from '@mui/material';
+
+import { PATH } from '@constant';
+import { logout } from '@services';
+import { useAppDispatch } from '@store';
 
 import { StyledMenu } from './navigation.styles';
 import { ProfileMenuProps } from './navigation.types';
 
 export const ProfileMenu = (props: ProfileMenuProps) => {
-    const { isMenuOpen, anchorEl, user, handleMenuClose, handleLogOut } = props;
+    const { isMenuOpen, anchorEl, user, handleMenuClose } = props;
     const theme = useTheme();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    /** logout functionality */
+    const handleLogOut = () => {
+        logout(dispatch);
+        void navigate(PATH.LOGIN);
+    };
 
     return (
         <StyledMenu

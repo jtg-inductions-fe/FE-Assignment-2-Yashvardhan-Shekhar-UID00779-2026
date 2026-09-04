@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { Box, Container, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 
 import { OrderItemDetails } from '@components';
 import { getOrders } from '@services';
@@ -18,7 +18,7 @@ export const Orders = () => {
     }, [dispatch]);
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4 }}>
+        <>
             <Stack pb={theme.typography.pxToRem(20)}>
                 <Typography variant="h2" component="h1">
                     {isOwnerView ? 'Customer Orders' : 'Your Orders'}
@@ -48,6 +48,6 @@ export const Orders = () => {
                     <Typography variant="h6">No orders found.</Typography>
                 </Box>
             )}
-        </Container>
+        </>
     );
 };

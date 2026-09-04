@@ -7,9 +7,12 @@ export const StyledChip = styled(Chip)(({ theme }) => ({
     fontWeight: 'bold',
 }));
 
-export const QuantityIconButton = styled(IconButton)({
-    width: '30%',
-});
+export const QuantityIconButton = styled(IconButton)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius,
+    width: '40%',
+    textAlign: 'start',
+    alignSelf: 'start',
+}));
 
 export const StyledCardActions = styled(CardActions)(({ theme }) => ({
     display: 'flex',

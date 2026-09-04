@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Add, Search } from '@mui/icons-material';
 import {
     Box,
-    Container,
     InputAdornment,
     Stack,
     TextField,
@@ -140,7 +139,7 @@ export const Restaurants = () => {
     }, [dispatch]);
 
     return (
-        <Container maxWidth="xl" sx={{ paddingBlock: 4 }}>
+        <>
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -149,7 +148,7 @@ export const Restaurants = () => {
                 mb={4}
             >
                 <Box>
-                    <Typography variant="h2" component="h1" fontWeight="bold">
+                    <Typography variant="h2" component="h1">
                         {isOwnerView ? 'My Restaurants' : 'Explore Restaurants'}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
@@ -245,6 +244,6 @@ export const Restaurants = () => {
                 handleClose={handleCloseDeleteDialog}
                 handleConfirm={handleDeleteRestaurant}
             />
-        </Container>
+        </>
     );
 };
