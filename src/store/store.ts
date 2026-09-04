@@ -3,6 +3,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import alertReducer from './alert.slice';
+import cartReducer from './cart.slice';
 import { AppDispatch, AppStore, RootState } from './store.type';
 import userReducer from './user.slice';
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     reducer: {
         user: userReducer,
         alert: alertReducer,
+        cart: cartReducer,
     },
 });
 

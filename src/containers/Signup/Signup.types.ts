@@ -8,9 +8,3 @@ export type SignupInput = User & {
     /** confirm password */
     confirmPassword: string;
 };
-/**
- * props for the component function to switch
- */
-export type SignupProp = {
-    onSwitchToLogin: () => void;
-};

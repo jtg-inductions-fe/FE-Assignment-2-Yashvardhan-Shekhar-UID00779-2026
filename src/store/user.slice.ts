@@ -14,7 +14,6 @@ const initialState: User = {
 
 /**
  * Redux slice responsible for managing the authenticated user's state.
- *
  * Provides an action to update user information or reset it to default values.
  */
 export const userSlice = createSlice({

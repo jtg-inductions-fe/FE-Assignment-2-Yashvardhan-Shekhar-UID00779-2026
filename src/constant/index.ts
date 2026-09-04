@@ -5,3 +5,5 @@ export {
     SCALING_FACTOR,
     BORDER_RADIUS,
 } from './theme.constant';
+
+export { PATH } from './path.constant';

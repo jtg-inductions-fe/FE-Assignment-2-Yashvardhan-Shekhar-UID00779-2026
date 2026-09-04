@@ -1,20 +1,22 @@
 import { useState } from 'react';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import { Box, Link, Stack, Typography } from '@mui/material';
 
 import { Button, PasswordField, RadioField, TextField } from '@components';
+import { PATH } from '@constant';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUp } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
 import { SignupSchema } from './Signup.config';
-import { SignupInput, SignupProp } from './Signup.types';
+import { SignupInput } from './Signup.types';
 
-export const Signup = (props: SignupProp) => {
-    const { onSwitchToLogin } = props;
+export const Signup = () => {
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -87,7 +89,7 @@ export const Signup = (props: SignupProp) => {
                                 type="button"
                                 variant="body2"
                                 underline="hover"
-                                onClick={onSwitchToLogin}
+                                onClick={() => void navigate(PATH.LOGIN)}
                                 fontWeight="bold"
                             >
                                 Log In

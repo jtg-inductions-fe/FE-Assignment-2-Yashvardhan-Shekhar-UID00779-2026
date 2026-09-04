@@ -1,20 +1,22 @@
 import { useState } from 'react';
 
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import { Box, Link, Stack, Typography } from '@mui/material';
 
 import { Button, PasswordField, TextField } from '@components';
+import { PATH } from '@constant';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { login } from '@services';
 import { useAppDispatch } from '@store';
 import { handleErrorFeedback } from '@utils';
 
 import { LoginSchema } from './Login.config';
-import { LoginInput, LoginProp } from './Login.types';
+import { LoginInput } from './Login.types';
 
-export const Login = (props: LoginProp) => {
-    const { onSwitchToSignUp } = props;
+export const Login = () => {
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -34,6 +36,7 @@ export const Login = (props: LoginProp) => {
         try {
             setIsLoading(true);
             await login(data, dispatch);
+            await navigate(PATH.HOME);
         } catch (e) {
             handleErrorFeedback(e, dispatch);
         } finally {
@@ -43,6 +46,15 @@ export const Login = (props: LoginProp) => {
 
     return (
         <FormProvider {...methods}>
+            <Typography
+                variant="h4"
+                component="h1"
+                gutterBottom
+                align="center"
+                fontWeight="medium"
+            >
+                Log in
+            </Typography>
             <Box
                 component="form"
                 onSubmit={(e) => {
@@ -51,7 +63,6 @@ export const Login = (props: LoginProp) => {
                 noValidate
             >
                 <Stack spacing={2}>
-                    {/* email field */}
                     <TextField
                         label="Email Address"
                         type="email"
@@ -77,7 +88,7 @@ export const Login = (props: LoginProp) => {
                                 type="button"
                                 variant="body2"
                                 underline="hover"
-                                onClick={onSwitchToSignUp}
+                                onClick={() => void navigate(PATH.SIGNUP)}
                                 fontWeight="bold"
                             >
                                 Sign Up
