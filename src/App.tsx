@@ -1,12 +1,13 @@
-import { Container } from '@mui/material';
+import { Provider } from 'react-redux';
 
-import { Home } from '@pages';
+import { Main } from '@layouts';
 import { ThemeProvider } from '@providers';
+import { store } from '@store';
 
 export const App = () => (
-    <ThemeProvider>
-        <Container maxWidth="xl">
-            <Home />
-        </Container>
-    </ThemeProvider>
+    <Provider store={store}>
+        <ThemeProvider>
+            <Main />
+        </ThemeProvider>
+    </Provider>
 );

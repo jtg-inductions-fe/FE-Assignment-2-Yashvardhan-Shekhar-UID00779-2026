@@ -3,13 +3,19 @@
         "baseUrl": "./src",
         "paths": {
             "@assets/*": ["assets/*"],
-            "@constant": ["constant/index"],
-            "@theme": ["theme/index"],
+            "@data/*": ["data/*"],
             "@components": ["components/index"],
+            "@constant": ["constant/index"],
+            "@containers": ["containers/index"],
+            "@layouts": ["layouts/index"],
             "@types": ["types/index"],
             "@store": ["store/index"],
             "@pages": ["pages/index"],
-            "@providers": ["providers/index"]
+            "@providers": ["providers/index"],
+            "@services": ["services/index"],
+            "@styles": ["styles/index"],
+            "@theme": ["theme/index"],
+            "@utils": ["utils/index"]
         }
     }
 }

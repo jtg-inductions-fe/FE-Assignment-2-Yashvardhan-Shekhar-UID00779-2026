@@ -3,4 +3,5 @@ export {
     FONT_WEIGHTS,
     COLORS,
     SCALING_FACTOR,
+    BORDER_RADIUS,
 } from './theme.constant';

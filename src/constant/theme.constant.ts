@@ -28,3 +28,8 @@ export const COLORS = {
         SECONDARY: '#5A6A75',
     },
 };
+
+/**
+ *  Border radius for pill shaped structure
+ */
+export const BORDER_RADIUS = 30;

@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-import { SCALING_FACTOR } from '@constant';
+import { BORDER_RADIUS, SCALING_FACTOR } from '@constant';
 
 // Customized MUI components themes
 import { components } from './components';
@@ -16,6 +16,9 @@ let theme = createTheme({
     typography: {
         fontFamily: 'Inter, Arial, sans-serif',
         ...typography.typographyUtil,
+    },
+    shape: {
+        borderRadius: BORDER_RADIUS,
     },
     spacing: (factor: number) =>
         theme.typography.pxToRem(factor * SCALING_FACTOR),
