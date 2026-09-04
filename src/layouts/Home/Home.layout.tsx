@@ -5,9 +5,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import { Box } from '@mui/material';
 
 import { BottomBar, Navbar, ProfileMenu } from '@components';
-import { logout } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
-import { handleUser } from '@utils';
+import { navigateUserBasedOnState } from '@utils';
 
 import { StyledContainer } from './Home.styles';
 
@@ -18,6 +17,7 @@ export const Home = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const user = useAppSelector((state) => state.user);
+    const isLoading = !user.id;
     const cartCount: number = useAppSelector((state) =>
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
@@ -40,16 +40,9 @@ export const Home = () => {
         setAnchorEl(null);
     };
 
-    /**
-     *  logout functionality
-     */
-    const handleLogOut = (): void => {
-        logout(dispatch);
-    };
-
     useEffect(() => {
-        handleUser(dispatch, navigate);
-    }, [user, dispatch, navigate]);
+        void navigateUserBasedOnState(dispatch, navigate, false);
+    }, [dispatch, navigate]);
 
     return (
         <Box height="100vh">
@@ -58,16 +51,16 @@ export const Home = () => {
                 user={user}
                 activeTab={pathname}
                 cartCount={cartCount}
+                isLoading={isLoading}
             />
             <ProfileMenu
                 isMenuOpen={isMenuOpen}
                 anchorEl={anchorEl}
                 user={user}
                 handleMenuClose={handleMenuClose}
-                handleLogOut={handleLogOut}
             />
             <StyledContainer maxWidth="xl">
-                <Outlet />
+                {!isLoading && <Outlet />}
             </StyledContainer>
             <BottomBar
                 handleProfileClick={handleProfileClick}

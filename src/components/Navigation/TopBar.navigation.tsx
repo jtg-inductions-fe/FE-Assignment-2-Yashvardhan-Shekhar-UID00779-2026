@@ -10,6 +10,7 @@ import {
     Button,
     Container,
     IconButton,
+    LinearProgress,
     Link,
     Toolbar,
 } from '@mui/material';
@@ -21,12 +22,13 @@ import { DesktopNavBox, StyledAppBar } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
 export const Navbar = (props: BarProps) => {
-    const { handleProfileClick, user, activeTab, cartCount } = props;
+    const { handleProfileClick, user, activeTab, cartCount, isLoading } = props;
 
     const navigate = useNavigate();
 
     return (
         <StyledAppBar position="sticky" elevation={1}>
+            {isLoading && <LinearProgress />}
             <Container maxWidth="xl">
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Link

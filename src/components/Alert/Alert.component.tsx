@@ -11,7 +11,7 @@ export const Alert = (alertProp: AlertTypeProp) => {
     const [isOpen, setIsOpen] = useState(false);
 
     /** closing alert Snackbar */
-    const handleAlertClose = (): void => {
+    const handleAlertClose = () => {
         setIsOpen(false);
     };
 
@@ -27,12 +27,14 @@ export const Alert = (alertProp: AlertTypeProp) => {
             open={isOpen}
             autoHideDuration={3000}
             onClose={handleAlertClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
             <MuiAlert
-                sx={{ boxShadow: theme.shadows[5] }}
+                sx={{ boxShadow: theme.shadows[24], marginTop: 0 }}
                 severity={severity}
                 onClose={handleAlertClose}
+                variant="standard"
+                elevation={10}
             >
                 {message}
             </MuiAlert>

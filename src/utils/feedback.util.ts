@@ -36,3 +36,9 @@ export const handleErrorFeedback = (
         alert('error', 'Unknown error has occurred', dispatch);
     }
 };
+
+/**
+ * Delays execution for the specified duration.
+ */
+export const delay = (): Promise<void> =>
+    new Promise((resolve) => setTimeout(resolve, 500));
