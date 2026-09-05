@@ -16,14 +16,18 @@ export const Home = () => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+    const isLoading = useAppSelector((state) => state.loading.isLoading);
+    const isStartupLoading = useAppSelector(
+        (state) => state.loading.isStartupLoading,
+    );
     const user = useAppSelector((state) => state.user);
-    const isLoading = !user.id;
     const cartCount: number = useAppSelector((state) =>
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
 
+    // const userPresent = !!user.id;
+    // console.log(userPresent);
     const { pathname } = useLocation();
-    const isMenuOpen = Boolean(anchorEl);
 
     /**
      *  Opens the profile menu by setting the clicked element as its anchor.
@@ -33,9 +37,7 @@ export const Home = () => {
         setAnchorEl(target);
     };
 
-    /**
-     *  Closes the profile menu.
-     */
+    /** Closes the profile menu.*/
     const handleMenuClose = (): void => {
         setAnchorEl(null);
     };
@@ -51,16 +53,16 @@ export const Home = () => {
                 user={user}
                 activeTab={pathname}
                 cartCount={cartCount}
-                isLoading={isLoading}
+                isLoading={isLoading || isStartupLoading}
             />
             <ProfileMenu
-                isMenuOpen={isMenuOpen}
+                isMenuOpen={!!anchorEl}
                 anchorEl={anchorEl}
                 user={user}
                 handleMenuClose={handleMenuClose}
             />
             <StyledContainer maxWidth="xl">
-                {!isLoading && <Outlet />}
+                {!!user.id && <Outlet />}
             </StyledContainer>
             <BottomBar
                 handleProfileClick={handleProfileClick}

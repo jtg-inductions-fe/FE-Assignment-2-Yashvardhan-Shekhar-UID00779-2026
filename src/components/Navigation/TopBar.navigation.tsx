@@ -28,9 +28,14 @@ export const Navbar = (props: BarProps) => {
 
     return (
         <StyledAppBar position="sticky" elevation={1}>
-            {isLoading && <LinearProgress />}
+            <LinearProgress
+                sx={{ visibility: isLoading ? 'visible' : 'hidden' }}
+            />
             <Container maxWidth="xl">
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Toolbar
+                    disableGutters
+                    sx={{ justifyContent: 'space-between' }}
+                >
                     <Link
                         variant="h6"
                         component="button"

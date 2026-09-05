@@ -13,7 +13,7 @@ export type RestaurantFormDialogProps = {
     /** function to handle edit change of the restaurant */
     handleEditRestaurant: (data: Restaurant) => Promise<void>;
     /** function to handle delete change of the restaurant */
-    handleCreateRestaurant: (data: Restaurant) => Promise<void>;
+    handleCreateRestaurant?: (data: Restaurant) => Promise<void>;
 };
 
 /** for input using veg/non veg */

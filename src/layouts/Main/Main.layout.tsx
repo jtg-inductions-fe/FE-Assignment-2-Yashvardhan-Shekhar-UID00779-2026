@@ -10,7 +10,7 @@ export const Main = () => {
     return (
         <>
             <Alert {...alert} />
-            <RouterProvider router={router} />;
+            <RouterProvider router={router} />
         </>
     );
 };

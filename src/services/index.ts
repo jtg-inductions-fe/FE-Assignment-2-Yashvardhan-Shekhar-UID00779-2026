@@ -4,9 +4,12 @@ export {
     createRestaurantService,
     editRestaurantService,
     deleteRestaurantService,
+} from './restaurants.service';
+export {
     getRestaurantDetailsService,
     handleEditMenuItem,
     handleCreateMenuItem,
     handleDeleteMenuItem,
-} from './restaurants.service';
+    editRestaurantDetailsService,
+} from './restaurantDetails.service';
 export { placeOrder, getOrders, updateOrder } from './order.service';

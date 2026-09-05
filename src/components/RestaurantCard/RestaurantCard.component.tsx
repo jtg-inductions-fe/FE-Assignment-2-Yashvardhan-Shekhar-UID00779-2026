@@ -7,6 +7,7 @@ import {
     CardActions,
     CardContent,
     CardMedia,
+    Chip,
     IconButton,
     Stack,
     Typography,
@@ -18,7 +19,6 @@ import { Card, Tooltip } from '@components';
 import { PATH } from '@constant';
 import { formatTime } from '@utils';
 
-import { StyledChip } from './RestaurantCard.styles';
 import { RestaurantCardProps } from './RestaurantCard.types';
 
 export const RestaurantCard = (props: RestaurantCardProps) => {
@@ -59,25 +59,22 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                         }}
                         alt={restaurant.name}
                     />
-                    <StyledChip
+                    <Chip
                         label={restaurant.isVeg ? 'Pure Veg' : 'Non-Veg'}
                         color={restaurant.isVeg ? 'success' : 'error'}
                         size="small"
+                        sx={{
+                            position: 'absolute',
+                            top: theme.typography.pxToRem(12),
+                            right: theme.typography.pxToRem(12),
+                        }}
                     />
                 </Box>
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2" noWrap>
                         {restaurant.name}
                     </Typography>
-                    <Tooltip
-                        title={description}
-                        enterDelay={1000}
-                        sx={{
-                            bgcolor: 'text.disabled',
-                            color: 'background.paper',
-                            p: 2,
-                        }}
-                    >
+                    <Tooltip title={description}>
                         <Typography
                             variant="body2"
                             color="text.secondary"

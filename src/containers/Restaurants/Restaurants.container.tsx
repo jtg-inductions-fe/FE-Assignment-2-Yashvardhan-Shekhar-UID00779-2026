@@ -12,7 +12,13 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { AddButton, DeleteDialog, Grid, RestaurantCard } from '@components';
+import {
+    AddButton,
+    DeleteDialog,
+    Grid,
+    RestaurantCard,
+    Tooltip,
+} from '@components';
 import { RestaurantFormDialog } from '@containers';
 import {
     createRestaurantService,
@@ -22,6 +28,7 @@ import {
 } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Restaurant } from '@types';
+import { startLoading } from '@utils';
 
 import { StyledToggleButton } from './Restaurants.styles';
 import { Category } from './Restaurants.types';
@@ -30,7 +37,7 @@ export const Restaurants = () => {
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
-    const canShow = useMediaQuery((th) => th.breakpoints.up('sm'));
+    const canShow = useMediaQuery((th) => th.breakpoints.up('md'));
 
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
 
@@ -114,7 +121,7 @@ export const Restaurants = () => {
 
     const filteredRestaurants = useMemo(
         () =>
-            restaurants.filter((restaurant) => {
+            restaurants?.filter((restaurant) => {
                 const matchesSearch =
                     restaurant.name
                         .toLowerCase()
@@ -135,115 +142,128 @@ export const Restaurants = () => {
 
     // update Redux store with loader data on load
     useEffect(() => {
+        startLoading(dispatch);
         void getRestaurantsService(dispatch);
     }, [dispatch]);
 
     return (
-        <>
-            <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems={{ xs: 'stretch', md: 'center' }}
-                spacing={2}
-                mb={4}
-            >
-                <Box>
-                    <Typography variant="h2" component="h1">
-                        {isOwnerView ? 'My Restaurants' : 'Explore Restaurants'}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                        {isOwnerView
-                            ? 'Manage your menus, opening schedules, and listings.'
-                            : 'Discover top-rated spots and treat your appetite.'}
-                    </Typography>
-                </Box>
-                {isOwnerView && (
-                    <AddButton
-                        variant="outlined"
-                        size={canShow ? 'large' : 'small'}
-                        startIcon={<Add />}
-                        onClick={() =>
-                            setTargetEditRestaurant(initialRestaurantState)
-                        }
-                    >
-                        {canShow && 'Add New Restaurant'}
-                    </AddButton>
-                )}
-            </Stack>
-            <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={2}
-                justifyContent="space-between"
-                alignItems="center"
-                mb={4}
-            >
-                <Box width={canShow ? theme.typography.pxToRem(390) : '100%'}>
-                    <TextField
-                        fullWidth
-                        placeholder="Search restaurants by name or description"
-                        variant="outlined"
-                        size="small"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Search color="action" />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                </Box>
-                <ToggleButtonGroup
-                    value={vegFilter}
-                    size="small"
-                    exclusive
-                    aria-label="filter"
-                    onChange={handleCategoryChange}
+        restaurants && (
+            <>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'stretch', md: 'center' }}
+                    spacing={2}
+                    mb={4}
                 >
-                    <StyledToggleButton value="all">All</StyledToggleButton>
-                    <StyledToggleButton value="veg">
-                        Pure Veg
-                    </StyledToggleButton>
-                    <StyledToggleButton value="non-veg">
-                        Non-Veg
-                    </StyledToggleButton>
-                </ToggleButtonGroup>
-            </Stack>
-            {filteredRestaurants.length === 0 && (
-                <Box textAlign="center" py={8}>
-                    <Typography variant="h6" color="text.secondary">
-                        No matching restaurants found.
-                    </Typography>
-                </Box>
-            )}
-            <Grid>
-                {filteredRestaurants.map((restaurant) => (
-                    <RestaurantCard
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                        isOwnerView={isOwnerView}
-                        onEdit={() => setTargetEditRestaurant(restaurant)}
-                        onDelete={() => setTargetDeleteRestaurant(restaurant)}
-                    />
-                ))}
-            </Grid>
-            <RestaurantFormDialog
-                restaurant={targetEditRestaurant || initialRestaurantState}
-                isProcessing={isProcessing}
-                isOpen={!!targetEditRestaurant}
-                handleClose={handleCloseFormDialog}
-                handleCreateRestaurant={handleCreateRestaurant}
-                handleEditRestaurant={handleEditRestaurant}
-            />
-            <DeleteDialog
-                name={targetDeleteRestaurant?.name}
-                isProcessing={isProcessing}
-                handleClose={handleCloseDeleteDialog}
-                handleConfirm={handleDeleteRestaurant}
-            />
-        </>
+                    <Box>
+                        <Typography variant="h2" component="h1">
+                            {isOwnerView
+                                ? 'My Restaurants'
+                                : 'Explore Restaurants'}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                            {isOwnerView
+                                ? 'Manage your menus, opening schedules, and listings.'
+                                : 'Discover top-rated spots and treat your appetite.'}
+                        </Typography>
+                    </Box>
+                    {isOwnerView && (
+                        <Tooltip title="Add New Restaurant">
+                            <AddButton
+                                variant="outlined"
+                                size={canShow ? 'large' : 'small'}
+                                startIcon={<Add />}
+                                onClick={() =>
+                                    setTargetEditRestaurant(
+                                        initialRestaurantState,
+                                    )
+                                }
+                            >
+                                {canShow && 'Add New Restaurant'}
+                            </AddButton>
+                        </Tooltip>
+                    )}
+                </Stack>
+                <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={2}
+                    justifyContent="space-between"
+                    alignItems="center"
+                    mb={4}
+                >
+                    <Box
+                        width={canShow ? theme.typography.pxToRem(390) : '100%'}
+                    >
+                        <TextField
+                            fullWidth
+                            placeholder="Search restaurants by name or description"
+                            variant="outlined"
+                            size="small"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Search color="action" />
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                        />
+                    </Box>
+                    <ToggleButtonGroup
+                        value={vegFilter}
+                        size="small"
+                        exclusive
+                        aria-label="filter"
+                        onChange={handleCategoryChange}
+                    >
+                        <StyledToggleButton value="all">All</StyledToggleButton>
+                        <StyledToggleButton value="veg">
+                            Pure Veg
+                        </StyledToggleButton>
+                        <StyledToggleButton value="non-veg">
+                            Non-Veg
+                        </StyledToggleButton>
+                    </ToggleButtonGroup>
+                </Stack>
+                {filteredRestaurants?.length === 0 && (
+                    <Box textAlign="center" py={8}>
+                        <Typography variant="h6" color="text.secondary">
+                            No restaurants found.
+                        </Typography>
+                    </Box>
+                )}
+                <Grid>
+                    {filteredRestaurants?.map((restaurant) => (
+                        <RestaurantCard
+                            key={restaurant.id}
+                            restaurant={restaurant}
+                            isOwnerView={isOwnerView}
+                            onEdit={() => setTargetEditRestaurant(restaurant)}
+                            onDelete={() =>
+                                setTargetDeleteRestaurant(restaurant)
+                            }
+                        />
+                    ))}
+                </Grid>
+                <RestaurantFormDialog
+                    restaurant={targetEditRestaurant || initialRestaurantState}
+                    isProcessing={isProcessing}
+                    isOpen={!!targetEditRestaurant}
+                    handleClose={handleCloseFormDialog}
+                    handleCreateRestaurant={handleCreateRestaurant}
+                    handleEditRestaurant={handleEditRestaurant}
+                />
+                <DeleteDialog
+                    name={targetDeleteRestaurant?.name}
+                    isProcessing={isProcessing}
+                    handleClose={handleCloseDeleteDialog}
+                    handleConfirm={handleDeleteRestaurant}
+                />
+            </>
+        )
     );
 };

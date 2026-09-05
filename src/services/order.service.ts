@@ -1,6 +1,6 @@
 import { AppDispatch, clearCart, setOrders, updateOrderState } from '@store';
 import { Order, OrderStatus } from '@types';
-import { alert, delay, handleErrorFeedback } from '@utils';
+import { alert, delay, handleErrorFeedback, stopLoading } from '@utils';
 
 /**
  * places order and resets cart on success
@@ -23,11 +23,14 @@ export const placeOrder = async (dispatch: AppDispatch) => {
 export const getOrders = async (dispatch: AppDispatch) => {
     try {
         // api call will be replaced by this block
+        await delay();
         const res = await fetch('data/orders.json');
         const data = (await res.json()) as Order[];
         dispatch(setOrders(data));
     } catch (e) {
         handleErrorFeedback(e, dispatch);
+    } finally {
+        stopLoading(dispatch);
     }
 };
 

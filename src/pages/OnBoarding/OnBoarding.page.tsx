@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import { Outlet, useNavigate } from 'react-router';
 
-import { Box, Typography } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
 
 import onboardingImg from '@assets/images/onboarding-bg.webp';
-import { useAppDispatch } from '@store';
+import { useAppDispatch, useAppSelector } from '@store';
 import { navigateUserBasedOnState } from '@utils';
 
 import {
@@ -19,17 +19,23 @@ export const OnBoarding = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const isLoading = useAppSelector(
+        (state) => state.loading.isStartupLoading || !!state.user.id,
+    );
+
     useEffect(() => {
         void navigateUserBasedOnState(dispatch, navigate, true);
     }, [dispatch, navigate]);
 
-    return (
+    return isLoading ? (
+        <LinearProgress />
+    ) : (
         <PageContainer>
             <BrandingColumn>
                 <Box textAlign="center">
                     <Typography
                         variant="h3"
-                        component="h2"
+                        component="h1"
                         gutterBottom
                         fontWeight="bold"
                     >

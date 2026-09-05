@@ -57,7 +57,6 @@ export const Signup = () => {
             >
                 Sign up
             </Typography>
-
             <Box
                 component="form"
                 onSubmit={(e) => {

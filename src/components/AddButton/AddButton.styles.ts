@@ -11,7 +11,7 @@ export const StyledAddButton = styled(Button)(({ theme }) => ({
         margin: 0,
     },
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
         borderRadius: theme.shape.borderRadius,
         width: 'auto',
         height: 'auto',

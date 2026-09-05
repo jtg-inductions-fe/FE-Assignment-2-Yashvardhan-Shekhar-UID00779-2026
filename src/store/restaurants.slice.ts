@@ -6,7 +6,7 @@ import { RestaurantState } from './store.type';
  * initial state of the store
  */
 const initialState: RestaurantState = {
-    restaurants: [],
+    restaurants: null,
 };
 
 /**
@@ -31,6 +31,7 @@ export const restaurantSlice = createSlice({
          * @param action Restaurant information of the new restaurant
          */
         addRestaurant: (state, action: PayloadAction<Restaurant>) => {
+            if (!state.restaurants) return;
             state.restaurants.push(action.payload);
         },
 
@@ -40,6 +41,7 @@ export const restaurantSlice = createSlice({
          * @param action details of with which existing restaurant will be updated
          */
         updateRestaurant: (state, action: PayloadAction<Restaurant>) => {
+            if (!state.restaurants) return;
             const index = state.restaurants.findIndex(
                 (r) => r.id === action.payload.id,
             );
@@ -54,6 +56,7 @@ export const restaurantSlice = createSlice({
          * @param action Restaurant id
          */
         removeRestaurant: (state, action: PayloadAction<string>) => {
+            if (!state.restaurants) return;
             state.restaurants = state.restaurants.filter(
                 (r) => r.id !== action.payload,
             );

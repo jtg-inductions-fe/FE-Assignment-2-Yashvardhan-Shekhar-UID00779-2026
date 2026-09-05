@@ -9,6 +9,7 @@ import {
     useTheme,
 } from '@mui/material';
 
+import foodIllustration from '@assets/images/food-illustration.webp';
 import { Button, Card, Tooltip } from '@components';
 import { addItemToCart, removeItemFromCart, useAppSelector } from '@store';
 
@@ -52,14 +53,10 @@ export const MenuCard = (props: MenuCardProps) => {
                 <CardMedia
                     component="img"
                     height="180"
-                    image={
-                        item.image ||
-                        '/src/assets/images/food-illustration.webp'
-                    }
+                    image={item.image || foodIllustration}
                     alt={item.name}
                     onError={(e) => {
-                        e.currentTarget.src =
-                            '/src/assets/images/food_illustration.webp';
+                        e.currentTarget.src = foodIllustration;
                     }}
                     loading="lazy"
                     sx={{

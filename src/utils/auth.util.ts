@@ -1,9 +1,9 @@
 import { NavigateFunction } from 'react-router';
 
 import { PATH } from '@constant';
-import { AppDispatch, updateUser } from '@store';
+import { AppDispatch, stopStartupLoading, updateUser } from '@store';
 import { User } from '@types';
-import { alert, delay, handleErrorFeedback } from '@utils';
+import { alert, delay, handleErrorFeedback, stopLoading } from '@utils';
 
 /**
  * handle user state for route protection
@@ -28,16 +28,24 @@ export const navigateUserBasedOnState = async (
         if (isPresent) {
             dispatch(updateUser(user));
             if (isOnAuthPage) {
-                alert('info', 'You are already logged in', dispatch);
-                void navigate(PATH.HOME);
+                await navigate(PATH.HOME);
             }
         } else {
             if (!isOnAuthPage) {
-                alert('warning', 'Please Login', dispatch);
-                void navigate(PATH.LOGIN);
+                await navigate(PATH.LOGIN);
+                alert(
+                    'warning',
+                    'It seem that you have been logged out',
+                    dispatch,
+                );
             }
+            stopLoading(dispatch);
         }
     } catch (error) {
         handleErrorFeedback(error, dispatch);
+        localStorage.removeItem('users');
+        await navigate(PATH.LOGIN);
+    } finally {
+        dispatch(stopStartupLoading());
     }
 };

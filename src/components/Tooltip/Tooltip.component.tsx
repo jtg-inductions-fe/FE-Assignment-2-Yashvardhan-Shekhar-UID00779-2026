@@ -4,7 +4,6 @@ export const Tooltip = (props: TooltipProps) => {
     const theme = useTheme();
     return (
         <MuiTooltip
-            {...props}
             enterDelay={1000}
             slotProps={{
                 tooltip: {
@@ -13,6 +12,7 @@ export const Tooltip = (props: TooltipProps) => {
                     },
                 },
             }}
+            {...props}
         />
     );
 };

@@ -6,6 +6,7 @@ import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { OrderItemDetails } from '@components';
 import { getOrders } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
+import { startLoading } from '@utils';
 
 export const Orders = () => {
     const theme = useTheme();
@@ -14,40 +15,42 @@ export const Orders = () => {
     const orders = useAppSelector((state) => state.orders.orders);
 
     useEffect(() => {
+        startLoading(dispatch);
         void getOrders(dispatch);
     }, [dispatch]);
 
     return (
-        <>
-            <Stack pb={theme.typography.pxToRem(20)}>
-                <Typography variant="h2" component="h1">
-                    {isOwnerView ? 'Customer Orders' : 'Your Orders'}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                    {isOwnerView
-                        ? 'Manage order stages and keep customers updated.'
-                        : 'Track current order stages and review order history.'}
-                </Typography>
-            </Stack>
-
-            {orders && orders.length > 0 ? (
-                <Box overflow="hidden">
-                    {orders.map((order) => (
-                        <OrderItemDetails
-                            key={order.id}
-                            order={order}
-                            isOwnerView={isOwnerView}
+        orders && (
+            <>
+                <Stack pb={theme.typography.pxToRem(20)}>
+                    <Typography variant="h2" component="h1">
+                        {isOwnerView ? 'Customer Orders' : 'Your Orders'}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        {isOwnerView
+                            ? 'Manage order stages and keep customers updated.'
+                            : 'Track current order stages and review order history.'}
+                    </Typography>
+                </Stack>
+                {orders && orders.length > 0 ? (
+                    <Box overflow="hidden">
+                        {orders.map((order) => (
+                            <OrderItemDetails
+                                key={order.id}
+                                order={order}
+                                isOwnerView={isOwnerView}
+                            />
+                        ))}
+                    </Box>
+                ) : (
+                    <Box textAlign="center" color="text.secondary">
+                        <ReceiptLongOutlinedIcon
+                            sx={{ fontSize: theme.typography.pxToRem(60) }}
                         />
-                    ))}
-                </Box>
-            ) : (
-                <Box textAlign="center" color="text.secondary">
-                    <ReceiptLongOutlinedIcon
-                        sx={{ fontSize: theme.typography.pxToRem(60) }}
-                    />
-                    <Typography variant="h6">No orders found.</Typography>
-                </Box>
-            )}
-        </>
+                        <Typography variant="h6">No orders found.</Typography>
+                    </Box>
+                )}
+            </>
+        )
     );
 };

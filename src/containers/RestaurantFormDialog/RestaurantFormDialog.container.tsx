@@ -45,16 +45,16 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
             ...data,
             isVeg: data?.isVeg === 'veg',
         };
-        if (isEditMode) {
-            await handleEditRestaurant(newRestaurant);
-        } else {
+        if (!isEditMode && handleCreateRestaurant) {
             await handleCreateRestaurant(newRestaurant);
+        } else {
+            await handleEditRestaurant(newRestaurant);
         }
     };
 
     useEffect(() => {
         reset({ ...restaurant, isVeg: restaurant.isVeg ? 'veg' : 'non-veg' });
-    }, [isOpen, reset, restaurant]);
+    }, [reset, restaurant]);
 
     return (
         <FormProvider {...methods}>

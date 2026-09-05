@@ -14,7 +14,7 @@ export type AppStore = typeof store;
  * Represents the state of the restaurants.
  */
 export type RestaurantState = {
-    restaurants: Restaurant[];
+    restaurants: Restaurant[] | null;
 };
 
 /**
@@ -30,12 +30,8 @@ export type RestaurantDetailsState = {
     restaurant: RestaurantDetails | null;
 };
 
-/**
- * order state for the store
- * @type {
- *     orders: Order[];
- * };
- */
+/** order state for the store  */
 export type OrderState = {
-    orders: Order[];
+    /**orders list */
+    orders: Order[] | null;
 };

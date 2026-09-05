@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import alertReducer from './alert.slice';
 import cartReducer from './cart.slice';
+import loadingReducer from './loading.slice';
 import ordersReducer from './orders.slice';
 import restaurantDetailsReducer from './restaurantDetails.slice';
 import restaurantReducer from './restaurants.slice';
@@ -21,6 +22,7 @@ export const store = configureStore({
         cart: cartReducer,
         restaurantDetails: restaurantDetailsReducer,
         orders: ordersReducer,
+        loading: loadingReducer,
     },
 });
 

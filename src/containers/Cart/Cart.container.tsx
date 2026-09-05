@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 
 import { ShoppingBagOutlined } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
@@ -38,16 +38,12 @@ export const Cart = () => {
             ),
         [cart],
     );
-    const bookingFee = Math.max(Math.min(subtotal * 0.1, 200), 40);
+    const bookingFee = Math.max(subtotal * 0.01, 20);
     const grandTotal = subtotal + bookingFee;
 
-    useEffect(() => {
-        if (role === 'owner') {
-            void navigate(PATH.HOME);
-        }
-    }, [role, navigate]);
-
-    return (
+    return role === 'owner' ? (
+        <Navigate to={PATH.HOME} />
+    ) : (
         <>
             <Stack component="section" spacing={1} mb={4}>
                 <Typography variant="h2" component="h1" fontWeight="bold">
@@ -107,14 +103,10 @@ export const Cart = () => {
                     </Button>
                 </Box>
             ) : (
-                <Box textAlign="center">
-                    <ShoppingBagOutlined
-                        sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }}
-                    />
-                    <Typography variant="h6" color="text.secondary">
-                        Your cart is empty.
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                <Box textAlign="center" color="text.secondary">
+                    <ShoppingBagOutlined sx={{ fontSize: 64, mb: 2 }} />
+                    <Typography variant="h6">Your cart is empty.</Typography>
+                    <Typography variant="body2">
                         Add some delicious items from the menu to get started!
                     </Typography>
                 </Box>

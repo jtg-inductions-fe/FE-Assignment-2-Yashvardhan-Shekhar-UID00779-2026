@@ -6,7 +6,6 @@ import { User } from '@types';
  * Defines the initial state for the user slice.
  */
 const initialState: User = {
-    id: '',
     name: '',
     email: '',
     role: 'owner',

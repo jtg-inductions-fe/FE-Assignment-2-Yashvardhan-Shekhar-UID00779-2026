@@ -1,10 +1,12 @@
 /**
  * Converts a 24-hour time string into a 12-hour AM/PM format.
  * @param time - Time in `HH:mm` format.
- * @returns Formatted time in `h:mm AM/PM` format.
+ * @returns Formatted time in `h:mm AM/PM` and empty otherwise format.
  */
 
-export const formatTime = (time: string) => {
+export const formatTime = (time: string | undefined) => {
+    if (!time) return '';
+
     const [hours, minutes] = time.split(':');
     const date = new Date();
     date.setHours(Number(hours), Number(minutes));

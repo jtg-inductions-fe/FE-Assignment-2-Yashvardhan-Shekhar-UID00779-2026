@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MenuItem, RestaurantDetails } from '@types';
+import { MenuItem, Restaurant, RestaurantDetails } from '@types';
 
 import { RestaurantDetailsState } from './store.type';
 
@@ -17,6 +17,18 @@ export const restaurantSlice = createSlice({
     name: 'restaurantDetails',
     initialState,
     reducers: {
+        /**
+         * set restaurant details
+         * @param state state of current slice ie restaurant details
+         * @param action the actual payload containing RestaurantDetails
+         */
+        updateRestaurantDetails: (state, action: PayloadAction<Restaurant>) => {
+            state.restaurant = {
+                ...action.payload,
+                menu: state.restaurant?.menu ?? [],
+            };
+        },
+
         /**
          * set restaurant details
          * @param state state of current slice ie restaurant details
@@ -68,7 +80,12 @@ export const restaurantSlice = createSlice({
     },
 });
 
-export const { setRestaurant, addMenuItem, updateMenuItem, removeMenuItem } =
-    restaurantSlice.actions;
+export const {
+    setRestaurant,
+    addMenuItem,
+    updateMenuItem,
+    removeMenuItem,
+    updateRestaurantDetails,
+} = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

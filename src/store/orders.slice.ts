@@ -8,7 +8,7 @@ import { OrderState } from './store.type';
  * Defines the initial state for the order slice.
  */
 const initialState: OrderState = {
-    orders: [],
+    orders: null,
 };
 
 /**
@@ -37,6 +37,8 @@ export const orderSlice = createSlice({
             state,
             action: PayloadAction<{ orderId: string; nextStatus: OrderStatus }>,
         ) => {
+            if (!state.orders) return;
+
             const index = state.orders.findIndex(
                 (order) => order.id === action.payload.orderId,
             );

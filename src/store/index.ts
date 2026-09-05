@@ -13,6 +13,8 @@ export {
     addMenuItem,
     removeMenuItem,
     updateMenuItem,
+    updateRestaurantDetails,
 } from './restaurantDetails.slice';
 export { removeItemFromCart, addItemToCart, clearCart } from './cart.slice';
 export { setOrders, updateOrderState } from './orders.slice';
+export { updateLoading, stopStartupLoading } from './loading.slice';
