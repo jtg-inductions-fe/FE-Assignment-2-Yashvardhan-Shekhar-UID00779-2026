@@ -1,6 +1,6 @@
-import { AppDispatch, updateUser } from '@store';
+import { AppDispatch, stopStartupLoading, updateUser } from '@store';
 import { User } from '@types';
-import { alert, handleErrorFeedback } from '@utils';
+import { alert, delay, handleErrorFeedback } from '@utils';
 
 import { LoginType, SignupType } from './auth.types';
 
@@ -78,4 +78,29 @@ export const logout = (dispatch: AppDispatch): void => {
 
     // Display a success message after logout.
     alert('success', 'Logged out successfully.', dispatch);
+};
+
+/**
+ * handle user state for route protection
+ * @param dispatch store dispatch
+ */
+export const initializeAuth = async (dispatch: AppDispatch) => {
+    try {
+        // replace with token verification
+        await delay();
+
+        const user = JSON.parse(localStorage.getItem('user') || 'null') as User;
+
+        const isPresent =
+            user && user.name && user.email && user.role && user.id;
+
+        if (isPresent) {
+            dispatch(updateUser(user));
+        }
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
+        localStorage.removeItem('users');
+    } finally {
+        dispatch(stopStartupLoading());
+    }
 };

@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
-
-import { Outlet, useNavigate } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 
 import { Box, LinearProgress, Typography } from '@mui/material';
 
 import onboardingImg from '@assets/images/onboarding-bg.webp';
-import { useAppDispatch, useAppSelector } from '@store';
-import { navigateUserBasedOnState } from '@utils';
+import { PATH } from '@constant';
+import { useAppSelector } from '@store';
 
 import {
     BrandingColumn,
@@ -16,20 +14,20 @@ import {
 } from './OnBoarding.styles';
 
 export const OnBoarding = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const isLoading = useAppSelector(
-        (state) => state.loading.isStartupLoading || !!state.user.id,
+    const isInitializing = useAppSelector(
+        (state) => state.loading.isStartupLoading,
     );
+    const isUserPresent = useAppSelector((state) => !!state.user.id);
 
-    useEffect(() => {
-        void navigateUserBasedOnState(dispatch, navigate, true);
-    }, [dispatch, navigate]);
+    if (isInitializing) {
+        return <LinearProgress />;
+    }
 
-    return isLoading ? (
-        <LinearProgress />
-    ) : (
+    if (isUserPresent) {
+        return <Navigate to={PATH.HOME} />;
+    }
+
+    return (
         <PageContainer>
             <BrandingColumn>
                 <Box textAlign="center">

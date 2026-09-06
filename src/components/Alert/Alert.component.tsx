@@ -30,7 +30,7 @@ export const Alert = (alertProp: AlertTypeProp) => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
             <MuiAlert
-                sx={{ boxShadow: theme.shadows[24], marginTop: 0 }}
+                sx={{ boxShadow: theme.shadows[24] }}
                 severity={severity}
                 onClose={handleAlertClose}
                 variant="standard"

@@ -3,7 +3,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 
 import { ShoppingBagOutlined } from '@mui/icons-material';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
 import { PATH } from '@constant';
@@ -14,6 +14,7 @@ import { CartItem } from '@types';
 import { StyledDivider, SummaryRow } from './Cart.styles';
 
 export const Cart = () => {
+    const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state) => state.cart.cartItems);
@@ -26,7 +27,7 @@ export const Cart = () => {
         setIsLoading(true);
         await placeOrder(dispatch);
         setIsLoading(false);
-        await navigate(PATH.HOME);
+        await navigate(PATH.ORDERS);
     };
 
     const subtotal = useMemo(
@@ -104,7 +105,9 @@ export const Cart = () => {
                 </Box>
             ) : (
                 <Box textAlign="center" color="text.secondary">
-                    <ShoppingBagOutlined sx={{ fontSize: 64, mb: 2 }} />
+                    <ShoppingBagOutlined
+                        sx={{ fontSize: theme.typography.pxToRem(64) }}
+                    />
                     <Typography variant="h6">Your cart is empty.</Typography>
                     <Typography variant="body2">
                         Add some delicious items from the menu to get started!

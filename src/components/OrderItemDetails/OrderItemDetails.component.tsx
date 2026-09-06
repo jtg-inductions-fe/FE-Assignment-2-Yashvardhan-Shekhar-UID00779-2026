@@ -76,7 +76,7 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                     justifyContent="space-between"
                     alignItems="center"
                     spacing={2}
-                    sx={{ width: '100%' }}
+                    width="100%"
                 >
                     <div>
                         <Typography variant="subtitle1" fontWeight="bold">

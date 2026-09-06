@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
-import { Box } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 
 import { BottomBar, Navbar, ProfileMenu } from '@components';
-import { useAppDispatch, useAppSelector } from '@store';
-import { navigateUserBasedOnState } from '@utils';
+import { PATH } from '@constant';
+import { useAppSelector } from '@store';
 
 import { StyledContainer } from './Home.styles';
 
 export const Home = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const { pathname } = useLocation();
 
     const isLoading = useAppSelector((state) => state.loading.isLoading);
-    const isStartupLoading = useAppSelector(
+    const isInitializing = useAppSelector(
         (state) => state.loading.isStartupLoading,
     );
     const user = useAppSelector((state) => state.user);
     const cartCount: number = useAppSelector((state) =>
         state.cart.cartItems.reduce((sum, el) => sum + el.quantity, 0),
     );
-
-    // const userPresent = !!user.id;
-    // console.log(userPresent);
-    const { pathname } = useLocation();
 
     /**
      *  Opens the profile menu by setting the clicked element as its anchor.
@@ -42,9 +36,13 @@ export const Home = () => {
         setAnchorEl(null);
     };
 
-    useEffect(() => {
-        void navigateUserBasedOnState(dispatch, navigate, false);
-    }, [dispatch, navigate]);
+    if (isInitializing) {
+        return <LinearProgress />;
+    }
+
+    if (!user.id) {
+        return <Navigate to={PATH.LOGIN} />;
+    }
 
     return (
         <Box height="100vh">
@@ -53,7 +51,7 @@ export const Home = () => {
                 user={user}
                 activeTab={pathname}
                 cartCount={cartCount}
-                isLoading={isLoading || isStartupLoading}
+                isLoading={isLoading || isInitializing}
             />
             <ProfileMenu
                 isMenuOpen={!!anchorEl}
@@ -62,7 +60,7 @@ export const Home = () => {
                 handleMenuClose={handleMenuClose}
             />
             <StyledContainer maxWidth="xl">
-                {!!user.id && <Outlet />}
+                <Outlet />
             </StyledContainer>
             <BottomBar
                 handleProfileClick={handleProfileClick}

@@ -1,11 +1,4 @@
-import { CardActions, Chip, IconButton, Stack, styled } from '@mui/material';
-
-export const StyledChip = styled(Chip)(({ theme }) => ({
-    position: 'absolute',
-    top: theme.typography.pxToRem(12),
-    right: theme.typography.pxToRem(12),
-    fontWeight: 'bold',
-}));
+import { CardActions, IconButton, Stack, styled } from '@mui/material';
 
 export const QuantityIconButton = styled(IconButton)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,

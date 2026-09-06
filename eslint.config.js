@@ -70,9 +70,7 @@ export default tseslint.config(
                         ['^react$', '^react-dom'],
                         ['^\\w'],
                         ['^@mui'],
-                        [
-                            '^@(?:|assets|components|constant|layout|routes|theme)',
-                        ],
+                        ['^@'],
                         ['^\\./', '^\\.\\./'],
                     ],
                 },

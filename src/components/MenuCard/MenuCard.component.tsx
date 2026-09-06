@@ -3,6 +3,7 @@ import {
     Box,
     CardContent,
     CardMedia,
+    Chip,
     IconButton,
     Stack,
     Typography,
@@ -17,7 +18,6 @@ import {
     QuantityControlStack,
     QuantityIconButton,
     StyledCardActions,
-    StyledChip,
 } from './MenuCard.styles';
 import { MenuCardProps } from './MenuCard.types';
 
@@ -65,10 +65,16 @@ export const MenuCard = (props: MenuCardProps) => {
                     }}
                 />
                 {isOutOfStock && (
-                    <StyledChip
+                    <Chip
                         label="Out of Stock"
                         color="default"
                         size="small"
+                        sx={{
+                            position: 'absolute',
+                            fontWeight: 'bold',
+                            top: theme.typography.pxToRem(12),
+                            right: theme.typography.pxToRem(12),
+                        }}
                     />
                 )}
             </Box>

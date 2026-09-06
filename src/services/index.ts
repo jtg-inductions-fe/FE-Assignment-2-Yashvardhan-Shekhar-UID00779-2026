@@ -1,4 +1,4 @@
-export { signUp, login, logout } from './auth.service';
+export { signUp, login, logout, initializeAuth } from './auth.service';
 export {
     getRestaurantsService,
     createRestaurantService,

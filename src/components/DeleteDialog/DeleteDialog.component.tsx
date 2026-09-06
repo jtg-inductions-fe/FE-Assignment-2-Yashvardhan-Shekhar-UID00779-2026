@@ -21,7 +21,7 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
             <DialogContent>
                 <DialogContentText>
                     Are you sure you want to delete{' '}
-                    <Box component="strong" sx={{ color: 'primary.main' }}>
+                    <Box component="strong" color="primary.main">
                         {name}
                     </Box>
                     ? This action cannot be undone.

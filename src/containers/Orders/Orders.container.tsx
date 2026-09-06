@@ -22,7 +22,7 @@ export const Orders = () => {
     return (
         orders && (
             <>
-                <Stack pb={theme.typography.pxToRem(20)}>
+                <Stack pb={5}>
                     <Typography variant="h2" component="h1">
                         {isOwnerView ? 'Customer Orders' : 'Your Orders'}
                     </Typography>
@@ -45,7 +45,7 @@ export const Orders = () => {
                 ) : (
                     <Box textAlign="center" color="text.secondary">
                         <ReceiptLongOutlinedIcon
-                            sx={{ fontSize: theme.typography.pxToRem(60) }}
+                            sx={{ fontSize: theme.typography.pxToRem(64) }}
                         />
                         <Typography variant="h6">No orders found.</Typography>
                     </Box>

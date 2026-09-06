@@ -47,7 +47,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
     };
 
     return (
-        <CardActionArea onClick={handleCardClick}>
+        <CardActionArea component="div" onClick={handleCardClick}>
             <Card elevation={2}>
                 <Box>
                     <CardMedia
@@ -87,7 +87,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                 <CardActions
                     sx={{
                         display: 'flex',
-                        padding: theme.typography.pxToRem(16),
+                        padding: 4,
                         paddingTop: 0,
                         justifyContent: isOwnerView
                             ? 'space-between'

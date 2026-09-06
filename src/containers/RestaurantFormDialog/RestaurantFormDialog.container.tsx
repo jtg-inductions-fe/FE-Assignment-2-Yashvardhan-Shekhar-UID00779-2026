@@ -2,13 +2,7 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-    Box,
-    DialogActions,
-    DialogTitle,
-    Stack,
-    useTheme,
-} from '@mui/material';
+import { Box, DialogActions, DialogTitle, Stack } from '@mui/material';
 
 import { Button, Dialog, RadioField, TextField } from '@components';
 
@@ -27,8 +21,6 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
         handleCreateRestaurant,
         handleEditRestaurant,
     } = props;
-
-    const theme = useTheme();
 
     const methods = useForm<RestaurantInput>();
 
@@ -112,8 +104,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                     </StyledDialogContent>
                     <DialogActions
                         sx={{
-                            padding: theme.typography.pxToRem(16),
-                            gap: theme.spacing(1),
+                            p: 4,
+                            gap: 1,
                         }}
                     >
                         <Button

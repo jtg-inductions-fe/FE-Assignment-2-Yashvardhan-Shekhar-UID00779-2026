@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -8,7 +8,7 @@ import loadingReducer from './loading.slice';
 import ordersReducer from './orders.slice';
 import restaurantDetailsReducer from './restaurantDetails.slice';
 import restaurantReducer from './restaurants.slice';
-import { AppDispatch, AppStore, RootState } from './store.type';
+import { AppDispatch, RootState } from './store.type';
 import userReducer from './user.slice';
 
 /**
@@ -35,8 +35,3 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
  * Typed Redux selector hook for accessing application state.
  */
 export const useAppSelector = useSelector.withTypes<RootState>();
-
-/**
- * Typed Redux store hook for accessing the configured application store.
- */
-export const useAppStore = useStore.withTypes<AppStore>();
