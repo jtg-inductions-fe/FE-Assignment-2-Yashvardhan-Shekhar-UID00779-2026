@@ -72,7 +72,9 @@ export const Restaurants = () => {
         _event: React.MouseEvent<HTMLElement>,
         filter: Category,
     ) => {
-        setVegFilter(filter);
+        if (filter) {
+            setVegFilter(filter);
+        }
     };
 
     /**resets the target restaurants of form dialog */
@@ -174,6 +176,7 @@ export const Restaurants = () => {
                                 variant="outlined"
                                 size={canShow ? 'large' : 'small'}
                                 startIcon={<Add />}
+                                aria-label="Add New Restaurant"
                                 onClick={() =>
                                     setTargetEditRestaurant(
                                         initialRestaurantState,

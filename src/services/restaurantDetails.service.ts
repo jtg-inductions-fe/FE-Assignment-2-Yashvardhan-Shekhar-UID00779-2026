@@ -19,6 +19,7 @@ export const getRestaurantDetailsService = async (
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
+        dispatch(setRestaurant(null));
         // will be replaced with actual api call
         await delay();
         const res = await fetch('/data/RestaurantDetails.json');

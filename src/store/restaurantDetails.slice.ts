@@ -34,7 +34,10 @@ export const restaurantSlice = createSlice({
          * @param state state of current slice ie restaurant details
          * @param action the actual payload containing RestaurantDetails
          */
-        setRestaurant: (state, action: PayloadAction<RestaurantDetails>) => {
+        setRestaurant: (
+            state,
+            action: PayloadAction<RestaurantDetails | null>,
+        ) => {
             state.restaurant = action.payload;
         },
 

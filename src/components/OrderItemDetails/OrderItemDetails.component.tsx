@@ -42,7 +42,7 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
 
     const activeStep =
         order.status === 'rejected' ? 0 : getActiveStep(order.status);
-    const rejected = order.status === 'rejected' ? 1 : -1;
+    const rejected = order.status === 'rejected' ? 0 : -1;
     const date = new Date(order.date).toDateString();
     const StatusIcon = getStatusIcon(order.status);
 
