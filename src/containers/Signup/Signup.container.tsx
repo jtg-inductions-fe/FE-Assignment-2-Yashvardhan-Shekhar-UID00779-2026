@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 
 import { Button, PasswordField, RadioField, TextField } from '@components';
 import { PATH } from '@constant';
@@ -64,7 +64,7 @@ export const Signup = () => {
                 }}
                 noValidate
             >
-                <Stack spacing={2}>
+                <Box display="flex" flexDirection="column" gap={2}>
                     <TextField label="Your Name" field="name" />
                     <TextField
                         label="Email Address"
@@ -105,7 +105,7 @@ export const Signup = () => {
                             </Link>
                         </Typography>
                     </Box>
-                </Stack>
+                </Box>
             </Box>
         </FormProvider>
     );

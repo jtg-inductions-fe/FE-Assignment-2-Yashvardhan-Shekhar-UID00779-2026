@@ -4,14 +4,7 @@ import { useParams } from 'react-router';
 
 import { AccessTime, Edit } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import {
-    Box,
-    Chip,
-    Stack,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from '@mui/material';
+import { Box, Chip, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { AddButton, DeleteDialog, Grid, MenuCard, Tooltip } from '@components';
 import { MenuFormDialog, RestaurantFormDialog } from '@containers';
@@ -115,6 +108,21 @@ export const RestaurantDetails = () => {
         }
     };
 
+    /**sets restaurant form dialog state to open */
+    const handleRestaurantFormDialogOpen = () => {
+        setIsOpenRestaurantFormDialogOpen(true);
+    };
+
+    /** sets target menuItem for edit dialog */
+    const handleTargetEditMenuItem = (menuItem: MenuItem) => {
+        setTargetEditMenuItem(menuItem);
+    };
+
+    /** sets target menuItem for delete dialog */
+    const handleTargetDeleteMenuItem = (menuItem: MenuItem) => {
+        setTargetDeleteMenuItem(menuItem);
+    };
+
     // Update Redux store on initial load
     useEffect(() => {
         startLoading(dispatch);
@@ -124,19 +132,21 @@ export const RestaurantDetails = () => {
     return (
         restaurantDetails && (
             <>
-                <Stack
-                    direction="row"
+                <Box
+                    display="flex"
+                    flexDirection="row"
                     justifyContent="space-between"
                     alignItems={{ xs: 'stretch', md: 'center' }}
-                    spacing={2}
+                    gap={2}
                     pb={4}
                 >
-                    <Stack spacing={1}>
+                    <Box gap={1}>
                         <Typography variant="h2" component="h1">
                             {restaurantDetails?.name}
                         </Typography>
-                        <Stack
-                            direction="row"
+                        <Box
+                            display="flex"
+                            flexDirection="row"
                             alignItems="center"
                             color="text.secondary"
                         >
@@ -158,22 +168,20 @@ export const RestaurantDetails = () => {
                                 }
                                 size="small"
                             />
-                        </Stack>
+                        </Box>
                         <Typography variant="subtitle1" color="text.secondary">
                             {restaurantDetails?.description}
                         </Typography>
-                    </Stack>
+                    </Box>
                     {isOwnerView && (
-                        <Stack gap={2}>
+                        <Box display="flex" flexDirection="column" gap={2}>
                             <Tooltip title="Edit Restaurant Details">
                                 <AddButton
                                     variant="outlined"
                                     size={canShow ? 'large' : 'small'}
                                     startIcon={<Edit />}
                                     aria-label="Add New Menu Item"
-                                    onClick={() =>
-                                        setIsOpenRestaurantFormDialogOpen(true)
-                                    }
+                                    onClick={handleRestaurantFormDialogOpen}
                                 >
                                     {canShow && 'Edit Restaurant Details'}
                                 </AddButton>
@@ -185,15 +193,17 @@ export const RestaurantDetails = () => {
                                     startIcon={<AddIcon />}
                                     aria-label="Add New Menu Item"
                                     onClick={() =>
-                                        setTargetEditMenuItem(initialMenuState)
+                                        handleTargetEditMenuItem(
+                                            initialMenuState,
+                                        )
                                     }
                                 >
                                     {canShow && 'Add New Menu Item'}
                                 </AddButton>
                             </Tooltip>
-                        </Stack>
+                        </Box>
                     )}
-                </Stack>
+                </Box>
                 <Grid>
                     {restaurantDetails?.menu.map((menuItem) => (
                         <MenuCard
@@ -201,8 +211,10 @@ export const RestaurantDetails = () => {
                             item={menuItem}
                             isOwnerView={isOwnerView}
                             dispatch={dispatch}
-                            onEdit={() => setTargetEditMenuItem(menuItem)}
-                            onDelete={() => setTargetDeleteMenuItem(menuItem)}
+                            onEdit={() => handleTargetEditMenuItem(menuItem)}
+                            onDelete={() =>
+                                handleTargetDeleteMenuItem(menuItem)
+                            }
                         />
                     ))}
                 </Grid>

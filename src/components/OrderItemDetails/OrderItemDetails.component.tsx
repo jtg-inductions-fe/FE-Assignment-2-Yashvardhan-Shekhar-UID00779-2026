@@ -5,8 +5,8 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
+    Box,
     Chip,
-    Stack,
     Step,
     StepLabel,
     Stepper,
@@ -71,11 +71,12 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
     return (
         <Accordion sx={{ boxShadow: 'none' }}>
             <AccordionSummary expandIcon={<ExpandMore />} sx={{ p: 3 }}>
-                <Stack
-                    direction="row"
+                <Box
+                    display="flex"
+                    flexDirection="row"
                     justifyContent="space-between"
                     alignItems="center"
-                    spacing={2}
+                    gap={2}
                     width="100%"
                 >
                     <div>
@@ -86,7 +87,12 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                             {date}
                         </Typography>
                     </div>
-                    <Stack direction="row" alignItems="center" spacing={2}>
+                    <Box
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                        gap={2}
+                    >
                         <Chip
                             label={getStatus(order.status)}
                             color={getStatusColor(order.status)}
@@ -106,8 +112,8 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                         >
                             ₹{order.totalAmount.toFixed(2)}
                         </Typography>
-                    </Stack>
-                </Stack>
+                    </Box>
+                </Box>
             </AccordionSummary>
             <AccordionDetails
                 sx={{
@@ -116,8 +122,9 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                 }}
             >
                 {order.items.map((item) => (
-                    <Stack
-                        direction="row"
+                    <Box
+                        display="flex"
+                        flexDirection="row"
                         justifyContent="space-between"
                         alignItems="center"
                         key={item.id}
@@ -128,7 +135,7 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                         <Typography variant="body2" fontWeight="medium">
                             ₹{(item.price * item.quantity).toFixed(2)}
                         </Typography>
-                    </Stack>
+                    </Box>
                 ))}
                 {!isOwnerView && (
                     <Stepper
@@ -148,9 +155,10 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                     </Stepper>
                 )}
                 {isOwnerView && (
-                    <Stack
-                        direction="row"
-                        spacing={2}
+                    <Box
+                        display="flex"
+                        flexDirection="row"
+                        gap={2}
                         justifyContent="flex-end"
                         mt={6}
                     >
@@ -238,7 +246,7 @@ export const OrderItemDetails = (props: OrderItemDetailsProps) => {
                                 No further actions available.
                             </Typography>
                         )}
-                    </Stack>
+                    </Box>
                 )}
             </AccordionDetails>
         </Accordion>

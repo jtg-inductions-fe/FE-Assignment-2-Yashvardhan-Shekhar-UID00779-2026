@@ -1,6 +1,10 @@
-import { IconButton, Stack, styled } from '@mui/material';
+import { Box, IconButton, styled } from '@mui/material';
 
-export const QuantityControlStack = styled(Stack)(({ theme }) => ({
+export const QuantityControlStack = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 1,
     border: '1px solid',
     borderColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,

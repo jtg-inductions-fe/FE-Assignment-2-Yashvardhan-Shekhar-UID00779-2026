@@ -1,4 +1,4 @@
-import { CardActions, IconButton, Stack, styled } from '@mui/material';
+import { Box, CardActions, IconButton, styled } from '@mui/material';
 
 export const QuantityIconButton = styled(IconButton)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
@@ -14,7 +14,11 @@ export const StyledCardActions = styled(CardActions)(({ theme }) => ({
     paddingTop: 0,
 }));
 
-export const QuantityControlStack = styled(Stack)(({ theme }) => ({
+export const QuantityControlStack = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     border: '1px solid',
     borderColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,

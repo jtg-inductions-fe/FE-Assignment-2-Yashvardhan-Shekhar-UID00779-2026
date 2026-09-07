@@ -1,12 +1,5 @@
 import { Add, Remove } from '@mui/icons-material';
-import {
-    Box,
-    CardMedia,
-    Stack,
-    Tooltip,
-    Typography,
-    useTheme,
-} from '@mui/material';
+import { Box, CardMedia, Tooltip, Typography, useTheme } from '@mui/material';
 
 import { addItemToCart, removeItemFromCart, useAppDispatch } from '@store';
 
@@ -29,7 +22,13 @@ export const CartItemRow = (props: CartItemRowProps) => {
     };
 
     return (
-        <Stack direction="row" alignItems="center" spacing={2} paddingBlock={2}>
+        <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            gap={2}
+            paddingBlock={2}
+        >
             <CardMedia
                 component="img"
                 image={item.image}
@@ -49,11 +48,7 @@ export const CartItemRow = (props: CartItemRowProps) => {
                     ₹{item.price} x {item.quantity}
                 </Typography>
             </Box>
-            <QuantityControlStack
-                direction="row"
-                alignItems="center"
-                spacing={1}
-            >
+            <QuantityControlStack>
                 <Tooltip title="decrease quantity">
                     <QuantityIconButton
                         size="small"
@@ -92,6 +87,6 @@ export const CartItemRow = (props: CartItemRowProps) => {
             >
                 ₹{item.price * item.quantity}
             </Typography>
-        </Stack>
+        </Box>
     );
 };

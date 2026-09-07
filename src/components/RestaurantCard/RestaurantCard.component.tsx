@@ -9,7 +9,6 @@ import {
     CardMedia,
     Chip,
     IconButton,
-    Stack,
     Typography,
     useTheme,
 } from '@mui/material';
@@ -94,10 +93,11 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                             : 'flex-start',
                     }}
                 >
-                    <Stack
-                        direction="row"
+                    <Box
+                        display="flex"
+                        flexDirection="row"
                         alignItems="center"
-                        spacing={1}
+                        gap={1}
                         color="text.secondary"
                     >
                         <AccessTime fontSize="small" />
@@ -105,9 +105,13 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                             {formatTime(restaurant.openingTime)} -{' '}
                             {formatTime(restaurant.closingTime)}
                         </Typography>
-                    </Stack>
+                    </Box>
                     {isOwnerView && (
-                        <Stack direction="row" alignItems="center">
+                        <Box
+                            display="flex"
+                            flexDirection="row"
+                            alignItems="center"
+                        >
                             <IconButton
                                 size="small"
                                 color="primary"
@@ -132,7 +136,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                             >
                                 <Delete />
                             </IconButton>
-                        </Stack>
+                        </Box>
                     )}
                 </CardActions>
             </Card>

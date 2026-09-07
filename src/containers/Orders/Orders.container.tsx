@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 import { OrderItemDetails } from '@components';
 import { getOrders } from '@services';
@@ -22,7 +22,7 @@ export const Orders = () => {
     return (
         orders && (
             <>
-                <Stack pb={5}>
+                <Box display="flex" flexDirection="column" pb={5}>
                     <Typography variant="h2" component="h1">
                         {isOwnerView ? 'Customer Orders' : 'Your Orders'}
                     </Typography>
@@ -31,7 +31,7 @@ export const Orders = () => {
                             ? 'Manage order stages and keep customers updated.'
                             : 'Track current order stages and review order history.'}
                     </Typography>
-                </Stack>
+                </Box>
                 {orders && orders.length > 0 ? (
                     <Box overflow="hidden">
                         {orders.map((order) => (

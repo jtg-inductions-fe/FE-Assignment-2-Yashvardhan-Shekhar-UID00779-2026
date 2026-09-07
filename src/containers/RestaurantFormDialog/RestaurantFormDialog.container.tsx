@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box, DialogActions, DialogTitle, Stack } from '@mui/material';
+import { Box, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import { Button, Dialog, RadioField, TextField } from '@components';
 
-import { StyledDialogContent } from './RestaurantFormDialog.styles';
 import {
     RestaurantFormDialogProps,
     RestaurantInput,
@@ -58,8 +57,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                     component="form"
                     onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
                 >
-                    <StyledDialogContent dividers>
-                        <Stack spacing={2}>
+                    <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
+                        <Box display="flex" flexDirection="column" gap={2}>
                             <TextField
                                 field="name"
                                 label="Restaurant Name *"
@@ -73,9 +72,10 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                 multiline
                                 rows={3}
                             />
-                            <Stack
-                                direction={{ xs: 'column', sm: 'row' }}
-                                spacing={2}
+                            <Box
+                                display="flex"
+                                flexDirection={{ xs: 'column', sm: 'row' }}
+                                gap={2}
                             >
                                 <TextField
                                     field="openingTime"
@@ -89,7 +89,7 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                     type="time"
                                     fullWidth
                                 />
-                            </Stack>
+                            </Box>
                             <TextField
                                 field="image"
                                 label="Image URL"
@@ -100,8 +100,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                                 heading="Select Category"
                                 options={['veg', 'non-veg']}
                             />
-                        </Stack>
-                    </StyledDialogContent>
+                        </Box>
+                    </DialogContent>
                     <DialogActions
                         sx={{
                             p: 4,

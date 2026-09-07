@@ -3,7 +3,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 
 import { ShoppingBagOutlined } from '@mui/icons-material';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
 import { PATH } from '@constant';
@@ -46,14 +46,20 @@ export const Cart = () => {
         <Navigate to={PATH.HOME} />
     ) : (
         <>
-            <Stack component="section" spacing={1} mb={4}>
+            <Box
+                display="flex"
+                flexDirection="column"
+                component="section"
+                gap={1}
+                mb={4}
+            >
                 <Typography variant="h2" component="h1" fontWeight="bold">
                     Order Checkout
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
                     Review your items and complete your order.
                 </Typography>
-            </Stack>
+            </Box>
             {cart.length > 0 ? (
                 <Box>
                     {cart.map((item: CartItem) => (

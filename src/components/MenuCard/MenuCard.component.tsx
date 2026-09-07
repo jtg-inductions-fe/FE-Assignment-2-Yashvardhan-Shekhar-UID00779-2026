@@ -5,7 +5,6 @@ import {
     CardMedia,
     Chip,
     IconButton,
-    Stack,
     Typography,
     useTheme,
 } from '@mui/material';
@@ -79,11 +78,12 @@ export const MenuCard = (props: MenuCardProps) => {
                 )}
             </Box>
             <CardContent>
-                <Stack
-                    direction="row"
+                <Box
+                    display="flex"
+                    flexDirection="row"
                     justifyContent="space-between"
                     alignItems="center"
-                    spacing={1}
+                    gap={1}
                     mb={1.5}
                 >
                     <Typography variant="h6" component="h2" noWrap>
@@ -96,7 +96,7 @@ export const MenuCard = (props: MenuCardProps) => {
                     >
                         ₹{item.price}
                     </Typography>
-                </Stack>
+                </Box>
                 <Typography
                     variant="body2"
                     color="text.secondary"
@@ -126,11 +126,7 @@ export const MenuCard = (props: MenuCardProps) => {
                                 {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
                             </Button>
                         ) : (
-                            <QuantityControlStack
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="space-between"
-                            >
+                            <QuantityControlStack>
                                 <Tooltip title="Remove item from cart">
                                     <QuantityIconButton
                                         size="small"
@@ -164,7 +160,12 @@ export const MenuCard = (props: MenuCardProps) => {
                     </Box>
                 )}
                 {isOwnerView && (
-                    <Stack direction="row" alignItems="center" spacing={1}>
+                    <Box
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                        gap={1}
+                    >
                         <IconButton
                             size="small"
                             color="primary"
@@ -181,7 +182,7 @@ export const MenuCard = (props: MenuCardProps) => {
                         >
                             <Delete />
                         </IconButton>
-                    </Stack>
+                    </Box>
                 )}
             </StyledCardActions>
         </Card>

@@ -2,17 +2,13 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box, DialogTitle, Stack } from '@mui/material';
+import { Box, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import { Button, Dialog, TextField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MenuItem } from '@types';
 
 import { MenuItemSchema } from './MenuFormDialog.config';
-import {
-    StyledDialogActions,
-    StyledDialogContent,
-} from './MenuFormDialog.styles';
 import { MenuFormDialogProps } from './MenuFormDialog.types';
 
 export const MenuFormDialog = ({
@@ -57,8 +53,8 @@ export const MenuFormDialog = ({
                     component="form"
                     onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
                 >
-                    <StyledDialogContent>
-                        <Stack spacing={2.5}>
+                    <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
+                        <Box display="flex" flexDirection="column" gap={2.5}>
                             <TextField field="name" label="Item Name *" />
                             <TextField
                                 field="description"
@@ -66,9 +62,10 @@ export const MenuFormDialog = ({
                                 multiline
                                 rows={3}
                             />
-                            <Stack
-                                direction={{ xs: 'column', sm: 'row' }}
-                                spacing={2}
+                            <Box
+                                display="flex"
+                                flexDirection={{ xs: 'column', sm: 'row' }}
+                                gap={2}
                             >
                                 <TextField
                                     field="price"
@@ -82,15 +79,20 @@ export const MenuFormDialog = ({
                                     type="number"
                                     fullWidth
                                 />
-                            </Stack>
+                            </Box>
                             <TextField
                                 field="image"
                                 label="Image URL"
                                 placeholder="https://example.com/item.jpg"
                             />
-                        </Stack>
-                    </StyledDialogContent>
-                    <StyledDialogActions>
+                        </Box>
+                    </DialogContent>
+                    <DialogActions
+                        sx={{
+                            p: 4,
+                            gap: 1,
+                        }}
+                    >
                         <Button
                             onClick={onClose}
                             variant="outlined"
@@ -105,7 +107,7 @@ export const MenuFormDialog = ({
                         >
                             {isEditMode ? 'Save Changes' : 'Add Item'}
                         </Button>
-                    </StyledDialogActions>
+                    </DialogActions>
                 </Box>
             </Dialog>
         </FormProvider>

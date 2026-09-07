@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 import { Add, Search } from '@mui/icons-material';
 import {
     Box,
     InputAdornment,
-    Stack,
     TextField,
     ToggleButtonGroup,
     Typography,
@@ -121,6 +120,19 @@ export const Restaurants = () => {
         }
     };
 
+    /**sets target edit restaurant */
+    const handleTargetEditRestaurant = (restaurant: Restaurant) => {
+        setTargetEditRestaurant(restaurant);
+    };
+
+    /**sets target delete restaurant */
+    const handleTargetDeleteRestaurant = (restaurant: Restaurant) => {
+        setTargetDeleteRestaurant(restaurant);
+    };
+
+    const handleSearchFieldChange = (e: ChangeEvent<HTMLInputElement>) =>
+        setSearchQuery(e.target.value);
+
     const filteredRestaurants = useMemo(
         () =>
             restaurants?.filter((restaurant) => {
@@ -151,11 +163,12 @@ export const Restaurants = () => {
     return (
         restaurants && (
             <>
-                <Stack
-                    direction="row"
+                <Box
+                    display="flex"
+                    flexDirection="row"
                     justifyContent="space-between"
                     alignItems={{ xs: 'stretch', md: 'center' }}
-                    spacing={2}
+                    gap={2}
                     mb={4}
                 >
                     <Box>
@@ -178,7 +191,7 @@ export const Restaurants = () => {
                                 startIcon={<Add />}
                                 aria-label="Add New Restaurant"
                                 onClick={() =>
-                                    setTargetEditRestaurant(
+                                    handleTargetEditRestaurant(
                                         initialRestaurantState,
                                     )
                                 }
@@ -187,10 +200,11 @@ export const Restaurants = () => {
                             </AddButton>
                         </Tooltip>
                     )}
-                </Stack>
-                <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
-                    spacing={2}
+                </Box>
+                <Box
+                    display="flex"
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    gap={2}
                     justifyContent="space-between"
                     alignItems="center"
                     mb={4}
@@ -204,7 +218,7 @@ export const Restaurants = () => {
                             variant="outlined"
                             size="small"
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={handleSearchFieldChange}
                             slotProps={{
                                 input: {
                                     startAdornment: (
@@ -231,7 +245,7 @@ export const Restaurants = () => {
                             Non-Veg
                         </StyledToggleButton>
                     </ToggleButtonGroup>
-                </Stack>
+                </Box>
                 {filteredRestaurants?.length === 0 && (
                     <Box textAlign="center" py={8}>
                         <Typography variant="h6" color="text.secondary">
@@ -245,9 +259,11 @@ export const Restaurants = () => {
                             key={restaurant.id}
                             restaurant={restaurant}
                             isOwnerView={isOwnerView}
-                            onEdit={() => setTargetEditRestaurant(restaurant)}
+                            onEdit={() =>
+                                handleTargetEditRestaurant(restaurant)
+                            }
                             onDelete={() =>
-                                setTargetDeleteRestaurant(restaurant)
+                                handleTargetDeleteRestaurant(restaurant)
                             }
                         />
                     ))}
