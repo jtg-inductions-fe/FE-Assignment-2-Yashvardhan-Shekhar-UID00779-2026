@@ -29,7 +29,9 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
             onClose={handleMenuClose}
             onClick={handleMenuClose}
         >
-            <ListSubheader>Hi, {user?.name}</ListSubheader>
+            <ListSubheader>
+                Hi, {user?.name} ({user?.role})
+            </ListSubheader>
             <MenuItem
                 onClick={handleLogOut}
                 sx={{ color: theme.palette.error.main }}

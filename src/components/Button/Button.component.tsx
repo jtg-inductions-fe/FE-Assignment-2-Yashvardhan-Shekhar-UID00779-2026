@@ -1,15 +1,21 @@
-import { Button as MuiButton, ButtonProps } from '@mui/material';
+import { Button as MuiButton } from '@mui/material';
+
+import { StyledAddButton } from './Button.styles';
+import { ButtonProps } from './Button.types';
 
 export const Button = (props: ButtonProps) => {
-    const isSmall = props.size === 'small';
+    const { isAddButton = false, ...rest } = props;
+    const isSmall = rest.size === 'small';
 
-    return (
+    return isAddButton ? (
+        <StyledAddButton {...rest} />
+    ) : (
         <MuiButton
             sx={{
                 py: isSmall ? 2 : 4,
                 px: isSmall ? 4 : 8,
             }}
-            {...props}
+            {...rest}
         />
     );
 };

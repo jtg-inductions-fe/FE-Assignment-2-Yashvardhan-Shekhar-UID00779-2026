@@ -10,8 +10,7 @@ import {
     Restaurants,
     Signup,
 } from '@containers';
-import { Home } from '@layouts';
-import { OnBoarding } from '@pages';
+import { Home, OnBoarding } from '@pages';
 
 export const router = createBrowserRouter([
     {

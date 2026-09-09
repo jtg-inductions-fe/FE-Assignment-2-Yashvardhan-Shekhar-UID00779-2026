@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { Navigate, useNavigate } from 'react-router';
 
@@ -14,6 +14,8 @@ import { CartItem } from '@types';
 import { StyledDivider, SummaryRow } from './Cart.styles';
 
 export const Cart = () => {
+    const [c, sc] = useState(0);
+
     const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -30,14 +32,9 @@ export const Cart = () => {
         await navigate(PATH.ORDERS);
     };
 
-    const subtotal = useMemo(
-        () =>
-            cart.reduce(
-                (sum: number, item: CartItem) =>
-                    sum + item.price * item.quantity,
-                0,
-            ),
-        [cart],
+    const subtotal = cart.reduce(
+        (sum: number, item: CartItem) => sum + item.price * item.quantity,
+        0,
     );
     const bookingFee = Math.max(subtotal * 0.01, 20);
     const grandTotal = subtotal + bookingFee;
@@ -46,6 +43,7 @@ export const Cart = () => {
         <Navigate to={PATH.HOME} />
     ) : (
         <>
+            <Button onClick={() => sc(c + 1)}>ctn</Button>
             <Box
                 display="flex"
                 flexDirection="column"

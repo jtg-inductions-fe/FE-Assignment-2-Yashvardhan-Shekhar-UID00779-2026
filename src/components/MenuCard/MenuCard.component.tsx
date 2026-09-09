@@ -48,35 +48,33 @@ export const MenuCard = (props: MenuCardProps) => {
 
     return (
         <Card elevation={2}>
-            <Box>
-                <CardMedia
-                    component="img"
-                    height="180"
-                    image={item.image || foodIllustration}
-                    alt={item.name}
-                    onError={(e) => {
-                        e.currentTarget.src = foodIllustration;
-                    }}
-                    loading="lazy"
+            <CardMedia
+                component="img"
+                height="180"
+                image={item.image || foodIllustration}
+                alt={item.name}
+                onError={(e) => {
+                    e.currentTarget.src = foodIllustration;
+                }}
+                loading="lazy"
+                sx={{
+                    filter: isOutOfStock ? 'grayscale(70%)' : 'none',
+                    opacity: isOutOfStock ? 0.3 : 1,
+                }}
+            />
+            {isOutOfStock && (
+                <Chip
+                    label="Out of Stock"
+                    color="default"
+                    size="small"
                     sx={{
-                        filter: isOutOfStock ? 'grayscale(70%)' : 'none',
-                        opacity: isOutOfStock ? 0.5 : 1,
+                        position: 'absolute',
+                        fontWeight: 'bold',
+                        top: theme.typography.pxToRem(12),
+                        right: theme.typography.pxToRem(12),
                     }}
                 />
-                {isOutOfStock && (
-                    <Chip
-                        label="Out of Stock"
-                        color="default"
-                        size="small"
-                        sx={{
-                            position: 'absolute',
-                            fontWeight: 'bold',
-                            top: theme.typography.pxToRem(12),
-                            right: theme.typography.pxToRem(12),
-                        }}
-                    />
-                )}
-            </Box>
+            )}
             <CardContent>
                 <Box
                     display="flex"
@@ -85,26 +83,29 @@ export const MenuCard = (props: MenuCardProps) => {
                     alignItems="center"
                     gap={1}
                     mb={1.5}
+                    color={isOutOfStock ? 'text.disabled' : 'text.primary'}
                 >
-                    <Typography variant="h6" component="h2" noWrap>
-                        {item.name}
-                    </Typography>
-                    <Typography
-                        variant="subtitle1"
-                        color={isOutOfStock ? 'textDisabled' : 'primary'}
-                        fontWeight="bold"
-                    >
+                    <Tooltip title={item.name}>
+                        <Typography variant="h6" component="h2" noWrap>
+                            {item.name}
+                        </Typography>
+                    </Tooltip>
+                    <Typography variant="subtitle1" fontWeight="bold">
                         ₹{item.price}
                     </Typography>
                 </Box>
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ ...theme.mixins.lineClamp(3) }}
-                >
-                    {item.description ||
-                        `Enjoy our ${item.name}, available for just ₹${item.price}.`}
-                </Typography>
+                <Tooltip title={item.description}>
+                    <Typography
+                        variant="body2"
+                        color={
+                            isOutOfStock ? 'text.disabled' : 'text.secondary'
+                        }
+                        sx={{ ...theme.mixins.lineClamp(3) }}
+                    >
+                        {item.description ||
+                            `Enjoy our ${item.name}, available for just ₹${item.price}.`}
+                    </Typography>
+                </Tooltip>
             </CardContent>
             <StyledCardActions
                 sx={{ justifyContent: isOwnerView ? 'flex-end' : 'stretch' }}
@@ -115,13 +116,10 @@ export const MenuCard = (props: MenuCardProps) => {
                             <Button
                                 fullWidth
                                 variant="contained"
+                                size="small"
                                 startIcon={<ShoppingBag />}
                                 disabled={isOutOfStock}
                                 onClick={handleAddToCart}
-                                sx={{
-                                    fontWeight: 'bold',
-                                    textTransform: 'none',
-                                }}
                             >
                                 {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
                             </Button>

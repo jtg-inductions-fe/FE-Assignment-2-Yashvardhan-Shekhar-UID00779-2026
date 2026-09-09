@@ -7,7 +7,6 @@ import {
 } from '@mui/icons-material';
 import {
     Badge,
-    Button,
     Container,
     IconButton,
     LinearProgress,
@@ -15,7 +14,7 @@ import {
     Toolbar,
 } from '@mui/material';
 
-import { Avatar } from '@components';
+import { Avatar, Button } from '@components';
 import { PATH } from '@constant';
 
 import { DesktopNavBox, StyledAppBar } from './navigation.styles';
@@ -47,6 +46,7 @@ export const Navbar = (props: BarProps) => {
                     </Link>
                     <DesktopNavBox>
                         <Button
+                            size="small"
                             color={
                                 activeTab === PATH.HOME ? 'primary' : 'inherit'
                             }
@@ -56,6 +56,7 @@ export const Navbar = (props: BarProps) => {
                         </Button>
                         {user?.role === 'customer' && (
                             <Button
+                                size="small"
                                 color={
                                     activeTab === PATH.CART
                                         ? 'primary'
@@ -74,6 +75,7 @@ export const Navbar = (props: BarProps) => {
                             </Button>
                         )}
                         <Button
+                            size="small"
                             color={
                                 activeTab === PATH.ORDERS
                                     ? 'primary'

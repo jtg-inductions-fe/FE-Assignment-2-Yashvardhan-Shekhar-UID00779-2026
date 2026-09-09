@@ -6,7 +6,7 @@ import { AccessTime, Edit } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Chip, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-import { AddButton, DeleteDialog, Grid, MenuCard, Tooltip } from '@components';
+import { Button, DeleteDialog, Grid, MenuCard, Tooltip } from '@components';
 import { MenuFormDialog, RestaurantFormDialog } from '@containers';
 import {
     editRestaurantDetailsService,
@@ -175,8 +175,12 @@ export const RestaurantDetails = () => {
                     </Box>
                     {isOwnerView && (
                         <Box display="flex" flexDirection="column" gap={2}>
-                            <Tooltip title="Edit Restaurant Details">
-                                <AddButton
+                            <Tooltip
+                                title="Edit Restaurant Details"
+                                mustShow={!canShow}
+                            >
+                                <Button
+                                    isAddButton={true}
                                     variant="outlined"
                                     size={canShow ? 'large' : 'small'}
                                     startIcon={<Edit />}
@@ -184,10 +188,14 @@ export const RestaurantDetails = () => {
                                     onClick={handleRestaurantFormDialogOpen}
                                 >
                                     {canShow && 'Edit Restaurant Details'}
-                                </AddButton>
+                                </Button>
                             </Tooltip>
-                            <Tooltip title="Add New Menu Item">
-                                <AddButton
+                            <Tooltip
+                                title="Add New Menu Item"
+                                mustShow={!canShow}
+                            >
+                                <Button
+                                    isAddButton={true}
                                     variant="outlined"
                                     size={canShow ? 'large' : 'small'}
                                     startIcon={<AddIcon />}
@@ -199,7 +207,7 @@ export const RestaurantDetails = () => {
                                     }
                                 >
                                     {canShow && 'Add New Menu Item'}
-                                </AddButton>
+                                </Button>
                             </Tooltip>
                         </Box>
                     )}

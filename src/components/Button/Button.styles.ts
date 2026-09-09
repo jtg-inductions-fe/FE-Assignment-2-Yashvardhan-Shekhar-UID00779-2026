@@ -13,7 +13,6 @@ export const StyledAddButton = styled(Button)(({ theme }) => ({
 
     [theme.breakpoints.up('md')]: {
         borderRadius: theme.shape.borderRadius,
-        width: 'auto',
-        height: 'auto',
+        width: theme.typography.pxToRem(240),
     },
 }));

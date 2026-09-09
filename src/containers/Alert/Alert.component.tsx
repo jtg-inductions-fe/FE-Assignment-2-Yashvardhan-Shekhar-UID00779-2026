@@ -1,26 +1,19 @@
-import { useEffect, useState } from 'react';
-
 import { Alert as MuiAlert, Snackbar, useTheme } from '@mui/material';
 
-import { Alert as AlertTypeProp } from '@types';
+import { closeAlert, useAppDispatch, useAppSelector } from '@store';
 
-export const Alert = (alertProp: AlertTypeProp) => {
-    const { severity, message } = alertProp;
+export const Alert = () => {
+    const { severity, message, isOpen } = useAppSelector(
+        (state) => state.alert,
+    );
 
     const theme = useTheme();
-    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useAppDispatch();
 
     /** closing alert Snackbar */
     const handleAlertClose = () => {
-        setIsOpen(false);
+        dispatch(closeAlert());
     };
-
-    /** based on changing the message and if exist then showing alert */
-    useEffect(() => {
-        if (message) {
-            setIsOpen(true);
-        }
-    }, [message]);
 
     return (
         <Snackbar

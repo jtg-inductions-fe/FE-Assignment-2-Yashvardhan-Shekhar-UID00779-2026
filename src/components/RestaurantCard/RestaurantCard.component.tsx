@@ -46,100 +46,100 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
     };
 
     return (
-        <CardActionArea component="div" onClick={handleCardClick}>
-            <Card elevation={2}>
-                <Box>
-                    <CardMedia
-                        component="img"
-                        height="180"
-                        image={restaurant.image || foodIllustration}
-                        onError={(e) => {
-                            e.currentTarget.src = foodIllustration;
-                        }}
-                        alt={restaurant.name}
-                    />
-                    <Chip
-                        label={restaurant.isVeg ? 'Pure Veg' : 'Non-Veg'}
-                        color={restaurant.isVeg ? 'success' : 'error'}
-                        size="small"
-                        sx={{
-                            position: 'absolute',
-                            top: theme.typography.pxToRem(12),
-                            right: theme.typography.pxToRem(12),
-                        }}
-                    />
-                </Box>
-                <CardContent>
+        <CardActionArea
+            component={Card}
+            onClick={handleCardClick}
+            sx={{ borderRadius: theme.typography.pxToRem(16) }}
+        >
+            <Box>
+                <CardMedia
+                    component="img"
+                    height="180"
+                    image={restaurant.image || foodIllustration}
+                    onError={(e) => {
+                        e.currentTarget.src = foodIllustration;
+                    }}
+                    alt={restaurant.name}
+                />
+                <Chip
+                    label={restaurant.isVeg ? 'Pure Veg' : 'Non-Veg'}
+                    color={restaurant.isVeg ? 'success' : 'error'}
+                    size="small"
+                    sx={{
+                        position: 'absolute',
+                        top: theme.typography.pxToRem(12),
+                        right: theme.typography.pxToRem(12),
+                    }}
+                />
+            </Box>
+            <CardContent>
+                <Tooltip title={restaurant.name}>
                     <Typography gutterBottom variant="h6" component="h2" noWrap>
                         {restaurant.name}
                     </Typography>
-                    <Tooltip title={description}>
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ ...theme.mixins.lineClamp(3) }}
-                        >
-                            {description}
-                        </Typography>
-                    </Tooltip>
-                </CardContent>
-                <CardActions
-                    sx={{
-                        display: 'flex',
-                        padding: 4,
-                        paddingTop: 0,
-                        justifyContent: isOwnerView
-                            ? 'space-between'
-                            : 'flex-start',
-                    }}
-                >
-                    <Box
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                        gap={1}
+                </Tooltip>
+                <Tooltip title={description}>
+                    <Typography
+                        variant="body2"
                         color="text.secondary"
+                        sx={{ ...theme.mixins.lineClamp(3) }}
                     >
-                        <AccessTime fontSize="small" />
-                        <Typography variant="caption">
-                            {formatTime(restaurant.openingTime)} -{' '}
-                            {formatTime(restaurant.closingTime)}
-                        </Typography>
-                    </Box>
-                    {isOwnerView && (
-                        <Box
-                            display="flex"
-                            flexDirection="row"
-                            alignItems="center"
+                        {description}
+                    </Typography>
+                </Tooltip>
+            </CardContent>
+            <CardActions
+                sx={{
+                    display: 'flex',
+                    padding: 4,
+                    paddingTop: 0,
+                    justifyContent: isOwnerView
+                        ? 'space-between'
+                        : 'flex-start',
+                }}
+            >
+                <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    gap={1}
+                    color="text.secondary"
+                >
+                    <AccessTime fontSize="small" />
+                    <Typography variant="caption">
+                        {formatTime(restaurant.openingTime)} -{' '}
+                        {formatTime(restaurant.closingTime)}
+                    </Typography>
+                </Box>
+                {isOwnerView && (
+                    <Box display="flex" flexDirection="row" alignItems="center">
+                        <IconButton
+                            size="small"
+                            color="primary"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditClick();
+                            }}
+                            sx={{ px: 3 }}
+                            aria-label="edit restaurant"
                         >
-                            <IconButton
-                                size="small"
-                                color="primary"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleEditClick();
-                                }}
-                                sx={{ px: 3 }}
-                                aria-label="edit restaurant"
-                            >
-                                <Edit />
-                            </IconButton>
-                            <IconButton
-                                size="small"
-                                color="error"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDeleteClick();
-                                }}
-                                sx={{ px: 3 }}
-                                aria-label="delete restaurant"
-                            >
-                                <Delete />
-                            </IconButton>
-                        </Box>
-                    )}
-                </CardActions>
-            </Card>
+                            <Edit />
+                        </IconButton>
+                        <IconButton
+                            size="small"
+                            color="error"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteClick();
+                            }}
+                            sx={{ px: 3 }}
+                            aria-label="delete restaurant"
+                        >
+                            <Delete />
+                        </IconButton>
+                    </Box>
+                )}
+            </CardActions>
         </CardActionArea>
     );
 };

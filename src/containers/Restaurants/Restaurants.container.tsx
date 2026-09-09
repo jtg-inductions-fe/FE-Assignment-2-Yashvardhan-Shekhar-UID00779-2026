@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 import {
-    AddButton,
+    Button,
     DeleteDialog,
     Grid,
     RestaurantCard,
@@ -184,8 +184,9 @@ export const Restaurants = () => {
                         </Typography>
                     </Box>
                     {isOwnerView && (
-                        <Tooltip title="Add New Restaurant">
-                            <AddButton
+                        <Tooltip title="Add New Restaurant" mustShow={!canShow}>
+                            <Button
+                                isAddButton={true}
                                 variant="outlined"
                                 size={canShow ? 'large' : 'small'}
                                 startIcon={<Add />}
@@ -197,7 +198,7 @@ export const Restaurants = () => {
                                 }
                             >
                                 {canShow && 'Add New Restaurant'}
-                            </AddButton>
+                            </Button>
                         </Tooltip>
                     )}
                 </Box>

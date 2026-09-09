@@ -22,5 +22,5 @@ export const QuantityControlStack = styled(Box)(({ theme }) => ({
     border: '1px solid',
     borderColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5),
 }));

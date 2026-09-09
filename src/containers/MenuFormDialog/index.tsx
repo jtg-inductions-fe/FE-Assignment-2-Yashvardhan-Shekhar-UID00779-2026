@@ -1,1 +1,1 @@
-export { MenuFormDialog } from './MenuFormDialog.component';
+export { MenuFormDialog } from './MenuFormDialog.container';

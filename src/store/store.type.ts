@@ -1,3 +1,5 @@
+import { AlertProps as MuiAlertProps } from '@mui/material';
+
 import { store } from '@store';
 import { CartItem, Order, Restaurant, RestaurantDetails } from '@types';
 
@@ -31,4 +33,11 @@ export type RestaurantDetailsState = {
 export type OrderState = {
     /**orders list */
     orders: Order[] | null;
+};
+
+/** Represents an application alert containing a message and its severity level. */
+export type Alert = Pick<MuiAlertProps, 'severity'> & {
+    /** alert message  */
+    message: string;
+    isOpen?: boolean;
 };

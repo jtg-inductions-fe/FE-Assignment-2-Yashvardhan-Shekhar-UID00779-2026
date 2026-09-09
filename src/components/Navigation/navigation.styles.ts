@@ -29,8 +29,7 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 export const DesktopNavBox = styled(Box)(({ theme }) => ({
     display: 'none',
-    gap: theme.spacing(1),
-    alignItems: 'center',
+    alignItems: 'right',
     color: theme.palette.text.secondary,
 
     [theme.breakpoints.up('md')]: {

@@ -1,7 +1,7 @@
 export { useAppDispatch, useAppSelector, store } from './store';
 export type { AppDispatch } from './store.type';
 export { updateUser } from './user.slice';
-export { updateAlert } from './alert.slice';
+export { updateAlert, closeAlert } from './alert.slice';
 export {
     addRestaurant,
     updateRestaurant,
