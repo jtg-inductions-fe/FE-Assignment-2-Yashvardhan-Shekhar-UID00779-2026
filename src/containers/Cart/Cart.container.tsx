@@ -2,8 +2,8 @@ import { Fragment, useState } from 'react';
 
 import { Navigate, useNavigate } from 'react-router';
 
-import { ShoppingBagOutlined } from '@mui/icons-material';
-import { Box, Typography, useTheme } from '@mui/material';
+import { ArrowBack, ShoppingBagOutlined } from '@mui/icons-material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
 import { PATH } from '@constant';
@@ -14,8 +14,6 @@ import { CartItem } from '@types';
 import { StyledDivider, SummaryRow } from './Cart.styles';
 
 export const Cart = () => {
-    const [c, sc] = useState(0);
-
     const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -43,7 +41,6 @@ export const Cart = () => {
         <Navigate to={PATH.HOME} />
     ) : (
         <>
-            <Button onClick={() => sc(c + 1)}>ctn</Button>
             <Box
                 display="flex"
                 flexDirection="column"
@@ -51,7 +48,16 @@ export const Cart = () => {
                 gap={1}
                 mb={4}
             >
-                <Typography variant="h2" component="h1" fontWeight="bold">
+                <Typography
+                    variant="h2"
+                    component="h1"
+                    fontWeight="bold"
+                    display="flex"
+                    alignItems="center"
+                >
+                    <IconButton onClick={() => void navigate(-1)}>
+                        <ArrowBack />
+                    </IconButton>
                     Order Checkout
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">

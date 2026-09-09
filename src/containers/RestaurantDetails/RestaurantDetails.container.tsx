@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
-import { AccessTime, Edit } from '@mui/icons-material';
+import { AccessTime, ArrowBack, Edit } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Chip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+    Box,
+    Chip,
+    IconButton,
+    Stack,
+    Typography,
+    useMediaQuery,
+    useTheme,
+} from '@mui/material';
 
 import { Button, DeleteDialog, Grid, MenuCard, Tooltip } from '@components';
 import { MenuFormDialog, RestaurantFormDialog } from '@containers';
@@ -23,6 +31,7 @@ export const RestaurantDetails = () => {
     const rid = useParams().restaurantId;
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const theme = useTheme();
     const canShow = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -140,8 +149,16 @@ export const RestaurantDetails = () => {
                     gap={2}
                     pb={4}
                 >
-                    <Box gap={1}>
-                        <Typography variant="h2" component="h1">
+                    <Stack gap={2}>
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            display="flex"
+                            alignItems="center"
+                        >
+                            <IconButton onClick={() => void navigate(-1)}>
+                                <ArrowBack />
+                            </IconButton>
                             {restaurantDetails?.name}
                         </Typography>
                         <Box
@@ -172,7 +189,7 @@ export const RestaurantDetails = () => {
                         <Typography variant="subtitle1" color="text.secondary">
                             {restaurantDetails?.description}
                         </Typography>
-                    </Box>
+                    </Stack>
                     {isOwnerView && (
                         <Box display="flex" flexDirection="column" gap={2}>
                             <Tooltip

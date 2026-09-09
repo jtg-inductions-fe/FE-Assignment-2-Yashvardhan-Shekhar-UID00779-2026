@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 
-import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { Box, Typography, useTheme } from '@mui/material';
+import { useNavigate } from 'react-router';
+
+import { ArrowBack, ReceiptLongOutlined } from '@mui/icons-material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 
 import { OrderItemDetails } from '@components';
 import { getOrders } from '@services';
@@ -10,6 +12,7 @@ import { startLoading } from '@utils';
 
 export const Orders = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const isOwnerView = useAppSelector((state) => state.user.role) === 'owner';
     const orders = useAppSelector((state) => state.orders.orders);
@@ -23,7 +26,15 @@ export const Orders = () => {
         orders && (
             <>
                 <Box display="flex" flexDirection="column" pb={5}>
-                    <Typography variant="h2" component="h1">
+                    <Typography
+                        variant="h2"
+                        component="h1"
+                        display="flex"
+                        alignItems="center"
+                    >
+                        <IconButton onClick={() => void navigate(-1)}>
+                            <ArrowBack />
+                        </IconButton>
                         {isOwnerView ? 'Customer Orders' : 'Your Orders'}
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
@@ -44,7 +55,7 @@ export const Orders = () => {
                     </Box>
                 ) : (
                     <Box textAlign="center" color="text.secondary">
-                        <ReceiptLongOutlinedIcon
+                        <ReceiptLongOutlined
                             sx={{ fontSize: theme.typography.pxToRem(64) }}
                         />
                         <Typography variant="h6">No orders found.</Typography>

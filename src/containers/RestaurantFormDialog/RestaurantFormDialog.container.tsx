@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, DialogContent } from '@mui/material';
 
-import { Button, Dialog, RadioField, TextField } from '@components';
+import { Dialog, RadioField, TextField } from '@components';
 
 import {
     RestaurantFormDialogProps,
@@ -49,12 +49,18 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
 
     return (
         <FormProvider {...methods}>
-            <Dialog open={isOpen} onClose={handleClose} fullWidth>
-                <DialogTitle variant="h3" component="h1">
-                    {isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'}
-                </DialogTitle>
-                <Box
-                    component="form"
+            <Box
+                component="form"
+                onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+            >
+                <Dialog
+                    isOpen={isOpen}
+                    onClose={handleClose}
+                    title={
+                        isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'
+                    }
+                    submitText={isEditMode ? 'Save Changes' : 'Add Restaurant'}
+                    isProcessing={isProcessing}
                     onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
                 >
                     <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
@@ -102,29 +108,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                             />
                         </Box>
                     </DialogContent>
-                    <DialogActions
-                        sx={{
-                            p: 4,
-                            gap: 1,
-                        }}
-                    >
-                        <Button
-                            onClick={handleClose}
-                            variant="outlined"
-                            disabled={isProcessing}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            loading={isProcessing}
-                        >
-                            {isEditMode ? 'Save Changes' : 'Add Restaurant'}
-                        </Button>
-                    </DialogActions>
-                </Box>
-            </Dialog>
+                </Dialog>
+            </Box>
         </FormProvider>
     );
 };

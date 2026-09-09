@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, DialogContent } from '@mui/material';
 
-import { Button, Dialog, TextField } from '@components';
+import { Dialog, TextField } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MenuItem } from '@types';
 
@@ -45,70 +45,48 @@ export const MenuFormDialog = ({
 
     return (
         <FormProvider {...methods}>
-            <Dialog open={isOpen} onClose={onClose} fullWidth>
-                <DialogTitle variant="h4" component="h1">
-                    {isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
-                </DialogTitle>
-                <Box
-                    component="form"
-                    onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
-                >
-                    <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
-                        <Box display="flex" flexDirection="column" gap={2.5}>
-                            <TextField field="name" label="Item Name *" />
+            <Dialog
+                isOpen={isOpen}
+                onClose={onClose}
+                title={isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
+                isProcessing={isProcessing}
+                submitText={isEditMode ? 'Save Changes' : 'Add Item'}
+                onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+            >
+                <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
+                    <Box display="flex" flexDirection="column" gap={2.5}>
+                        <TextField field="name" label="Item Name *" />
+                        <TextField
+                            field="description"
+                            label="Description"
+                            multiline
+                            rows={3}
+                        />
+                        <Box
+                            display="flex"
+                            flexDirection={{ xs: 'column', sm: 'row' }}
+                            gap={2}
+                        >
                             <TextField
-                                field="description"
-                                label="Description"
-                                multiline
-                                rows={3}
+                                field="price"
+                                label="Price"
+                                type="number"
+                                fullWidth
                             />
-                            <Box
-                                display="flex"
-                                flexDirection={{ xs: 'column', sm: 'row' }}
-                                gap={2}
-                            >
-                                <TextField
-                                    field="price"
-                                    label="Price"
-                                    type="number"
-                                    fullWidth
-                                />
-                                <TextField
-                                    field="stock"
-                                    label="Stock Quantity"
-                                    type="number"
-                                    fullWidth
-                                />
-                            </Box>
                             <TextField
-                                field="image"
-                                label="Image URL"
-                                placeholder="https://example.com/item.jpg"
+                                field="stock"
+                                label="Stock Quantity"
+                                type="number"
+                                fullWidth
                             />
                         </Box>
-                    </DialogContent>
-                    <DialogActions
-                        sx={{
-                            p: 4,
-                            gap: 1,
-                        }}
-                    >
-                        <Button
-                            onClick={onClose}
-                            variant="outlined"
-                            disabled={isProcessing}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            loading={isProcessing}
-                        >
-                            {isEditMode ? 'Save Changes' : 'Add Item'}
-                        </Button>
-                    </DialogActions>
-                </Box>
+                        <TextField
+                            field="image"
+                            label="Image URL"
+                            placeholder="https://example.com/item.jpg"
+                        />
+                    </Box>
+                </DialogContent>
             </Dialog>
         </FormProvider>
     );
