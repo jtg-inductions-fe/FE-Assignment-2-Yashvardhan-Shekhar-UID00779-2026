@@ -11,14 +11,16 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
         <Dialog
             isOpen={!!name}
             title="Delete Confirmation ?"
-            isProcessing={isProcessing}
             onClose={handleClose}
-            onSubmit={(e) => {
-                e.preventDefault();
-                void handleConfirm();
+            form={{
+                isProcessing: isProcessing,
+                onSubmit: (e) => {
+                    e.preventDefault();
+                    void handleConfirm();
+                },
+                submitText: 'Delete',
+                color: 'error',
             }}
-            submitText="Delete"
-            color="error"
         >
             <DialogContent sx={{ py: 0 }}>
                 <DialogContentText>

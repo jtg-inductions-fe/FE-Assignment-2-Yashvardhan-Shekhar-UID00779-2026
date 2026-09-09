@@ -59,9 +59,13 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
                     title={
                         isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'
                     }
-                    submitText={isEditMode ? 'Save Changes' : 'Add Restaurant'}
-                    isProcessing={isProcessing}
-                    onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+                    form={{
+                        isProcessing: isProcessing,
+                        submitText: isEditMode
+                            ? 'Save Changes'
+                            : 'Add Restaurant',
+                        onSubmit: (e) => void handleSubmit(handleFormSubmit)(e),
+                    }}
                 >
                     <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
                         <Box display="flex" flexDirection="column" gap={2}>

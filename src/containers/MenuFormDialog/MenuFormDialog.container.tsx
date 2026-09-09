@@ -47,11 +47,13 @@ export const MenuFormDialog = ({
         <FormProvider {...methods}>
             <Dialog
                 isOpen={isOpen}
-                onClose={onClose}
                 title={isEditMode ? 'Edit Menu Item' : 'Add New Menu Item'}
-                isProcessing={isProcessing}
-                submitText={isEditMode ? 'Save Changes' : 'Add Item'}
-                onSubmit={(e) => void handleSubmit(handleFormSubmit)(e)}
+                onClose={onClose}
+                form={{
+                    isProcessing: isProcessing,
+                    submitText: isEditMode ? 'Save Changes' : 'Add Item',
+                    onSubmit: (e) => void handleSubmit(handleFormSubmit)(e),
+                }}
             >
                 <DialogContent dividers sx={{ px: { xs: 0.5, sm: 2 } }}>
                     <Box display="flex" flexDirection="column" gap={2.5}>
