@@ -114,7 +114,7 @@ export const Cart = () => {
                     </Button>
                 </Box>
             ) : (
-                <Box textAlign="center" color="text.secondary">
+                <Box mt="30dvh" textAlign="center" color="text.secondary">
                     <ShoppingBagOutlined
                         sx={{ fontSize: theme.typography.pxToRem(64) }}
                     />

@@ -14,7 +14,6 @@
             "description": "Char-grilled cottage cheese marinated with yogurt, spices, onions, and bell peppers.",
             "price": 129,
             "stock": 15,
-            "category": "Starters",
             "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -23,7 +22,6 @@
             "description": "Crispy golden pastry filled with spiced potatoes, peas, and aromatic Indian herbs.",
             "price": 59,
             "stock": 20,
-            "category": "Starters",
             "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -32,7 +30,6 @@
             "description": "Crispy potato patties topped with yogurt, tangy chutneys, spices, and fresh coriander.",
             "price": 79,
             "stock": 12,
-            "category": "Starters",
             "image": "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -41,7 +38,6 @@
             "description": "Crispy South Indian rice and lentil crepe filled with spiced potato masala, served with chutney and sambar.",
             "price": 99,
             "stock": 18,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -50,7 +46,6 @@
             "description": "Soft cottage cheese cooked in a rich tomato, butter, cream, and cashew gravy.",
             "price": 149,
             "stock": 20,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -59,7 +54,6 @@
             "description": "Fragrant basmati rice layered with seasonal vegetables, saffron, herbs, and aromatic biryani spices.",
             "price": 139,
             "stock": 14,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -68,7 +62,6 @@
             "description": "Spiced chickpea curry served with fluffy deep-fried bhature and fresh onions.",
             "price": 119,
             "stock": 10,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -77,7 +70,6 @@
             "description": "Slow-cooked black lentils and kidney beans simmered with butter, cream, and traditional spices.",
             "price": 129,
             "stock": 16,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -86,7 +78,6 @@
             "description": "Mumbai-style spiced vegetable mash served with buttery toasted pav and chopped onions.",
             "price": 109,
             "stock": 13,
-            "category": "Main Course",
             "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -95,7 +86,6 @@
             "description": "Traditional Indian tea brewed with milk, cardamom, ginger, cinnamon, and aromatic spices.",
             "price": 49,
             "stock": 0,
-            "category": "Beverages",
             "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -104,7 +94,6 @@
             "description": "Creamy yogurt-based mango drink blended with ripe mangoes and a hint of cardamom.",
             "price": 69,
             "stock": 18,
-            "category": "Beverages",
             "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -113,7 +102,6 @@
             "description": "Chilled espresso blended with creamy milk and a warm Indian spice infusion.",
             "price": 89,
             "stock": 10,
-            "category": "Beverages",
             "image": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -122,7 +110,6 @@
             "description": "Soft golden milk dumplings soaked in fragrant sugar syrup and served warm.",
             "price": 69,
             "stock": 15,
-            "category": "Desserts",
             "image": "https://images.unsplash.com/photo-1666190094762-b0f3f9e0f0c3?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -131,7 +118,6 @@
             "description": "Soft cottage cheese dumplings soaked in chilled saffron-cardamom milk.",
             "price": 89,
             "stock": 8,
-            "category": "Desserts",
             "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -140,7 +126,6 @@
             "description": "Traditional Indian carrot dessert slow-cooked with milk, khoya, cardamom, and nuts.",
             "price": 79,
             "stock": 7,
-            "category": "Desserts",
             "image": "https://images.unsplash.com/photo-1606471191009-63994c53433b?auto=format&fit=crop&w=800&q=70"
         },
         {
@@ -149,7 +134,6 @@
             "description": "Warm chocolate cake with a rich molten center served with vanilla ice cream.",
             "price": 99,
             "stock": 5,
-            "category": "Desserts",
             "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=70"
         }
     ]

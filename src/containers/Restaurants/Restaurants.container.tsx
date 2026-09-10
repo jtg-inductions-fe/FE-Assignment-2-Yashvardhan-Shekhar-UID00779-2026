@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
-import { Add, Search } from '@mui/icons-material';
+import { Add, Clear, Search } from '@mui/icons-material';
 import {
     Box,
+    IconButton,
     InputAdornment,
     TextField,
     ToggleButtonGroup,
@@ -130,8 +131,12 @@ export const Restaurants = () => {
         setTargetDeleteRestaurant(restaurant);
     };
 
+    /**updated search query with the input change */
     const handleSearchFieldChange = (e: ChangeEvent<HTMLInputElement>) =>
         setSearchQuery(e.target.value);
+
+    /**clears search query */
+    const handleSearchFieldClear = () => setSearchQuery('');
 
     const filteredRestaurants = useMemo(
         () =>
@@ -227,6 +232,15 @@ export const Restaurants = () => {
                                             <Search color="action" />
                                         </InputAdornment>
                                     ),
+                                    endAdornment: searchQuery && (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleSearchFieldClear}
+                                            >
+                                                <Clear color="action" />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
                                 },
                             }}
                         />
@@ -247,28 +261,29 @@ export const Restaurants = () => {
                         </StyledToggleButton>
                     </ToggleButtonGroup>
                 </Box>
-                {filteredRestaurants?.length === 0 && (
-                    <Box textAlign="center" py={8}>
+                {filteredRestaurants?.length === 0 ? (
+                    <Box mt="30dvh" textAlign="center" py={8}>
                         <Typography variant="h6" color="text.secondary">
                             No restaurants found.
                         </Typography>
                     </Box>
+                ) : (
+                    <Grid>
+                        {filteredRestaurants?.map((restaurant) => (
+                            <RestaurantCard
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                                isOwnerView={isOwnerView}
+                                onEdit={() =>
+                                    handleTargetEditRestaurant(restaurant)
+                                }
+                                onDelete={() =>
+                                    handleTargetDeleteRestaurant(restaurant)
+                                }
+                            />
+                        ))}
+                    </Grid>
                 )}
-                <Grid>
-                    {filteredRestaurants?.map((restaurant) => (
-                        <RestaurantCard
-                            key={restaurant.id}
-                            restaurant={restaurant}
-                            isOwnerView={isOwnerView}
-                            onEdit={() =>
-                                handleTargetEditRestaurant(restaurant)
-                            }
-                            onDelete={() =>
-                                handleTargetDeleteRestaurant(restaurant)
-                            }
-                        />
-                    ))}
-                </Grid>
                 <RestaurantFormDialog
                     restaurant={targetEditRestaurant || initialRestaurantState}
                     isProcessing={isProcessing}

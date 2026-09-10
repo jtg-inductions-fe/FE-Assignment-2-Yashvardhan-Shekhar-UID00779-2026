@@ -54,7 +54,7 @@ export const Orders = () => {
                         ))}
                     </Box>
                 ) : (
-                    <Box textAlign="center" color="text.secondary">
+                    <Box mt="30dvh" textAlign="center" color="text.secondary">
                         <ReceiptLongOutlined
                             sx={{ fontSize: theme.typography.pxToRem(64) }}
                         />
