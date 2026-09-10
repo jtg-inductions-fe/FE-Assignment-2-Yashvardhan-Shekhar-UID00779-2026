@@ -1,4 +1,4 @@
-import { Alert as MuiAlert, Snackbar, useTheme } from '@mui/material';
+import { Alert as MuiAlert, Slide, Snackbar, useTheme } from '@mui/material';
 
 import { closeAlert, useAppDispatch, useAppSelector } from '@store';
 
@@ -20,6 +20,7 @@ export const Alert = () => {
             open={isOpen}
             autoHideDuration={3000}
             onClose={handleAlertClose}
+            TransitionComponent={Slide}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
             <MuiAlert
