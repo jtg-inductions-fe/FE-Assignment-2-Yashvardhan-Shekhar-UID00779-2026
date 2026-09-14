@@ -29,7 +29,12 @@ const commonConfig: UserConfig = {
             },
         },
     },
-};
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        setupFiles: './src/test/setup.ts',
+    },
+} as UserConfig;
 
 export default defineConfig(({ mode }): UserConfig => {
     /* Load environment variables based on the mode */

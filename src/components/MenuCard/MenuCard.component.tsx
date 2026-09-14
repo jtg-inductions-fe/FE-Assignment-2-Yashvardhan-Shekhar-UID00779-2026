@@ -11,7 +11,12 @@ import {
 
 import foodIllustration from '@assets/images/food-illustration.webp';
 import { Button, Card, Tooltip } from '@components';
-import { addItemToCart, removeItemFromCart, useAppSelector } from '@store';
+import {
+    addItemToCart,
+    removeItemFromCart,
+    useAppDispatch,
+    useAppSelector,
+} from '@store';
 
 import {
     QuantityControlStack,
@@ -21,8 +26,9 @@ import {
 import { MenuCardProps } from './MenuCard.types';
 
 export const MenuCard = (props: MenuCardProps) => {
-    const { item, isOwnerView, dispatch, onEdit, onDelete } = props;
+    const { item, isOwnerView, onEdit, onDelete } = props;
     const theme = useTheme();
+    const dispatch = useAppDispatch();
 
     const quantity = useAppSelector((state): number => {
         const res = state.cart.cartItems.find((it) => it.id === item.id);
