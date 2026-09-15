@@ -1,1 +1,1 @@
-export { StyledAvatar as Avatar } from './Avatar.component';
+export { Avatar } from './Avatar.component';
