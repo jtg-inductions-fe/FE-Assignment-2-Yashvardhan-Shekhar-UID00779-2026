@@ -1,22 +1,21 @@
 {
     "compilerOptions": {
-        "baseUrl": "./src",
         "paths": {
-            "@assets/*": ["assets/*"],
-            "@data/*": ["data/*"],
-            "@components": ["components/index"],
-            "@constant": ["constant/index"],
-            "@containers": ["containers/index"],
-            "@layouts": ["layouts/index"],
-            "@types": ["types/index"],
-            "@store": ["store/index"],
-            "@pages": ["pages/index"],
-            "@providers": ["providers/index"],
-            "@services": ["services/index"],
-            "@styles": ["styles/index"],
-            "@theme": ["theme/index"],
-            "@utils": ["utils/index"],
-            "@router": ["router/index"]
+            "@assets/*": ["./src/assets/*"],
+            "@data/*": ["./src/data/*"],
+            "@components": ["./src/components/index"],
+            "@constant": ["./src/constant/index"],
+            "@containers": ["./src/containers/index"],
+            "@layouts": ["./src/layouts/index"],
+            "@types": ["./src/types/index"],
+            "@store": ["./src/store/index"],
+            "@pages": ["./src/pages/index"],
+            "@providers": ["./src/providers/index"],
+            "@services": ["./src/services/index"],
+            "@styles": ["./src/styles/index"],
+            "@theme": ["./src/theme/index"],
+            "@utils": ["./src/utils/index"],
+            "@router": ["./src/router/index"]
         }
     }
 }

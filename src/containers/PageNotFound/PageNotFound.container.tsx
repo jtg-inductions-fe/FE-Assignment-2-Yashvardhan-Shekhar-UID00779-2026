@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import HomeIcon from '@mui/icons-material/Home';
-import { Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { Button } from '@components';
 import { PATH } from '@constant';
@@ -13,7 +13,12 @@ export const PageNotFound = () => {
 
     return (
         <StyledNotFoundContainer maxWidth="sm">
-            <Stack spacing={5} textAlign="center">
+            <Box
+                display="flex"
+                flexDirection="column"
+                gap={5}
+                textAlign="center"
+            >
                 <Typography variant="h1" component="h1">
                     404 Page Not Found
                 </Typography>
@@ -32,7 +37,7 @@ export const PageNotFound = () => {
                 >
                     Back to Home
                 </Button>
-            </Stack>
+            </Box>
         </StyledNotFoundContainer>
     );
 };

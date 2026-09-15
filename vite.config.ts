@@ -22,14 +22,19 @@ const commonConfig: UserConfig = {
                     if (/\.(webp|jpe?g|png)$/.test(name ?? '')) {
                         return 'assets/images/[name]-[hash][extname]';
                     }
-                    if (/\.(woff2|ttf)$/.test(name ?? ''))
+                    if (/\.(woff2|woff)$/.test(name ?? ''))
                         return 'assets/fonts/[name]-[hash][extname]';
                     return '[name]-[hash][extname]';
                 },
             },
         },
     },
-};
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        setupFiles: './src/test/setup.ts',
+    },
+} as UserConfig;
 
 export default defineConfig(({ mode }): UserConfig => {
     /* Load environment variables based on the mode */

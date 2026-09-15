@@ -1,0 +1,260 @@
+[
+    {
+        "id": "ORD-8492",
+        "date": "2026-08-27",
+        "totalAmount": 648.0,
+        "status": "pending",
+        "items": [
+            {
+                "id": "m1",
+                "name": "Paneer Butter Masala",
+                "quantity": 2,
+                "price": 260.0
+            },
+            {
+                "id": "m2",
+                "name": "Butter Naan",
+                "quantity": 4,
+                "price": 32.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-7310",
+        "date": "2026-08-27",
+        "totalAmount": 430.0,
+        "status": "accepted",
+        "items": [
+            {
+                "id": "m3",
+                "name": "Chicken Dum Biryani",
+                "quantity": 1,
+                "price": 350.0
+            },
+            {
+                "id": "m4",
+                "name": "Mirchi Ka Salan",
+                "quantity": 1,
+                "price": 80.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-6204",
+        "date": "2026-08-27",
+        "totalAmount": 290.0,
+        "status": "preparing",
+        "items": [
+            {
+                "id": "m5",
+                "name": "Veg Hakka Noodles",
+                "quantity": 1,
+                "price": 180.0
+            },
+            {
+                "id": "m6",
+                "name": "Veg Manchurian Bowl",
+                "quantity": 1,
+                "price": 110.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-5198",
+        "date": "2026-08-27",
+        "totalAmount": 520.0,
+        "status": "out_for_delivery",
+        "items": [
+            {
+                "id": "m7",
+                "name": "Margherita Pizza (Medium)",
+                "quantity": 1,
+                "price": 390.0
+            },
+            {
+                "id": "m8",
+                "name": "Garlic Breadsticks",
+                "quantity": 1,
+                "price": 130.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-4012",
+        "date": "2026-08-26",
+        "totalAmount": 180.0,
+        "status": "delivered",
+        "items": [
+            {
+                "id": "m9",
+                "name": "Cold Coffee with Ice Cream",
+                "quantity": 2,
+                "price": 90.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-3981",
+        "date": "2026-08-26",
+        "totalAmount": 310.0,
+        "status": "rejected",
+        "items": [
+            {
+                "id": "m10",
+                "name": "Special Masala Dosa",
+                "quantity": 2,
+                "price": 155.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-2847",
+        "date": "2026-08-26",
+        "totalAmount": 765.0,
+        "status": "delivered",
+        "items": [
+            {
+                "id": "m11",
+                "name": "Butter Chicken",
+                "quantity": 1,
+                "price": 420.0
+            },
+            {
+                "id": "m12",
+                "name": "Garlic Naan",
+                "quantity": 3,
+                "price": 45.0
+            },
+            {
+                "id": "m13",
+                "name": "Jeera Rice",
+                "quantity": 1,
+                "price": 120.0
+            },
+            {
+                "id": "m14",
+                "name": "Gulab Jamun",
+                "quantity": 2,
+                "price": 90.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-1736",
+        "date": "2026-08-26",
+        "totalAmount": 355.0,
+        "status": "preparing",
+        "items": [
+            {
+                "id": "m15",
+                "name": "Paneer Tikka",
+                "quantity": 1,
+                "price": 220.0
+            },
+            {
+                "id": "m16",
+                "name": "Tandoori Roti",
+                "quantity": 3,
+                "price": 25.0
+            },
+            {
+                "id": "m17",
+                "name": "Sweet Lassi",
+                "quantity": 1,
+                "price": 60.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-9521",
+        "date": "2026-08-25",
+        "totalAmount": 590.0,
+        "status": "delivered",
+        "items": [
+            {
+                "id": "m18",
+                "name": "Farmhouse Pizza (Large)",
+                "quantity": 1,
+                "price": 450.0
+            },
+            {
+                "id": "m19",
+                "name": "French Fries",
+                "quantity": 1,
+                "price": 90.0
+            },
+            {
+                "id": "m20",
+                "name": "Coke",
+                "quantity": 1,
+                "price": 50.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-8473",
+        "date": "2026-08-25",
+        "totalAmount": 425.0,
+        "status": "accepted",
+        "items": [
+            {
+                "id": "m21",
+                "name": "Chole Bhature",
+                "quantity": 2,
+                "price": 150.0
+            },
+            {
+                "id": "m22",
+                "name": "Masala Chaas",
+                "quantity": 1,
+                "price": 65.0
+            },
+            {
+                "id": "m23",
+                "name": "Samosa",
+                "quantity": 2,
+                "price": 30.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-6349",
+        "date": "2026-08-24",
+        "totalAmount": 870.0,
+        "status": "out_for_delivery",
+        "items": [
+            {
+                "id": "m24",
+                "name": "Mutton Biryani",
+                "quantity": 2,
+                "price": 380.0
+            },
+            {
+                "id": "m25",
+                "name": "Raita",
+                "quantity": 2,
+                "price": 55.0
+            }
+        ]
+    },
+    {
+        "id": "ORD-5126",
+        "date": "2026-08-24",
+        "totalAmount": 340.0,
+        "status": "pending",
+        "items": [
+            {
+                "id": "m26",
+                "name": "Veg Fried Rice",
+                "quantity": 1,
+                "price": 190.0
+            },
+            {
+                "id": "m27",
+                "name": "Chilli Paneer",
+                "quantity": 1,
+                "price": 150.0
+            }
+        ]
+    }
+]

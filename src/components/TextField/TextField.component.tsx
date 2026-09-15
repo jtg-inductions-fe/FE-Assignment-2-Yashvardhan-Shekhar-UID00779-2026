@@ -6,6 +6,7 @@ import { TextFieldProps } from './TextField.types';
 
 export const TextField = (props: TextFieldProps) => {
     const { field, ...rest } = props;
+    const isNumber = rest.type === 'number';
 
     const {
         formState: { errors },
@@ -16,8 +17,10 @@ export const TextField = (props: TextFieldProps) => {
         <MuiTextField
             {...rest}
             error={!!errors[field]}
-            helperText={errors[field]?.message as string}
-            {...register(field)}
+            helperText={errors[field] ? (errors[field].message as string) : ''}
+            {...register(field, {
+                valueAsNumber: isNumber,
+            })}
         />
     );
 };

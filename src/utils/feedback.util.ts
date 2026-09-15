@@ -1,6 +1,6 @@
 import { AlertColor } from '@mui/material';
 
-import { AppDispatch, updateAlert } from '@store';
+import { AppDispatch, updateAlert, updateLoading } from '@store';
 
 /**
  * Creates and dispatches an alert with the specified severity and message.
@@ -35,4 +35,27 @@ export const handleErrorFeedback = (
     } else {
         alert('error', 'Unknown error has occurred', dispatch);
     }
+};
+
+/**
+ * Delays execution for the specified duration.
+ * @param ms delay in milliseconds
+ */
+export const delay = (ms: number = 1000): Promise<void> =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * handles loading state of the linear progress bar
+ * @param dispatch store dispatch
+ */
+export const startLoading = (dispatch: AppDispatch) => {
+    dispatch(updateLoading(true));
+};
+
+/**
+ * handles loading state of the linear progress bar
+ * @param dispatch store dispatch
+ */
+export const stopLoading = (dispatch: AppDispatch) => {
+    dispatch(updateLoading(false));
 };

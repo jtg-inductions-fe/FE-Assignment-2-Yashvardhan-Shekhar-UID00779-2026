@@ -10,6 +10,8 @@ export type BarProps = {
     activeTab: string;
     /** cart items count */
     cartCount: number;
+    /** loading state */
+    isLoading?: boolean;
 };
 
 /**
@@ -24,6 +26,4 @@ export type ProfileMenuProps = {
     user: User;
     /** toggle menu close */
     handleMenuClose: () => void;
-    /** logout function */
-    handleLogOut: () => void;
 };
