@@ -235,7 +235,6 @@ export const RestaurantDetails = () => {
                             key={menuItem.id}
                             item={menuItem}
                             isOwnerView={isOwnerView}
-                            dispatch={dispatch}
                             onEdit={() => handleTargetEditMenuItem(menuItem)}
                             onDelete={() =>
                                 handleTargetDeleteMenuItem(menuItem)

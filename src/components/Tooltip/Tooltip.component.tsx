@@ -2,6 +2,7 @@ import {
     cloneElement,
     isValidElement,
     ReactElement,
+    Ref,
     useLayoutEffect,
     useRef,
     useState,
@@ -13,7 +14,8 @@ import { TooltipProps } from './Tooltip.types';
 
 export const Tooltip = (props: TooltipProps) => {
     const { mustShow, ...rest } = props;
-    const children = props.children as ReactElement;
+    const children = props.children as ReactElement<{ ref?: Ref<HTMLElement> }>;
+
     const theme = useTheme();
     const ref = useRef<HTMLElement>(null);
     const [isClamped, setIsClamped] = useState(true);

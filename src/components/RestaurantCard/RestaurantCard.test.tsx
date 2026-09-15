@@ -99,43 +99,41 @@ describe('RestaurantCard Component', () => {
         ).not.toBeInTheDocument();
     });
 
-    describe('Owner View Controls', () => {
-        const ownerProps: RestaurantCardProps = {
-            ...defaultProps,
-            isOwnerView: true,
-        };
+    const ownerProps: RestaurantCardProps = {
+        ...defaultProps,
+        isOwnerView: true,
+    };
 
-        it('renders edit and delete buttons when isOwnerView is true', () => {
-            renderComponent(ownerProps);
+    it('renders edit and delete buttons when isOwnerView is true', () => {
+        renderComponent(ownerProps);
 
-            expect(
-                screen.getByRole('button', { name: 'edit restaurant' }),
-            ).toBeInTheDocument();
-            expect(
-                screen.getByRole('button', { name: 'delete restaurant' }),
-            ).toBeInTheDocument();
+        expect(
+            screen.getByRole('button', { name: 'edit restaurant' }),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole('button', { name: 'delete restaurant' }),
+        ).toBeInTheDocument();
+    });
+
+    it('calls onEdit with id and stops click propagation to card navigation', () => {
+        renderComponent(ownerProps);
+
+        const editButton = screen.getByRole('button', {
+            name: 'edit restaurant',
         });
+        fireEvent.click(editButton);
 
-        it('calls onEdit with id and stops click propagation to card navigation', () => {
-            renderComponent(ownerProps);
+        expect(defaultProps.onEdit).toHaveBeenCalledWith('rest-123');
+    });
 
-            const editButton = screen.getByRole('button', {
-                name: /edit restaurant/i,
-            });
-            fireEvent.click(editButton);
+    it('calls onDelete with id and stops click propagation to card navigation', () => {
+        renderComponent(ownerProps);
 
-            expect(defaultProps.onEdit).toHaveBeenCalledWith('rest-123');
+        const deleteButton = screen.getByRole('button', {
+            name: 'delete restaurant',
         });
+        fireEvent.click(deleteButton);
 
-        it('calls onDelete with id and stops click propagation to card navigation', () => {
-            renderComponent(ownerProps);
-
-            const deleteButton = screen.getByRole('button', {
-                name: /delete restaurant/i,
-            });
-            fireEvent.click(deleteButton);
-
-            expect(defaultProps.onDelete).toHaveBeenCalledWith('rest-123');
-        });
+        expect(defaultProps.onDelete).toHaveBeenCalledWith('rest-123');
     });
 });
