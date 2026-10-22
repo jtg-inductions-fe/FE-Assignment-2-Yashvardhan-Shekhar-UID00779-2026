@@ -14,8 +14,6 @@ export type Restaurant = {
     isVeg: boolean;
     /** image of the restaurant */
     image: string;
-    /** owner of the restaurant */
-    owner: string;
 };
 
 /**fields in the menuItem */

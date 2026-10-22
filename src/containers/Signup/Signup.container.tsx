@@ -38,7 +38,7 @@ export const Signup = () => {
     ): Promise<void> => {
         try {
             setIsLoading(true);
-            await signUp(data, dispatch);
+            await signUp(data, dispatch, navigate);
         } catch (e) {
             handleErrorFeedback(e, dispatch);
         } finally {

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { AlertColor } from '@mui/material';
 
 import { AppDispatch, updateAlert, updateLoading } from '@store';
@@ -30,11 +32,13 @@ export const handleErrorFeedback = (
     error: unknown,
     dispatch: AppDispatch,
 ): void => {
-    if (error instanceof Error) {
-        alert('error', error.message, dispatch);
-    } else {
-        alert('error', 'Unknown error has occurred', dispatch);
-    }
+    const message = axios.isAxiosError<{ detail?: unknown }>(error)
+        ? (error.response?.data?.detail as string)
+        : error instanceof Error
+          ? error.message
+          : 'Something went wrong';
+
+    alert('error', message, dispatch);
 };
 
 /**

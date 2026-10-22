@@ -18,7 +18,7 @@ export const ProfileMenu = (props: ProfileMenuProps) => {
 
     /** logout functionality */
     const handleLogOut = () => {
-        logout(dispatch);
+        void logout(dispatch);
         void navigate(PATH.LOGIN);
     };
 

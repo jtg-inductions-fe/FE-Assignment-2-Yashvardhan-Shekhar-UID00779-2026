@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -21,6 +21,8 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
         handleEditRestaurant,
     } = props;
 
+    const submittingRef = useRef(false);
+
     const methods = useForm<RestaurantInput>();
 
     const { register, handleSubmit, reset } = methods;
@@ -36,11 +38,16 @@ export const RestaurantFormDialog = (props: RestaurantFormDialogProps) => {
             ...data,
             isVeg: data?.isVeg === 'veg',
         };
+
+        if (submittingRef.current) return;
+        submittingRef.current = true;
+
         if (!isEditMode && handleCreateRestaurant) {
             await handleCreateRestaurant(newRestaurant);
         } else {
             await handleEditRestaurant(newRestaurant);
         }
+        submittingRef.current = false;
     };
 
     useEffect(() => {

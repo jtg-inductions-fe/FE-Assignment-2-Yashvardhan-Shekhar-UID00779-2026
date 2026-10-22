@@ -6,95 +6,117 @@ import {
     updateRestaurant,
 } from '@store';
 import { Restaurant } from '@types';
-import { alert, delay, handleErrorFeedback, stopLoading } from '@utils';
+import { alert, handleErrorFeedback, stopLoading } from '@utils';
 
-/**
- * Fetches the restaurant list from the local data source and stores the restaurants in the Redux state.
- * @param dispatch - Redux dispatch function used to update the restaurant state.
- */
+import { api } from './api.service';
+
+type RestaurantApiResponse = {
+    id: string;
+    name: string;
+    description: string;
+    address: string | null;
+    city: string | null;
+    state: string | null;
+    is_veg: boolean;
+    opening_time: string;
+    closing_time: string;
+    image: string | null;
+};
+
+type RestaurantListResponse = {
+    items: RestaurantApiResponse[];
+    total: number;
+    current_page: string | null;
+    current_page_backwards: string | null;
+    previous_page: string | null;
+    next_page: string | null;
+};
+
+const mapRestaurantFromApi = (data: RestaurantApiResponse): Restaurant => ({
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    openingTime: data.opening_time.slice(0, 5),
+    closingTime: data.closing_time.slice(0, 5),
+    isVeg: data.is_veg,
+    image: data.image ?? '',
+});
+
+const mapRestaurantToApi = (data: Restaurant) => ({
+    name: data.name,
+    description: data.description,
+    is_veg: data.isVeg,
+    opening_time: data.openingTime,
+    closing_time: data.closingTime,
+    image: data.image || null,
+});
+
 export const getRestaurantsService = async (
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
-        // will be replaced with actual api call
-        await delay();
-        const res = await fetch('/data/Restaurants.json');
-        const restaurants = (await res.json()) as Restaurant[];
-        dispatch(setRestaurants(restaurants));
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+        const { data } = await api.get<RestaurantListResponse>('/restaurants', {
+            params: {
+                size: 100,
+                type: 'ALL',
+            },
+        });
+
+        dispatch(setRestaurants(data.items.map(mapRestaurantFromApi)));
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     } finally {
         stopLoading(dispatch);
     }
 };
 
-/**
- * Creates a new restaurant with a unique ID, adds it to the Redux state, and displays a success alert.
- * @param data - Restaurant details used to create the new restaurant.
- * @param dispatch - Redux dispatch function used to update the restaurant state.
- */
 export const createRestaurantService = async (
     data: Restaurant,
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
-        // delay will be replaced with actual api call
-        await delay();
-        // to create unique id to manage in store for now
-        const newRestaurant: Restaurant = {
-            ...data,
-            id: crypto.randomUUID(),
-        };
-
-        dispatch(addRestaurant(newRestaurant));
-
-        alert(
-            'success',
-            `Restaurant ${newRestaurant.name} has been created.`,
-            dispatch,
+        const response = await api.post<RestaurantApiResponse>(
+            '/restaurants',
+            mapRestaurantToApi(data),
         );
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+
+        dispatch(addRestaurant(mapRestaurantFromApi(response.data)));
+
+        alert('success', 'Restaurant created successfully', dispatch);
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     }
 };
 
-/**
- * Updates an existing restaurant in the Redux state and displays a success alert.
- * @param data - Updated restaurant details.
- * @param dispatch - Redux dispatch function used to update the restaurant state.
- */
 export const editRestaurantService = async (
     data: Restaurant,
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
-        // delay will be replaced with actual api call
-        await delay();
+        const response = await api.put<RestaurantApiResponse>(
+            `/restaurants/${data.id}`,
+            mapRestaurantToApi(data),
+        );
 
-        dispatch(updateRestaurant(data));
-        alert('success', `Restaurant ${data.name} has been updated.`, dispatch);
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+        dispatch(updateRestaurant(mapRestaurantFromApi(response.data)));
+
+        alert('success', 'Restaurant updated successfully', dispatch);
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     }
 };
 
-/**
- * Deletes a restaurant from the Redux state and displays a success alert.
- * @param data - Restaurant to be removed.
- * @param dispatch - Redux dispatch
- */
 export const deleteRestaurantService = async (
     data: Restaurant,
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
-        // delay will be replaced with actual api call
-        await delay();
+        await api.delete(`/restaurants/${data.id}`);
 
         dispatch(removeRestaurant(data.id));
 
-        alert('success', `Restaurant ${data.name} has been deleted.`, dispatch);
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+        alert('success', 'Restaurant deleted successfully', dispatch);
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     }
 };

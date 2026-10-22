@@ -89,7 +89,7 @@ export const RestaurantDetails = () => {
      */
     const handleCreateMenuItem = async (data: MenuItem) => {
         setIsProcessing(true);
-        await createMenuItemService(data, dispatch);
+        await createMenuItemService(data, restaurantDetails, dispatch);
         setIsProcessing(false);
         setTargetEditMenuItem(null);
     };
@@ -101,7 +101,7 @@ export const RestaurantDetails = () => {
     const handleEditMenuItem = async (data: MenuItem) => {
         if (targetEditMenuItem) {
             setIsProcessing(true);
-            await editMenuItemService(data, dispatch);
+            await editMenuItemService(data, restaurantDetails, dispatch);
             setIsProcessing(false);
             setTargetEditMenuItem(null);
         }
@@ -111,7 +111,11 @@ export const RestaurantDetails = () => {
     const handleDeleteMenuItem = async () => {
         if (targetDeleteMenuItem) {
             setIsProcessing(true);
-            await deleteMenuItemService(targetDeleteMenuItem, dispatch);
+            await deleteMenuItemService(
+                targetDeleteMenuItem,
+                restaurantDetails,
+                dispatch,
+            );
             setIsProcessing(false);
             setTargetDeleteMenuItem(null);
         }

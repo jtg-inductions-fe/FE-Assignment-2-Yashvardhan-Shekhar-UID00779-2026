@@ -35,8 +35,7 @@ export const Login = () => {
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
             setIsLoading(true);
-            await login(data, dispatch);
-            await navigate(PATH.HOME);
+            await login(data, dispatch, navigate);
         } catch (e) {
             handleErrorFeedback(e, dispatch);
         } finally {

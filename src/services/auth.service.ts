@@ -1,105 +1,126 @@
-import { AppDispatch, stopStartupLoading, updateUser } from '@store';
-import { User } from '@types';
-import { alert, delay, handleErrorFeedback } from '@utils';
+import { NavigateFunction } from 'react-router';
 
-import { LoginType, SignupType } from './auth.types';
+import { PATH } from '@constant';
+import { AppDispatch } from '@store';
+import { stopStartupLoading, updateUser } from '@store';
+import { alert, handleErrorFeedback } from '@utils';
 
-/**
- * Registers a new user and stores their information
- * @param user - User registration details
- * @param dispatch - Redux dispatch
- */
+import { api, refreshAccessToken, setAccessToken } from './api.service';
+import {
+    AccessTokenResponse,
+    LoginType,
+    SignupType,
+    UserDetailsResponse,
+} from './ApiResponse.types';
+
+const getProfile = async () => {
+    const { data } = await api.get<UserDetailsResponse>('/profile');
+
+    return {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        role: data.role,
+    };
+};
+
 export const signUp = async (
     user: SignupType,
     dispatch: AppDispatch,
-): Promise<void> => {
+    navigate: NavigateFunction,
+) => {
     try {
-        // replace this block with actual api
-        const res = await fetch('data/users.json');
-        const data = (await res.json()) as User[];
-        const userInfo = data[0];
-        userInfo.role = user.role;
+        const body = new URLSearchParams();
 
-        // storing data into local storage
-        localStorage.setItem('user', JSON.stringify(userInfo));
+        body.set('name', user.name);
+        body.set('email', user.email);
+        body.set('password', user.password);
+        body.set('role', user.role);
 
-        // Update the Redux user state.
+        if (user.address != null) body.set('address', user.address);
+        if (user.city != null) body.set('city', user.city);
+        if (user.state != null) body.set('state', user.state);
+        if (user.contact_number != null) {
+            body.set('contact_number', user.contact_number);
+        }
+
+        const { data } = await api.post<AccessTokenResponse>(
+            '/auth/signup',
+            body,
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            },
+        );
+
+        setAccessToken(data.access_token);
+
+        const userInfo = await getProfile();
+
         dispatch(updateUser(userInfo));
-
-        // Display a success message after account creation.
-        alert('success', 'Your account has been created.', dispatch);
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+        alert('success', 'Account created successfully', dispatch);
+        await navigate(PATH.HOME);
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     }
 };
 
-/**
- * Authenticates a user using their email and password
- * @param user - User login credentials.
- * @param dispatch - Redux dispatch
- */
 export const login = async (
     user: LoginType,
     dispatch: AppDispatch,
-): Promise<void> => {
+    navigate: NavigateFunction,
+) => {
     try {
-        // replace this block with actual api
-        const res = await fetch('data/users.json');
-        const data = (await res.json()) as User[];
+        const body = new URLSearchParams({
+            username: user.email,
+            password: user.password,
+        });
 
-        if (data[0].email !== user.email && data[1].email !== user.email) {
-            throw new Error('Invalid email or password');
-        }
-        const userInfo = data[0].email === user.email ? data[0] : data[1];
+        const { data } = await api.post<AccessTokenResponse>(
+            '/auth/login',
+            body,
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            },
+        );
 
-        // storing data into local storage
-        localStorage.setItem('user', JSON.stringify(userInfo));
+        setAccessToken(data.access_token);
 
-        // Display a success message after authentication.
-        alert('success', 'Logged in successfully.', dispatch);
+        const userInfo = await getProfile();
 
-        // Update the Redux user state.
         dispatch(updateUser(userInfo));
-    } catch (e) {
-        handleErrorFeedback(e, dispatch);
+        alert('success', 'Logged in successfully', dispatch);
+        await navigate(PATH.HOME);
+    } catch (error) {
+        handleErrorFeedback(error, dispatch);
     }
 };
 
-/**
- * Logs out the current user by clearing the user data
- * @param dispatch - Redux dispatch f
- */
-export const logout = (dispatch: AppDispatch): void => {
-    // Update the Redux user state.
-    dispatch(updateUser(null));
-
-    // Remove the stored information.
-    localStorage.removeItem('user');
-
-    // Display a success message after logout.
-    alert('success', 'Logged out successfully.', dispatch);
-};
-
-/**
- * handle user state for route protection
- * @param dispatch store dispatch
- */
-export const initializeAuth = async (dispatch: AppDispatch) => {
+export const logout = async (dispatch: AppDispatch) => {
     try {
-        // replace with token verification
-        await delay();
-
-        const user = JSON.parse(localStorage.getItem('user') || 'null') as User;
-
-        const isPresent =
-            user && user.name && user.email && user.role && user.id;
-
-        if (isPresent) {
-            dispatch(updateUser(user));
-        }
+        await api.post('/auth/logout');
+        alert('success', 'Logged out successfully', dispatch);
     } catch (error) {
         handleErrorFeedback(error, dispatch);
-        localStorage.removeItem('users');
+    } finally {
+        setAccessToken(null);
+        dispatch(updateUser(null));
+        localStorage.removeItem('user');
+    }
+};
+
+export const initializeAuth = async (dispatch: AppDispatch) => {
+    try {
+        await refreshAccessToken();
+
+        const userInfo = await getProfile();
+        dispatch(updateUser(userInfo));
+    } catch {
+        setAccessToken(null);
+        dispatch(updateUser(null));
     } finally {
         dispatch(stopStartupLoading());
     }
