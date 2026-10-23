@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Add, Clear, Search } from '@mui/icons-material';
 import {
@@ -51,6 +51,14 @@ export const Restaurants = () => {
         useState<Restaurant | null>(null);
     const [targetEditRestaurant, setTargetEditRestaurant] =
         useState<Restaurant | null>(null);
+
+    // Infinite-scroll state
+    const [nextCursor, setNextCursor] = useState<string | null>(null);
+    const [hasMore, setHasMore] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+    const loadingMoreRef = useRef(false);
 
     const initialRestaurantState: Restaurant = {
         id: '',
@@ -161,9 +169,58 @@ export const Restaurants = () => {
 
     // update Redux store with loader data on load
     useEffect(() => {
+        let cancelled = false;
+
         startLoading(dispatch);
-        void getRestaurantsService(dispatch);
+
+        void getRestaurantsService(dispatch).then((cursor) => {
+            if (cancelled) return;
+
+            setNextCursor(cursor);
+            setHasMore(Boolean(cursor));
+        });
+
+        return () => {
+            cancelled = true;
+        };
     }, [dispatch]);
+
+    useEffect(() => {
+        const target = loadMoreRef.current;
+
+        if (!target || !hasMore || !nextCursor) return;
+
+        const getMoreRest = async (entry: IntersectionObserverEntry) => {
+            if (!entry.isIntersecting || loadingMoreRef.current) return;
+
+            loadingMoreRef.current = true;
+            setIsLoadingMore(true);
+
+            try {
+                const cursor = await getRestaurantsService(
+                    dispatch,
+                    nextCursor,
+                );
+
+                setNextCursor(cursor);
+                setHasMore(Boolean(cursor));
+            } finally {
+                loadingMoreRef.current = false;
+                setIsLoadingMore(false);
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            ([entry]) => void getMoreRest(entry),
+            {
+                rootMargin: '200px',
+            },
+        );
+
+        observer.observe(target);
+
+        return () => observer.disconnect();
+    }, [dispatch, hasMore, nextCursor]);
 
     return (
         restaurants && (
@@ -283,6 +340,14 @@ export const Restaurants = () => {
                             />
                         ))}
                     </Grid>
+                )}
+                <Box ref={loadMoreRef} minHeight={1} />
+                {isLoadingMore && (
+                    <Box textAlign="center" py={3}>
+                        <Typography color="text.secondary">
+                            Loading more restaurants...
+                        </Typography>
+                    </Box>
                 )}
                 <RestaurantFormDialog
                     restaurant={targetEditRestaurant || initialRestaurantState}

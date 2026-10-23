@@ -1,3 +1,4 @@
+import { FETCH_LIMIT } from '@constant';
 import {
     AppDispatch,
     clearCart,
@@ -62,17 +63,41 @@ const mapOrderFromApi = (order: OrderApiResponse): Order => ({
  * get list of all orders
  * @param dispatch dispatch store
  */
-export const getOrders = async (dispatch: AppDispatch) => {
+export const getOrders = async (
+    dispatch: AppDispatch,
+    cursor?: string | null,
+): Promise<string | null> => {
     try {
         const { data } = await api.get<OrderListApiResponse>('/orders', {
-            params: { size: 100 },
+            params: {
+                size: FETCH_LIMIT,
+                ...(cursor ? { cursor } : {}),
+            },
         });
 
-        dispatch(setOrders(data.items.map(mapOrderFromApi)));
+        const orders = data.items.map(mapOrderFromApi);
+
+        if (cursor) {
+            orders.forEach((order) => {
+                dispatch(
+                    setOrders([
+                        ...(store.getState().orders.orders as Order[]),
+                        order,
+                    ]),
+                );
+            });
+        } else {
+            dispatch(setOrders(orders));
+        }
+
+        return data.next_page;
     } catch (e) {
         handleErrorFeedback(e, dispatch);
+        return null;
     } finally {
-        stopLoading(dispatch);
+        if (!cursor) {
+            stopLoading(dispatch);
+        }
     }
 };
 

@@ -7,3 +7,4 @@ export {
 } from './theme.constant';
 
 export { PATH } from './path.constant';
+export { FETCH_LIMIT } from './size.constant';

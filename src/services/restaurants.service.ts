@@ -1,3 +1,4 @@
+import { FETCH_LIMIT } from '@constant';
 import {
     addRestaurant,
     AppDispatch,
@@ -51,22 +52,43 @@ const mapRestaurantToApi = (data: Restaurant) => ({
     image: data.image || null,
 });
 
+/**
+ * Fetches the first page or the next page of restaurants.
+ * @param dispatch Redux dispatch
+ * @param cursor Cursor for the next page. Omit for the first page.
+ * @returns Cursor for the next page, or null when no more pages exist.
+ */
 export const getRestaurantsService = async (
     dispatch: AppDispatch,
-): Promise<void> => {
+    cursor?: string | null,
+): Promise<string | null> => {
     try {
         const { data } = await api.get<RestaurantListResponse>('/restaurants', {
             params: {
-                size: 100,
+                size: FETCH_LIMIT,
                 type: 'ALL',
+                ...(cursor ? { cursor } : {}),
             },
         });
 
-        dispatch(setRestaurants(data.items.map(mapRestaurantFromApi)));
+        const restaurants = data.items.map(mapRestaurantFromApi);
+
+        if (cursor) {
+            restaurants.forEach((restaurant) => {
+                dispatch(addRestaurant(restaurant));
+            });
+        } else {
+            dispatch(setRestaurants(restaurants));
+        }
+
+        return data.next_page;
     } catch (error) {
         handleErrorFeedback(error, dispatch);
+        return null;
     } finally {
-        stopLoading(dispatch);
+        if (!cursor) {
+            stopLoading(dispatch);
+        }
     }
 };
 

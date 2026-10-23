@@ -26,10 +26,8 @@ export const api = axios.create({
     },
 });
 
-// Access token remains in memory, never localStorage.
 let accessToken: string | null = null;
 
-// Prevent concurrent requests from triggering multiple refreshes.
 let refreshPromise: Promise<string> | null = null;
 
 export const setAccessToken = (token: string | null): void => {
