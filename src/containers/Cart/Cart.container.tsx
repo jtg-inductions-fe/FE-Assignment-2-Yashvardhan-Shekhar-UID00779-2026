@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { Navigate, useNavigate } from 'react-router';
 
@@ -19,6 +19,7 @@ import { PATH } from '@constant';
 import { checkoutPreview, placeOrder } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
 import { CartItem } from '@types';
+import { stopLoading } from '@utils';
 
 import { StyledDivider, SummaryRow } from './Cart.styles';
 
@@ -52,23 +53,21 @@ export const Cart = () => {
         subtotal + bookingFee - discount,
     );
 
-    const handleApplyCoupon = async () => {
-        const code = couponCode.trim();
-        
-        if (discount > 0) {
-            setDiscount(0)
-            setCouponCode('')
-            setGrandTotal(subtotal + bookingFee);
-            return
-        }
-
-        if (!code || isApplyingCoupon) {
-            return;
-        }
-
-        setIsApplyingCoupon(true);
+    const handleApplyCoupon = async (isRefreshing: boolean = false) => {
         try {
-            const preview = await checkoutPreview(couponCode, dispatch);
+            if (isApplyingCoupon || cart.length == 0) return;
+
+            const code = couponCode.trim();
+
+            if (!isRefreshing && discount > 0) {
+                setDiscount(0);
+                setCouponCode('');
+                setGrandTotal(subtotal + bookingFee);
+                return;
+            }
+
+            setIsApplyingCoupon(true);
+            const preview = await checkoutPreview(code, dispatch);
 
             if (preview) {
                 setSubtotal(Number(preview.subtotal));
@@ -76,11 +75,15 @@ export const Cart = () => {
                 setDiscount(Number(preview.discount));
                 setGrandTotal(Number(preview.grand_total));
             }
-
         } finally {
             setIsApplyingCoupon(false);
+            stopLoading(dispatch);
         }
     };
+
+    useEffect(() => {
+        void handleApplyCoupon(true);
+    }, [cart]);
 
     return role === 'owner' ? (
         <Navigate to={PATH.HOME} />
@@ -183,7 +186,7 @@ export const Cart = () => {
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     aria-label="Apply coupon"
-                                                    color="primary"
+                                                    color="default"
                                                     edge="end"
                                                     type="submit"
                                                     disabled={
@@ -193,7 +196,7 @@ export const Cart = () => {
                                                     loading={isApplyingCoupon}
                                                 >
                                                     {discount > 0 ? (
-                                                        <DeleteOutlineOutlined color='disabled' />
+                                                        <DeleteOutlineOutlined />
                                                     ) : (
                                                         <Check />
                                                     )}
@@ -209,6 +212,7 @@ export const Cart = () => {
                             variant="contained"
                             color="primary"
                             size="large"
+                            disabled={isApplyingCoupon}
                             loading={isLoading}
                             loadingPosition="end"
                             onClick={() => void handelPlaceOrder()}
