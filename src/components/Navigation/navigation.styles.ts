@@ -12,8 +12,9 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export const StyledMenu = styled(Menu)(({ theme }) => ({
-    '.MuiMenu-list': {
+    '.MuiMenu-paper': {
         minWidth: theme.typography.pxToRem(180),
+        borderRadius: theme.typography.pxToRem(16),
     },
 }));
 
@@ -28,8 +29,7 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 export const DesktopNavBox = styled(Box)(({ theme }) => ({
     display: 'none',
-    gap: theme.spacing(1),
-    alignItems: 'center',
+    alignItems: 'right',
     color: theme.palette.text.secondary,
 
     [theme.breakpoints.up('md')]: {

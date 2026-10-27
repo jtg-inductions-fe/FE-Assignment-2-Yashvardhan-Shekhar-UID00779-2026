@@ -1,11 +1,11 @@
-## React Base Template
+# Apna Restaurant
 
 ## Getting Started
 
 ### Prerequisites
 
 - **Node.js**: Version 20+. You can download and install it from nodejs.org.
-- **yarn**: Version 4.5.0. If Yarn is not installed, you can follow the instruction below in Installing section
+- **yarn**: Version 4.18.0. If Yarn is not installed, you can follow the instruction below in Installing section.
 
 ### Installing
 
@@ -39,11 +39,7 @@ To set up the project on your local environment, follow these steps:
     npm install -g yarn
     ```
 
-    - **Switch to correct version**: Switch to yarn latest version
-
-    ```bash
-    yarn set version berry
-    ```
+    - **Yarn Version**: The project uses Yarn 4.18.0, which is already in the repository.
 
 3. **Install the necessary dependencies using yarn**
 

@@ -7,28 +7,34 @@ import {
 } from '@mui/icons-material';
 import {
     Badge,
-    Button,
     Container,
     IconButton,
+    LinearProgress,
     Link,
     Toolbar,
 } from '@mui/material';
 
-import { Avatar } from '@components';
+import { Avatar, Button } from '@components';
 import { PATH } from '@constant';
 
 import { DesktopNavBox, StyledAppBar } from './navigation.styles';
 import { BarProps } from './navigation.types';
 
 export const Navbar = (props: BarProps) => {
-    const { handleProfileClick, user, activeTab, cartCount } = props;
+    const { handleProfileClick, user, activeTab, cartCount, isLoading } = props;
 
     const navigate = useNavigate();
 
     return (
         <StyledAppBar position="sticky" elevation={1}>
+            <LinearProgress
+                sx={{ visibility: isLoading ? 'visible' : 'hidden' }}
+            />
             <Container maxWidth="xl">
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Toolbar
+                    disableGutters
+                    sx={{ justifyContent: 'space-between' }}
+                >
                     <Link
                         variant="h6"
                         component="button"
@@ -40,6 +46,7 @@ export const Navbar = (props: BarProps) => {
                     </Link>
                     <DesktopNavBox>
                         <Button
+                            size="small"
                             color={
                                 activeTab === PATH.HOME ? 'primary' : 'inherit'
                             }
@@ -49,6 +56,7 @@ export const Navbar = (props: BarProps) => {
                         </Button>
                         {user?.role === 'customer' && (
                             <Button
+                                size="small"
                                 color={
                                     activeTab === PATH.CART
                                         ? 'primary'
@@ -67,6 +75,7 @@ export const Navbar = (props: BarProps) => {
                             </Button>
                         )}
                         <Button
+                            size="small"
                             color={
                                 activeTab === PATH.ORDERS
                                     ? 'primary'

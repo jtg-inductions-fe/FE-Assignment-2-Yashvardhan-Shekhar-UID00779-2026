@@ -1,13 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { CartItem } from '@types';
+import { CartItem, MenuItem } from '@types';
 
-/**
- * Represents the state of the shopping cart.
- */
-type CartState = {
-    cartItems: CartItem[];
-};
+import { CartState } from './store.type';
 
 /**
  * Defines the initial state for the cart slice.
@@ -29,18 +24,21 @@ export const cartSlice = createSlice({
          * @param state - Current cart state.
          * @param action - Action containing the ID of the item to add.
          */
-        addItemToCart: (state, action: PayloadAction<string>): void => {
+        addItemToCart: (state, action: PayloadAction<MenuItem>) => {
+            if (action.payload.stock <= 0) return;
+
             const index = state.cartItems.findIndex(
-                (item: CartItem) => item.id === action.payload,
+                (item: CartItem) => item.id === action.payload.id,
             );
 
             if (index !== -1) {
-                state.cartItems[index].quantity += 1;
+                const cartItem = state.cartItems[index];
+
+                if (cartItem.quantity < action.payload.stock) {
+                    cartItem.quantity += 1;
+                }
             } else {
-                state.cartItems.push({
-                    id: action.payload,
-                    quantity: 1,
-                });
+                state.cartItems.push({ ...action.payload, quantity: 1 });
             }
         },
 
@@ -49,9 +47,9 @@ export const cartSlice = createSlice({
          * @param state - Current cart state.
          * @param action - Action containing the ID of the item to remove.
          */
-        removeItemFromCart: (state, action: PayloadAction<string>): void => {
+        removeItemFromCart: (state, action: PayloadAction<MenuItem>) => {
             const index = state.cartItems.findIndex(
-                (item) => item.id === action.payload,
+                (item: CartItem) => item.id === action.payload.id,
             );
 
             if (index !== -1) {
@@ -62,12 +60,20 @@ export const cartSlice = createSlice({
                 }
             }
         },
+        /**
+         * resets the cart
+         * @param state Current cart state.
+         */
+        clearCart: (state) => {
+            state.cartItems.length = 0;
+        },
     },
 });
 
 /**
  * Action creators for adding and removing items from the shopping cart.
  */
-export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, clearCart } =
+    cartSlice.actions;
 
 export default cartSlice.reducer;

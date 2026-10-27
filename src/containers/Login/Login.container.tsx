@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 
 import { Button, PasswordField, TextField } from '@components';
 import { PATH } from '@constant';
@@ -35,8 +35,7 @@ export const Login = () => {
     const handleClick: SubmitHandler<LoginInput> = async (data) => {
         try {
             setIsLoading(true);
-            await login(data, dispatch);
-            await navigate(PATH.HOME);
+            await login(data, dispatch, navigate);
         } catch (e) {
             handleErrorFeedback(e, dispatch);
         } finally {
@@ -62,7 +61,7 @@ export const Login = () => {
                 }}
                 noValidate
             >
-                <Stack spacing={2}>
+                <Box display="flex" flexDirection="column" gap={2}>
                     <TextField
                         label="Email Address"
                         type="email"
@@ -95,7 +94,7 @@ export const Login = () => {
                             </Link>
                         </Typography>
                     </Box>
-                </Stack>
+                </Box>
             </Box>
         </FormProvider>
     );

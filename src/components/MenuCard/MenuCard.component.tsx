@@ -1,0 +1,194 @@
+import { Add, Delete, Edit, Remove, ShoppingBag } from '@mui/icons-material';
+import {
+    Box,
+    CardContent,
+    CardMedia,
+    Chip,
+    IconButton,
+    Typography,
+    useTheme,
+} from '@mui/material';
+
+import foodIllustration from '@assets/images/food-illustration.webp';
+import { Button, Card, Tooltip } from '@components';
+import {
+    addItemToCart,
+    removeItemFromCart,
+    useAppDispatch,
+    useAppSelector,
+} from '@store';
+
+import {
+    QuantityControlStack,
+    QuantityIconButton,
+    StyledCardActions,
+} from './MenuCard.styles';
+import { MenuCardProps } from './MenuCard.types';
+
+export const MenuCard = (props: MenuCardProps) => {
+    const { item, isOwnerView, onEdit, onDelete } = props;
+    const theme = useTheme();
+    const dispatch = useAppDispatch();
+
+    const quantity = useAppSelector((state): number => {
+        const res = state.cart.cartItems.find((it) => it.id === item.id);
+        return res ? res.quantity : 0;
+    });
+
+    const isOutOfStock = item.stock <= 0;
+    const isInCart = quantity > 0;
+
+    /**
+     * adds item in the cart
+     */
+    const handleAddToCart = () => {
+        dispatch(addItemToCart(item));
+    };
+
+    /**
+     * removes item from the card
+     */
+    const handleRemoveFromCart = () => {
+        dispatch(removeItemFromCart(item));
+    };
+
+    return (
+        <Card elevation={2}>
+            <CardMedia
+                component="img"
+                height="180"
+                image={item.image || foodIllustration}
+                alt={item.name}
+                onError={(e) => {
+                    e.currentTarget.src = foodIllustration;
+                }}
+                loading="lazy"
+                sx={{
+                    filter: isOutOfStock ? 'grayscale(70%)' : 'none',
+                    opacity: isOutOfStock ? 0.3 : 1,
+                }}
+            />
+            {isOutOfStock && (
+                <Chip
+                    label="Out of Stock"
+                    color="default"
+                    size="small"
+                    sx={{
+                        position: 'absolute',
+                        fontWeight: 'bold',
+                        top: theme.typography.pxToRem(12),
+                        right: theme.typography.pxToRem(12),
+                    }}
+                />
+            )}
+            <CardContent>
+                <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    gap={1}
+                    mb={1.5}
+                    color={isOutOfStock ? 'text.disabled' : 'text.primary'}
+                >
+                    <Tooltip title={item.name}>
+                        <Typography variant="h6" component="h2" noWrap>
+                            {item.name}
+                        </Typography>
+                    </Tooltip>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                        ₹{item.price}
+                    </Typography>
+                </Box>
+                <Tooltip title={item.description}>
+                    <Typography
+                        variant="body2"
+                        color={
+                            isOutOfStock ? 'text.disabled' : 'text.secondary'
+                        }
+                        sx={{ ...theme.mixins.lineClamp(3) }}
+                    >
+                        {item.description ||
+                            `Enjoy our ${item.name}, available for just ₹${item.price}.`}
+                    </Typography>
+                </Tooltip>
+            </CardContent>
+            <StyledCardActions
+                sx={{ justifyContent: isOwnerView ? 'flex-end' : 'stretch' }}
+            >
+                {!isOwnerView && (
+                    <Box width="100%">
+                        {!isInCart ? (
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                size="small"
+                                startIcon={<ShoppingBag />}
+                                disabled={isOutOfStock}
+                                onClick={handleAddToCart}
+                            >
+                                {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+                            </Button>
+                        ) : (
+                            <QuantityControlStack>
+                                <Tooltip title="Remove item from cart">
+                                    <QuantityIconButton
+                                        size="small"
+                                        color="primary"
+                                        onClick={handleRemoveFromCart}
+                                        aria-label="remove item from cart"
+                                    >
+                                        <Remove fontSize="small" />
+                                    </QuantityIconButton>
+                                </Tooltip>
+                                <Typography
+                                    variant="body1"
+                                    fontWeight="bold"
+                                    color="primary.main"
+                                >
+                                    {quantity}
+                                </Typography>
+                                <Tooltip title="Add item to cart">
+                                    <QuantityIconButton
+                                        size="small"
+                                        color="primary"
+                                        disabled={quantity >= item.stock}
+                                        onClick={handleAddToCart}
+                                        aria-label="add item to cart"
+                                    >
+                                        <Add fontSize="small" />
+                                    </QuantityIconButton>
+                                </Tooltip>
+                            </QuantityControlStack>
+                        )}
+                    </Box>
+                )}
+                {isOwnerView && (
+                    <Box
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                        gap={1}
+                    >
+                        <IconButton
+                            size="small"
+                            color="primary"
+                            onClick={() => onEdit(item.id)}
+                            aria-label="edit menu item"
+                        >
+                            <Edit />
+                        </IconButton>
+                        <IconButton
+                            size="small"
+                            color="error"
+                            onClick={() => onDelete(item.id)}
+                            aria-label="delete menu item"
+                        >
+                            <Delete />
+                        </IconButton>
+                    </Box>
+                )}
+            </StyledCardActions>
+        </Card>
+    );
+};

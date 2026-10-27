@@ -1,13 +1,24 @@
-import { Provider } from 'react-redux';
+import { useEffect } from 'react';
 
-import { Main } from '@layouts';
+import { RouterProvider } from 'react-router';
+
+import { Alert } from '@components';
 import { ThemeProvider } from '@providers';
-import { store } from '@store';
+import { router } from '@router';
+import { initializeAuth } from '@services';
+import { useAppDispatch } from '@store';
 
-export const App = () => (
-    <Provider store={store}>
+export const App = () => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        void initializeAuth(dispatch);
+    }, [dispatch]);
+
+    return (
         <ThemeProvider>
-            <Main />
+            <RouterProvider router={router} />
+            <Alert />
         </ThemeProvider>
-    </Provider>
-);
+    );
+};
