@@ -39,3 +39,10 @@ export type RestaurantDetails = Restaurant & {
     /**menu list */
     menu: MenuItem[];
 };
+
+export type Coupon = {
+    code: string,
+    id: string,
+    percentage: number,
+    is_active: boolean,
+}

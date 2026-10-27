@@ -4,4 +4,5 @@ export type {
     Restaurant,
     MenuItem,
     RestaurantDetails,
+    Coupon
 } from './restaurant.types';

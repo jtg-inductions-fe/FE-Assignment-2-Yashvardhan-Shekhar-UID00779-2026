@@ -10,6 +10,7 @@ import { Restaurant } from '@types';
 import { alert, handleErrorFeedback, stopLoading } from '@utils';
 
 import { api } from './api.service';
+import { Category } from '../containers/Restaurants/Restaurants.types';
 
 type RestaurantApiResponse = {
     id: string;
@@ -56,17 +57,22 @@ const mapRestaurantToApi = (data: Restaurant) => ({
  * Fetches the first page or the next page of restaurants.
  * @param dispatch Redux dispatch
  * @param cursor Cursor for the next page. Omit for the first page.
+ * @param searchQuery Restaurant search query
+ * @param vegFilter Selected restaurant category
  * @returns Cursor for the next page, or null when no more pages exist.
  */
 export const getRestaurantsService = async (
     dispatch: AppDispatch,
     cursor?: string | null,
+    searchQuery = '',
+    vegFilter: Category = 'all',
 ): Promise<string | null> => {
     try {
         const { data } = await api.get<RestaurantListResponse>('/restaurants', {
             params: {
                 size: FETCH_LIMIT,
-                type: 'ALL',
+                type: vegFilter.toUpperCase(),
+                ...(searchQuery.trim() ? { q: searchQuery.trim() } : {}),
                 ...(cursor ? { cursor } : {}),
             },
         });

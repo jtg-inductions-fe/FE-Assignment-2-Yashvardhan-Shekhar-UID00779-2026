@@ -2,12 +2,21 @@ import { Fragment, useState } from 'react';
 
 import { Navigate, useNavigate } from 'react-router';
 
+import { Check, DeleteOutlineOutlined } from '@mui/icons-material';
 import { ArrowBack, ShoppingBagOutlined } from '@mui/icons-material';
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
+import {
+    Box,
+    IconButton,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
 import { Button, CartItemRow } from '@components';
 import { PATH } from '@constant';
-import { placeOrder } from '@services';
+import { checkoutPreview, placeOrder } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
 import { CartItem } from '@types';
 
@@ -20,22 +29,58 @@ export const Cart = () => {
     const cart = useAppSelector((state) => state.cart.cartItems);
     const role = useAppSelector((state) => state.user.role);
 
+    const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+    const [couponCode, setCouponCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     /** places order on clicked and resets the store cart */
     const handelPlaceOrder = async () => {
         setIsLoading(true);
-        await placeOrder(dispatch);
+        await placeOrder(dispatch, couponCode, navigate);
         setIsLoading(false);
-        await navigate(PATH.ORDERS);
     };
 
-    const subtotal = cart.reduce(
-        (sum: number, item: CartItem) => sum + item.price * item.quantity,
-        0,
+    const [subtotal, setSubtotal] = useState(
+        cart.reduce(
+            (sum: number, item: CartItem) => sum + item.price * item.quantity,
+            0,
+        ),
     );
-    const bookingFee = Math.max(subtotal * 0.01, 20);
-    const grandTotal = subtotal + bookingFee;
+    const [bookingFee, setBookingFee] = useState(Math.max(subtotal * 0.01, 20));
+    const [discount, setDiscount] = useState(0);
+    const [grandTotal, setGrandTotal] = useState(
+        subtotal + bookingFee - discount,
+    );
+
+    const handleApplyCoupon = async () => {
+        const code = couponCode.trim();
+        
+        if (discount > 0) {
+            setDiscount(0)
+            setCouponCode('')
+            setGrandTotal(subtotal + bookingFee);
+            return
+        }
+
+        if (!code || isApplyingCoupon) {
+            return;
+        }
+
+        setIsApplyingCoupon(true);
+        try {
+            const preview = await checkoutPreview(couponCode, dispatch);
+
+            if (preview) {
+                setSubtotal(Number(preview.subtotal));
+                setBookingFee(Number(preview.booking_fee));
+                setDiscount(Number(preview.discount));
+                setGrandTotal(Number(preview.grand_total));
+            }
+
+        } finally {
+            setIsApplyingCoupon(false);
+        }
+    };
 
     return role === 'owner' ? (
         <Navigate to={PATH.HOME} />
@@ -88,6 +133,16 @@ export const Cart = () => {
                             ₹{bookingFee.toFixed(2)}
                         </Typography>
                     </SummaryRow>
+                    {discount > 0 && (
+                        <SummaryRow>
+                            <Typography variant="body1" color="text.secondary">
+                                Discount
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                                - ₹{discount.toFixed(2)}
+                            </Typography>
+                        </SummaryRow>
+                    )}
                     <StyledDivider />
                     <SummaryRow mb={3}>
                         <Typography variant="h6" fontWeight="bold">
@@ -101,17 +156,67 @@ export const Cart = () => {
                             ₹{grandTotal.toFixed(2)}
                         </Typography>
                     </SummaryRow>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        loading={isLoading}
-                        loadingPosition="end"
-                        onClick={() => void handelPlaceOrder()}
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={2}
+                        alignItems="stretch"
                     >
-                        Place Order ₹{grandTotal.toFixed(2)}
-                    </Button>
+                        <Box
+                            component="form"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                void handleApplyCoupon();
+                            }}
+                            sx={{ flex: 1 }}
+                        >
+                            <TextField
+                                fullWidth
+                                size="small"
+                                label="Coupon code"
+                                placeholder="Enter coupon code"
+                                value={couponCode}
+                                onChange={(e) => setCouponCode(e.target.value)}
+                                disabled={isApplyingCoupon || discount > 0}
+                                slotProps={{
+                                    input: {
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="Apply coupon"
+                                                    color="primary"
+                                                    edge="end"
+                                                    type="submit"
+                                                    disabled={
+                                                        !couponCode.trim() ||
+                                                        isApplyingCoupon
+                                                    }
+                                                    loading={isApplyingCoupon}
+                                                >
+                                                    {discount > 0 ? (
+                                                        <DeleteOutlineOutlined color='disabled' />
+                                                    ) : (
+                                                        <Check />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    },
+                                }}
+                            />
+                        </Box>
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            loading={isLoading}
+                            loadingPosition="end"
+                            onClick={() => void handelPlaceOrder()}
+                            sx={{ flex: 1, whiteSpace: 'nowrap' }}
+                        >
+                            Place Order ₹{grandTotal.toFixed(2)}
+                        </Button>
+                    </Stack>
                 </Box>
             ) : (
                 <Box mt="30dvh" textAlign="center" color="text.secondary">

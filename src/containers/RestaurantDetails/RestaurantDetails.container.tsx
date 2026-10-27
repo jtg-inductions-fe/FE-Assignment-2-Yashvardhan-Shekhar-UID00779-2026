@@ -2,12 +2,21 @@ import { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router';
 
-import { AccessTime, ArrowBack, Edit } from '@mui/icons-material';
+import {
+    AccessTime,
+    Add,
+    ArrowBack,
+    Edit,
+    List,
+    LocalActivity,
+} from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import {
     Box,
     Chip,
     IconButton,
+    SpeedDial,
+    SpeedDialAction,
     Stack,
     Typography,
     useMediaQuery,
@@ -24,8 +33,11 @@ import {
     handleEditMenuItem as editMenuItemService,
 } from '@services';
 import { useAppDispatch, useAppSelector } from '@store';
-import { MenuItem, Restaurant } from '@types';
+import { Coupon, MenuItem, Restaurant } from '@types';
 import { formatTime, startLoading } from '@utils';
+
+import { CouponDialogForm } from '../CouponDialogForm';
+import { CouponsDialog } from '../Coupons';
 
 export const RestaurantDetails = () => {
     const rid = useParams().restaurantId;
@@ -47,6 +59,18 @@ export const RestaurantDetails = () => {
         useState<MenuItem | null>(null);
     const [targetEditMenuItem, setTargetEditMenuItem] =
         useState<MenuItem | null>(null);
+    const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
+
+    const [targetEditCoupon, setTargetEditCoupon] = useState<Coupon | null>(
+        null,
+    );
+
+    const initialCouponState: Coupon = {
+        id: '',
+        code: '',
+        percentage: 1,
+        is_active: true,
+    };
 
     const initialMenuState = {
         id: '',
@@ -70,6 +94,10 @@ export const RestaurantDetails = () => {
     /** closes dialog and edits restaurant details*/
     const handleCloseRestaurantFormDialog = () => {
         if (!isProcessing) setIsOpenRestaurantFormDialogOpen(false);
+    };
+    /** closes dialog and edits restaurant details*/
+    const handleCloseCouponsDialog = () => {
+        setIsCouponModalOpen(false);
     };
 
     /**
@@ -134,6 +162,22 @@ export const RestaurantDetails = () => {
     /** sets target menuItem for delete dialog */
     const handleTargetDeleteMenuItem = (menuItem: MenuItem) => {
         setTargetDeleteMenuItem(menuItem);
+    };
+
+    /** closes coupon form and clears selected coupon */
+    const handleCloseFormCouponsDialog = () => {
+        // setIsCouponFormModalOpen(false);
+        setTargetEditCoupon(null);
+    };
+
+    /** opens coupon form for creating a new coupon */
+    const handleCreateCouponOpen = () => {
+        setTargetEditCoupon(initialCouponState);
+    };
+
+    /** opens coupon form for editing an existing coupon */
+    const handleEditCoupon = (coupon: Coupon) => {
+        setTargetEditCoupon(coupon);
     };
 
     // Update Redux store on initial load
@@ -274,6 +318,41 @@ export const RestaurantDetails = () => {
                     handleClose={handleCloseDeleteDialog}
                     handleConfirm={handleDeleteMenuItem}
                 />
+                {isOwnerView && (
+                    <>
+                        <SpeedDial
+                            ariaLabel="SpeedDial basic example"
+                            sx={{ position: 'fixed', bottom: 64, right: 64 }}
+                            icon={<LocalActivity />}
+                        >
+                            <SpeedDialAction
+                                key={'List Coupon'}
+                                icon={<List />}
+                                tooltipTitle={'List Coupon'}
+                                onClick={() => setIsCouponModalOpen(true)}
+                            />
+                            <SpeedDialAction
+                                key={'Create Coupon'}
+                                icon={<Add />}
+                                tooltipTitle={'Create Coupon'}
+                                onClick={handleCreateCouponOpen}
+                            />
+                        </SpeedDial>
+                        <CouponDialogForm
+                            restaurantId={restaurantDetails.id}
+                            coupon={targetEditCoupon || initialCouponState}
+                            isOpen={!!targetEditCoupon}
+                            isProcessing={isProcessing}
+                            handleClose={handleCloseFormCouponsDialog}
+                        />
+                        <CouponsDialog
+                            isOpen={isCouponModalOpen}
+                            handleClose={handleCloseCouponsDialog}
+                            openEditMenuOfCoupon={handleEditCoupon}
+                            restaurantId={restaurantDetails.id}
+                        />
+                    </>
+                )}
             </>
         )
     );

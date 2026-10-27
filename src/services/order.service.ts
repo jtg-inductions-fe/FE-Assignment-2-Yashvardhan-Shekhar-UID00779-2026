@@ -1,4 +1,6 @@
-import { FETCH_LIMIT } from '@constant';
+import { NavigateFunction } from 'react-router';
+
+import { FETCH_LIMIT, PATH } from '@constant';
 import {
     AppDispatch,
     clearCart,
@@ -10,13 +12,59 @@ import { Order, OrderStatus } from '@types';
 import { alert, handleErrorFeedback, stopLoading } from '@utils';
 
 import { api } from './api.service';
-import { OrderApiResponse, OrderListApiResponse } from './ApiResponse.types';
+import {
+    CheckoutPreviewResponse,
+    OrderApiResponse,
+    OrderListApiResponse,
+} from './ApiResponse.types';
+
+export const checkoutPreview = async (
+    couponCode: string | null,
+    dispatch: AppDispatch,
+): Promise<CheckoutPreviewResponse | null> => {
+    try {
+        const state = store.getState();
+
+        const cartItems = state.cart.cartItems;
+        const restaurant = state.restaurantDetails.restaurant;
+
+        if (!restaurant || cartItems.length === 0) {
+            alert(
+                'error',
+                'Cart is empty or restaurant is not selected',
+                dispatch,
+            );
+            return null;
+        }
+
+        const { data } = await api.post<CheckoutPreviewResponse>(
+            '/orders/checkout-preview',
+            {
+                restaurant_id: restaurant.id,
+                items: cartItems.map((item) => ({
+                    menu_item_id: item.id,
+                    quantity: item.quantity,
+                })),
+                coupon_code: couponCode?.trim() || null,
+            },
+        );
+
+        return data;
+    } catch (e) {
+        handleErrorFeedback(e, dispatch);
+        return null;
+    }
+};
 
 /**
  * places order and resets cart on success
  * @param dispatch store dispatch
  */
-export const placeOrder = async (dispatch: AppDispatch) => {
+export const placeOrder = async (
+    dispatch: AppDispatch,
+    couponCode: string,
+    navigate: NavigateFunction,
+) => {
     try {
         const state = store.getState();
 
@@ -34,6 +82,7 @@ export const placeOrder = async (dispatch: AppDispatch) => {
 
         await api.post('/orders', {
             restaurant_id: restaurant.id,
+            coupon_code: Boolean(couponCode) ? couponCode : null,
             items: cartItems.map((item) => ({
                 menu_item_id: item.id,
                 quantity: item.quantity,
@@ -41,6 +90,8 @@ export const placeOrder = async (dispatch: AppDispatch) => {
         });
 
         alert('success', 'Order has been placed successfully', dispatch);
+
+        await navigate(PATH.ORDERS);
         dispatch(clearCart());
     } catch (e) {
         handleErrorFeedback(e, dispatch);

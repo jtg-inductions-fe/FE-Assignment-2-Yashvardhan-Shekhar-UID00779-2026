@@ -12,4 +12,14 @@ export {
     handleDeleteMenuItem,
     editRestaurantDetailsService,
 } from './restaurantDetails.service';
-export { placeOrder, getOrders, updateOrder } from './order.service';
+export {
+    placeOrder,
+    getOrders,
+    updateOrder,
+    checkoutPreview,
+} from './order.service';
+export {
+    getCoupons,
+    editCouponService,
+    createCouponService,
+} from './coupons.service';

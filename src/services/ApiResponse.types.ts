@@ -83,3 +83,12 @@ export type OrderListApiResponse = {
     previous_page: string | null;
     next_page: string | null;
 };
+
+export type CheckoutPreviewResponse = {
+    restaurant_id: string;
+    items: OrderApiResponse[];
+    subtotal: number;
+    booking_fee: number;
+    discount: number;
+    grand_total: number;
+};

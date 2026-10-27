@@ -10,7 +10,7 @@ export const Dialog = (props: DialogProps) => {
 
     return (
         <StyledDialog open={isOpen} onClose={onClose} fullWidth>
-            {form && (
+            {form ? (
                 <Box component="form" onSubmit={form.onSubmit}>
                     <DialogTitle variant="h4" fontWeight="bold">
                         {title}
@@ -40,6 +40,13 @@ export const Dialog = (props: DialogProps) => {
                         </Button>
                     </DialogActions>
                 </Box>
+            ) : (
+                <>
+                    <DialogTitle variant="h4" fontWeight="bold">
+                        {title}
+                    </DialogTitle>
+                    {children}
+                </>
             )}
         </StyledDialog>
     );

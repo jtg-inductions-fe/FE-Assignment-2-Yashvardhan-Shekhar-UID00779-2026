@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { Add, Clear, Search } from '@mui/icons-material';
 import {
@@ -44,6 +44,7 @@ export const Restaurants = () => {
     const restaurants = useAppSelector((state) => state.restaurant.restaurants);
 
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
     const [vegFilter, setVegFilter] = useState<Category>('all');
 
     const [isProcessing, setIsProcessing] = useState(false);
@@ -52,7 +53,6 @@ export const Restaurants = () => {
     const [targetEditRestaurant, setTargetEditRestaurant] =
         useState<Restaurant | null>(null);
 
-    // Infinite-scroll state
     const [nextCursor, setNextCursor] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -146,34 +146,22 @@ export const Restaurants = () => {
     /**clears search query */
     const handleSearchFieldClear = () => setSearchQuery('');
 
-    const filteredRestaurants = useMemo(
-        () =>
-            restaurants?.filter((restaurant) => {
-                const matchesSearch =
-                    restaurant.name
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase()) ||
-                    restaurant.description
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase());
-
-                const matchesVeg =
-                    vegFilter === 'all' ||
-                    (vegFilter === 'veg' && restaurant.isVeg) ||
-                    (vegFilter === 'non-veg' && !restaurant.isVeg);
-
-                return matchesSearch && matchesVeg;
-            }),
-        [restaurants, searchQuery, vegFilter],
-    );
-
-    // update Redux store with loader data on load
     useEffect(() => {
         let cancelled = false;
 
+        loadingMoreRef.current = false;
+        setIsLoadingMore(false);
+        setNextCursor(null);
+        setHasMore(false);
+
         startLoading(dispatch);
 
-        void getRestaurantsService(dispatch).then((cursor) => {
+        void getRestaurantsService(
+            dispatch,
+            undefined,
+            debouncedSearchQuery,
+            vegFilter,
+        ).then((cursor) => {
             if (cancelled) return;
 
             setNextCursor(cursor);
@@ -183,7 +171,7 @@ export const Restaurants = () => {
         return () => {
             cancelled = true;
         };
-    }, [dispatch]);
+    }, [dispatch, debouncedSearchQuery, vegFilter]);
 
     useEffect(() => {
         const target = loadMoreRef.current;
@@ -200,6 +188,8 @@ export const Restaurants = () => {
                 const cursor = await getRestaurantsService(
                     dispatch,
                     nextCursor,
+                    debouncedSearchQuery,
+                    vegFilter,
                 );
 
                 setNextCursor(cursor);
@@ -212,15 +202,20 @@ export const Restaurants = () => {
 
         const observer = new IntersectionObserver(
             ([entry]) => void getMoreRest(entry),
-            {
-                rootMargin: '200px',
-            },
         );
 
         observer.observe(target);
 
         return () => observer.disconnect();
-    }, [dispatch, hasMore, nextCursor]);
+    }, [dispatch, hasMore, nextCursor, debouncedSearchQuery, vegFilter]);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedSearchQuery(searchQuery);
+        }, 400);
+
+        return () => clearTimeout(timeoutId);
+    }, [searchQuery]);
 
     return (
         restaurants && (
@@ -277,7 +272,7 @@ export const Restaurants = () => {
                     >
                         <TextField
                             fullWidth
-                            placeholder="Search restaurants by name or description"
+                            placeholder="Search restaurants by name"
                             variant="outlined"
                             size="small"
                             value={searchQuery}
@@ -313,12 +308,12 @@ export const Restaurants = () => {
                         <StyledToggleButton value="veg">
                             Pure Veg
                         </StyledToggleButton>
-                        <StyledToggleButton value="non-veg">
+                        <StyledToggleButton value="non_veg">
                             Non-Veg
                         </StyledToggleButton>
                     </ToggleButtonGroup>
                 </Box>
-                {filteredRestaurants?.length === 0 ? (
+                {restaurants?.length === 0 ? (
                     <Box mt="30dvh" textAlign="center" py={8}>
                         <Typography variant="h6" color="text.secondary">
                             No restaurants found.
@@ -326,7 +321,7 @@ export const Restaurants = () => {
                     </Box>
                 ) : (
                     <Grid>
-                        {filteredRestaurants?.map((restaurant) => (
+                        {restaurants?.map((restaurant) => (
                             <RestaurantCard
                                 key={restaurant.id}
                                 restaurant={restaurant}
@@ -341,7 +336,7 @@ export const Restaurants = () => {
                         ))}
                     </Grid>
                 )}
-                <Box ref={loadMoreRef} minHeight={1} />
+                <Box ref={loadMoreRef} />
                 {isLoadingMore && (
                     <Box textAlign="center" py={3}>
                         <Typography color="text.secondary">
